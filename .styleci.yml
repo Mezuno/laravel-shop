@@ -1,0 +1,9 @@
+php:
+  preset: laravel
+  disabled:
+    - no_unused_imports
+  finder:
+    not-name:
+      - index.blade.php
+js: true
+css: true
