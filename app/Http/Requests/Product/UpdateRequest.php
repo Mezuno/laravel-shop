@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,14 +24,19 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'description' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'content' => 'nullable|string',
-            'preview_image' => 'nullable',
-            'product_images' => 'array|nullable',
+            'preview_image' => [
+                'nullable',
+                File::image()
+//                    ->min(1024)
+//                    ->max(12 * 1024)
+                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(1000)),
+            ],
             'price' => 'required|numeric',
             'count' => 'required|numeric',
-            'is_published' => 'nullable|integer',
+            'is_published' => 'nullable|string',
             'category_id' => 'required|integer',
             'tags' => 'nullable|array',
         ];

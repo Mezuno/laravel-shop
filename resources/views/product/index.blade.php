@@ -101,7 +101,7 @@
                                     <tr>
                                         <td class="pt-0 pb-0 align-text-bottom pl-4">{{ $product->vendor_code }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom"><img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="50" height="50" alt="Изображение товара"></td>
-                                        <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="btn btn-outline-dark">{{ $product->title }}</a></td>
+                                        <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="btn btn-outline-dark">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->price }} ₽</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->count }}шт.</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->publishedStatus }}</td>

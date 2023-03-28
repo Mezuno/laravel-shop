@@ -53,4 +53,9 @@ Route::group(['prefix' => 'products'], function () {
     Route::get('/{product}/edit', \App\Http\Controllers\Product\EditController::class)->name('product.edit');
     Route::patch('/{product}', \App\Http\Controllers\Product\UpdateController::class)->name('product.update');
     Route::delete('/{product}', \App\Http\Controllers\Product\DeleteController::class)->name('product.delete');
+
+    Route::group(['prefix' => 'images/{product}'], function() {
+        Route::patch('/{productImage}', \App\Http\Controllers\Product\UpdateImageController::class)->name('product.image.update');
+        Route::post('/', \App\Http\Controllers\Product\StoreImageController::class)->name('product.image.store');
+    });
 });

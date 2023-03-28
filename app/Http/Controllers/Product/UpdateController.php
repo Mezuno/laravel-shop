@@ -28,18 +28,10 @@ class UpdateController extends Controller
         $product->tags()->sync($data['tags'] ?? []);
         unset($data['tags']);
 
-        // Переписать немного (чтобы фиксированно было во вью)
-        if (isset($productImages)) {
-            foreach ($productImages as $productImage) {
-                $currentImages = ProductImage::where('product_id', $product->id)->count();
-                if ($currentImages >= 3) continue;
-
-                $productImage = Storage::disk('public')->put('/images/products/', $productImage);
-                ProductImage::insert([
-                    'file_path' => $productImage,
-                    'product_id' => $product->id,
-                ]);
-            }
+        if (isset($data['is_published'])) {
+            $data['is_published'] = 1;
+        } else {
+            $data['is_published'] = 0;
         }
 
         $product->update($data);

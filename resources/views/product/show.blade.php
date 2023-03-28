@@ -52,7 +52,7 @@
                                 </tr>
                                 <tr>
                                     <td>Контент</td>
-                                    <td>{{ $product->content }}</td>
+                                    <td><p class="text-wrap" style="max-width: 1000px;">{{ $product->content }}</p></td>
                                 </tr>
                                 <tr>
                                     <td>Цена</td>
@@ -79,9 +79,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Превью картинка</td>
+                                    <td>Превью и остальные фото товара</td>
                                     <td>
                                         <img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="200" height="200" alt="Изображение товара">
+                                        @foreach($productImages as $productImage)
+                                            <img src="{{ URL::asset('storage/'.$productImage->file_path) }}" width="200" height="200" alt="Изображение товара">
+                                        @endforeach
                                     </td>
                                 </tr>
                                 </tbody>
