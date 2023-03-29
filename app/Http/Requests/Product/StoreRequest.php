@@ -34,6 +34,16 @@ class StoreRequest extends FormRequest
 //                    ->max(12 * 1024)
                     ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(1000)),
             ],
+            'product_images' => [
+                'nullable',
+                'array',
+            ],
+            'product_images.*' => [
+                File::image()
+//                    ->min(1024)
+//                    ->max(12 * 1024)
+                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(1000)),
+            ],
             'price' => 'required|string',
             'count' => 'required|string',
             'is_published' => 'nullable|integer',

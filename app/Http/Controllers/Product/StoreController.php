@@ -38,7 +38,6 @@ class StoreController extends Controller
             foreach ($productImages as $productImage) {
                 $productImage = Storage::disk('public')->put('/images/products/', $productImage);
                 $currentImages = ProductImage::where('product_id', $product->id)->count();
-                dd($currentImages);
                 ProductImage::insert([
                     'file_path' => $productImage,
                     'product_id' => $product->id,
