@@ -120,6 +120,14 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+            <div class="nav-item mx-1">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="btn btn-outline-danger" type="submit">
+                        Выйти
+                    </button>
+                </form>
+            </div>
         </ul>
     </nav>
     <!-- /.navbar -->

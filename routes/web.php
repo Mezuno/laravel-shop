@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin/login', App\Http\Controllers\Admin\LoginController::class)->name('admin.login');
+Route::post('/admin/login', App\Http\Controllers\Admin\AuthController::class)->name('admin.auth');
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
 
     Route::get('/', \App\Http\Controllers\Main\IndexController::class)->name('main.index');
 
@@ -64,4 +66,8 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
-Route::get('{page}', \App\Http\Controllers\Client\IndexController::class)->where('page', '.*');
+Route::get('{page}', \App\Http\Controllers\Client\IndexController::class)->where('page', '.*')->name('client');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

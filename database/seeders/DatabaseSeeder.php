@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'patronymic' => 'Андреевич',
             'email' => 'mekishido@gmail.com',
             'password' => Hash::make('12345678'),
+            'is_admin' => 1,
         ]);
 
         \App\Models\Category::factory()->create([
