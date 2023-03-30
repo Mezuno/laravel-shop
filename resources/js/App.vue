@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div>
-                <a href="" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></a>
+                <router-link to="/cart" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></router-link>
                 <div class="cart pt-3" style="z-index: 100">
                     <div class="w-25">
 
@@ -60,9 +60,9 @@
                                         <strong class="mb-1">{{ productInCart.title }}</strong>
                                         <small class="text-secondary fw-bold">{{ productInCart.price }} руб</small>
                                     </div>
-                                    <div class="col-10 mb-1 small">
+                                    <div class="col-10 mb-1 small d-flex justify-content-between">
                                         <img :src="productInCart.image_url" width="50" alt="Отсутствует фото товара">
-                                        <small class="text-secondary fw-bold">x{{ productInCart.qty }}</small>
+                                        <p class="d-inline-block text-secondary fw-bold">x{{ productInCart.qty }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -74,7 +74,8 @@
                                 <!--                        <span class="fs-5 fw-semibold ">Корзина</span>-->
                                 <!--                    </a>-->
                                 <span class="fs-5 fw-semibold d-flex align-items-center flex-shrink-0 p-3">Всего:</span>
-                                <small class="text-secondary fw-bold p-3">{{ getFullPrice }} руб</small>
+                                <small class="text-secondary fw-bold p-3">{{ totalPrice }} руб</small>
+                                <router-link to="/cart" class="btn btn-primary">Заказать</router-link>
                             </div>
                         </div>
                         <!--      <div>-->
@@ -108,19 +109,18 @@ export default {
     },
 
     computed: {
-        getFullPrice: function () {
-            let fullPrice = 0
+        totalPrice: function () {
+            let total = 0
             this.productsInCart.forEach(productInCart => {
-                fullPrice += Number(productInCart.price) * Number(productInCart.qty)
+                total += Number(productInCart.price) * Number(productInCart.qty)
             })
-            return fullPrice
+            return total
         }
     },
 
     methods: {
         getProductsInCart() {
             this.productsInCart = JSON.parse(localStorage.getItem('cart'))
-            console.log(this.productsInCart);
         }
     }
 }

@@ -26,7 +26,6 @@ class ProductResource extends JsonResource
             'vendor_code' => $this->vendor_code,
             'price' => $this->price,
             'count' => $this->count,
-            'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
             'tags' => TagResource::collection($this->tags),
         ];

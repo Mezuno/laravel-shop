@@ -23,3 +23,4 @@ Route::post('/products', \App\Http\Controllers\API\Product\IndexController::clas
 Route::get('/products/filters', \App\Http\Controllers\API\Product\FilterListController::class)->name('product.filter.list');
 Route::get('/products/{product}', \App\Http\Controllers\API\Product\ShowController::class)->where('product', '[0-9]+')->name('product.show');
 Route::get('/categories', \App\Http\Controllers\API\Category\IndexController::class)->name('category.index');
+Route::post('/orders', \App\Http\Controllers\API\Order\StoreController::class)->name('order.store');

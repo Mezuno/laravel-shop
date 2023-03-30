@@ -185,6 +185,7 @@ export default {
             }).then(response => {
                 this.products = response.data.data
                 this.pagination = response.data.meta
+                console.log(this.products);
                 this.loaded = true
                 this.loadedProducts = true
             });
