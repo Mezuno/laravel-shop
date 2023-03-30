@@ -26,26 +26,62 @@
                 <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('post')
+
+                    @if ($errors->has('title'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('title') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <input type="text" name="title" value="{{ old('title') ?? '' }}" class="form-control"
                                placeholder="Наименование" required>
                     </div>
+
+                    @if ($errors->has('description'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('description') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <input type="text" name="description" value="{{ old('description') ?? '' }}"
                                class="form-control" placeholder="Описание">
                     </div>
+
+                    @if ($errors->has('content'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('content') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <textarea name="content" class="form-control"
                                   placeholder="Контент">{{ old('content') ?? '' }}</textarea>
                     </div>
+
+                    @if ($errors->has('price'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('price') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <input type="number" max="100000" name="price" value="{{ old('price') ?? '' }}"
                                class="form-control" placeholder="Цена">
                     </div>
+
+                    @if ($errors->has('count'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('count') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
-                        <input type="text" name="count" value="{{ old('count') ?? '' }}" class="form-control"
+                        <input type="number" name="count" value="{{ old('count') ?? '' }}" class="form-control"
                                placeholder="Количество в наличии">
                     </div>
+
+                    @if ($errors->has('category_id'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('category_id') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <select name="category_id" class="form-control select2" style="width: 100%;">
                             <option selected="selected" disabled>Выберите категорию</option>
@@ -54,6 +90,12 @@
                             @endforeach
                         </select>
                     </div>
+
+                    @if ($errors->has('tags'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('tags') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Добавить тег"
                                 style="width: 100%;">
@@ -62,6 +104,12 @@
                             @endforeach
                         </select>
                     </div>
+
+                    @if ($errors->has('preview_image'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('preview_image') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <div class="input-group">
                             <div class="custom-file">
@@ -70,6 +118,12 @@
                             </div>
                         </div>
                     </div>
+
+                    @if ($errors->has('product_images'))
+                        <div class="alert alert-danger w-100">
+                            <ul>@foreach($errors->get('product_images') as $message)<li>{{$message}}</li>@endforeach</ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <div class="input-group">
                             <div class="custom-file">

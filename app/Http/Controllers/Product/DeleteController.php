@@ -10,6 +10,6 @@ class DeleteController extends Controller
     public function __invoke(Product $product)
     {
         $product->delete();
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with(['success' => 'Товар с артикулом ' . $product->vendor_code . ' успешно удален']);
     }
 }

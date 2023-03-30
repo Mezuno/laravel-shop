@@ -19,6 +19,10 @@
     </div>
     <!-- /.content-header -->
 
+    @if (!empty(session()->get('success')))
+        <div class="success">{{ session()->get('success') }}</div>
+    @endif
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -28,11 +32,9 @@
                     <div class="card">
                         <div class="card-header d-flex p-3">
                             <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary mr-3">Редактировать</a>
-                            <form action="{{ route('product.delete', $product->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-outline-danger">Удалить</button>
-                            </form>
+                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
+                                Удалить
+                            </button>
                         </div>
 
                         <div class="card-body table-responsive p-0">
@@ -98,4 +100,39 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    <!-- Modal -->
+    <div onclick="openModal({{ "deleteModal" . $product->id}})" class="deleteModal d-none" id="deleteModal{{ $product->id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Подтверждение действия</h5>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    Вы действительно хотите удалить товар с артикулом {{ $product->vendor_code }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Отмена</button>
+                    <form action="{{ route('product.delete', $product->id) }}" method="post" class="p-0 d-inline">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            if (id.classList.contains('d-none')) {
+                id.classList.remove('d-none')
+                id.classList.add('d-flex')
+            } else {
+                id.classList.remove('d-flex')
+                id.classList.add('d-none')
+            }
+        }
+    </script>
 @endsection

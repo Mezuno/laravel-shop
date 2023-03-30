@@ -36,6 +36,6 @@ class UpdateController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('product.show', compact('product'));
+        return redirect()->route('product.show', compact('product'))->with(['success' => 'Товар с артикулом ' . $product->vendor_code . ' успешно обновлен']);
     }
 }

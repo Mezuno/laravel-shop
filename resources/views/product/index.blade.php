@@ -17,6 +17,11 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+
+    @if (!empty(session()->get('success')))
+        <div class="success">{{ session()->get('success') }}</div>
+    @endif
+
     <!-- Content filter -->
     <div class="ml-3 p-3 pr-0 alert alert-default-dark d-inline-block">
         <div class="">
@@ -104,6 +109,16 @@
                                         <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->price }} ₽</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->count }}шт.</td>
+{{--                                        <td class="pt-0 pb-0 align-text-bottom">--}}
+{{--                                            <div class="custom-control custom-switch">--}}
+{{--                                                <form action="" method="post">--}}
+{{--                                                    @csrf--}}
+{{--                                                    @method('patch')--}}
+{{--                                                    <input onchange="updatePublished({{ $product->id }});" @if($product->is_published) checked @endif name="is_published" type="checkbox" class="custom-control-input" id="customSwitch{{ $product->id }}">--}}
+{{--                                                    <label class="custom-control-label" for="customSwitch{{ $product->id }}"></label>--}}
+{{--                                                </form>--}}
+{{--                                            </div>--}}
+{{--                                        </td>--}}
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->publishedStatus }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->category->title }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">
@@ -140,7 +155,7 @@
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
                     </div>
                     <div class="modal-body">
-                        Вы действительно хотите удалить товар id{{ $product->id }}?
+                        Вы действительно хотите удалить товар с артикулом {{ $product->vendor_code }}?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Отмена</button>

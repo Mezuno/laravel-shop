@@ -70,7 +70,7 @@
                         </div>
                     @endif
                     <div class="form-group">
-                        <input type="text" name="count" value="{{ old('count') ?? $product->count }}" class="form-control" placeholder="Количество в наличии">
+                        <input type="number" name="count" value="{{ old('count') ?? $product->count }}" class="form-control" placeholder="Количество в наличии">
                     </div>
 
                     @if ($errors->has('category_id'))
