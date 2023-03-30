@@ -1,0 +1,30 @@
+.success {
+    background-color: rgba(116, 180, 60, 0.9);
+    border: 1px solid #62EB32;
+}
+.error {
+    background-color: rgba(180, 60, 60, 0.9);
+    border: 1px solid #eb3232;
+}
+.notification {
+    border-radius: 6px;
+    position: fixed;
+    left: 40%;
+    top: 75px;
+    padding: 15px;
+    z-index: 100;
+    color: whitesmoke;
+    opacity: 0;
+    animation: blink 7s none;
+}
+@keyframes blink {
+    0% {
+        opacity: 100%;
+    }
+    70% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0;
+    }
+}

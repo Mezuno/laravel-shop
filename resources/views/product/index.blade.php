@@ -19,7 +19,11 @@
     <!-- /.content-header -->
 
     @if (!empty(session()->get('success')))
-        <div class="success">{{ session()->get('success') }}</div>
+        <div class="notification success">{{ session()->get('success') }}</div>
+    @endif
+
+    @if (!empty(session()->get('error')))
+        <div class="notification error">{{ session()->get('error') }}</div>
     @endif
 
     <!-- Content filter -->

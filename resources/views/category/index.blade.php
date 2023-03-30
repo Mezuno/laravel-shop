@@ -19,7 +19,11 @@
     <!-- /.content-header -->
 
     @if (!empty(session()->get('success')))
-        <div class="success">{{ session()->get('success') }}</div>
+        <div class="notification success">{{ session()->get('success') }}</div>
+    @endif
+
+    @if (!empty(session()->get('error')))
+        <div class="notification error">{{ session()->get('error') }}</div>
     @endif
 
     <!-- Main content -->
@@ -48,7 +52,7 @@
                                         <td>{{ $category->id }}</td>
                                         <td><a href="{{ route('category.show', $category->id) }}">{{ $category->title }}</a></td>
                                         <td class="d-flex">
-                                            <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary mr-2"><i class="fas fa-pen"></i></a>
+                                            <a href="{{ route('category.edit', $category->id) }}" class="p-2 mr-2"><i class="fas fa-pen"></i></a>
                                             <form action="{{ route('category.delete', $category->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
