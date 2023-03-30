@@ -101,24 +101,25 @@
                                     <tr>
                                         <td class="pt-0 pb-0 align-text-bottom pl-4">{{ $product->vendor_code }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom"><img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="50" height="50" alt="Изображение товара"></td>
-                                        <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="btn btn-outline-dark">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
+                                        <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->price }} ₽</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->count }}шт.</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->publishedStatus }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->category->title }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">
                                             <a href="{{ route('product.edit', $product->id) }}" class="primary p-2 mr-4 d-inline"><i class="fas fa-pen"></i></a>
-                                            <form action="{{ route('product.delete', $product->id) }}" method="post" class="p-0 d-inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                            </form>
+
+                                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
+
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
+
 
                     </div>
 
@@ -128,4 +129,41 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    @foreach($products as $product)
+        <!-- Modal -->
+        <div onclick="openModal({{ "deleteModal" . $product->id}})" class="deleteModal d-none" id="deleteModal{{ $product->id }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Подтверждение действия</h5>
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        Вы действительно хотите удалить товар id{{ $product->id }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Отмена</button>
+                        <form action="{{ route('product.delete', $product->id) }}" method="post" class="p-0 d-inline">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <script>
+        function openModal(id) {
+            if (id.classList.contains('d-none')) {
+                id.classList.remove('d-none')
+                id.classList.add('d-flex')
+            } else {
+                id.classList.remove('d-flex')
+                id.classList.add('d-none')
+            }
+        }
+    </script>
 @endsection

@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Теги</h1>
+                    <h1 class="m-0">Пользователи</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -58,11 +58,9 @@
                                         <td>{{ $user->address }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-2"><i class="fas fa-pen"></i></a>
-                                            <form action="{{ route('user.delete', $user->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                            <button type="button" onclick="openModal({{ "deleteModal" . $user->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,4 +77,42 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    @foreach($users as $user)
+        <!-- Modal -->
+        <div onclick="openModal({{ "deleteModal" . $user->id}})" class="deleteModal d-none" id="deleteModal{{ $user->id }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Подтверждение действия</h5>
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        Вы действительно хотите удалить пользователя id{{ $user->id }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Отмена</button>
+                        <form action="{{ route('user.delete', $user->id) }}" method="post" class="p-0 d-inline">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
+    <script>
+        function openModal(id) {
+            if (id.classList.contains('d-none')) {
+                id.classList.remove('d-none')
+                id.classList.add('d-flex')
+            } else {
+                id.classList.remove('d-flex')
+                id.classList.add('d-none')
+            }
+        }
+    </script>
+
 @endsection
