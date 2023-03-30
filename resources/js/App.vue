@@ -53,18 +53,20 @@
                     <aside class="border border-left" id="cart">
                         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
                              style="width: 380px;">
-                            <div v-for="productInCart in productsInCart" class="list-group list-group-flush border-bottom scrollarea">
-                                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight"
-                                   aria-current="true">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <strong class="mb-1">{{ productInCart.title }}</strong>
-                                        <small class="text-secondary fw-bold">{{ productInCart.price }} руб</small>
-                                    </div>
-                                    <div class="col-10 mb-1 small d-flex justify-content-between">
-                                        <img :src="productInCart.image_url" width="50" alt="Отсутствует фото товара">
-                                        <p class="d-inline-block text-secondary fw-bold">x{{ productInCart.qty }}</p>
-                                    </div>
-                                </a>
+                            <div style="overflow-y: scroll; height: 516px;">
+                                <div v-for="productInCart in productsInCart" class="list-group list-group-flush border-bottom scrollarea">
+                                    <a href="#" class="list-group-item list-group-item-action py-3 lh-tight"
+                                       aria-current="true">
+                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                            <strong class="mb-1">{{ productInCart.title }}</strong>
+                                            <small class="text-secondary fw-bold">{{ productInCart.price }} руб</small>
+                                        </div>
+                                        <div class="col-10 mb-1 small d-flex justify-content-between">
+                                            <img :src="productInCart.image_url" width="50" alt="Отсутствует фото товара">
+                                            <p class="d-inline-block text-secondary fw-bold">x{{ productInCart.qty }}</p>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                             <div class="border-bottom d-flex w-100 align-items-center justify-content-between">
                                 <!--                    <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">-->

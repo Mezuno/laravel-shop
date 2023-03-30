@@ -5,6 +5,7 @@ import axios from "axios";
 
 import '../css/client/assets/cart.css'
 import '../css/client/assets/hover-prdouct-card.css'
+import '../css/client/assets/scroll-barr.css'
 
 const app = createApp(App)
 
