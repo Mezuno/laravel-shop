@@ -3,6 +3,8 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,10 +24,36 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'surname' => 'nullable|string',
-            'patronymic' => 'nullable|string',
-            'age' => 'nullable|integer',
+            'name' => [
+                'required',
+                'max:70',
+                "regex:/^(([a-zA-Z'-]{1,70})|([а-яА-ЯЁё'-]{1,70}))$/u"
+            ],
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($this->route('user'), 'id'),
+                'email:rfc,dns',
+            ],
+            'password' => [
+                'nullable',
+                Password::min(8)
+                    ->letters()
+                    ->symbols()
+                    ->uncompromised()
+                    ->numbers()
+                    ->mixedCase(),
+            ],
+            'surname' => [
+                'nullable',
+                'max:70',
+                "regex:/^(([a-zA-Z'-]{1,70})|([а-яА-ЯЁё'-]{1,70}))$/u"
+            ],
+            'patronymic' => [
+                'nullable',
+                'max:70',
+                "regex:/^(([a-zA-Z'-]{1,70})|([а-яА-ЯЁё'-]{1,70}))$/u"
+            ],
+            'age' => 'nullable|integer|min:0|max:150',
             'address' => 'nullable|string',
             'gender' => 'nullable|integer',
         ];

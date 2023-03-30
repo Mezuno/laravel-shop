@@ -49,6 +49,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that guarded against mass assignable.
+     *
+     * @var string[]
+     */
+    protected $guarded = [
+        'is_admin',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

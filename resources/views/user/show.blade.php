@@ -17,7 +17,9 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+    @if (!empty(session()->get('success')))
+        <div class="success">{{ session()->get('success') }}</div>
+    @endif
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -46,16 +48,16 @@
                                     <td>{{ $user->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Почта</td>
-                                    <td>{{ $user->email }}</td>
-                                </tr>
-                                <tr>
                                     <td>Фамилия</td>
                                     <td>{{ $user->surname }}</td>
                                 </tr>
                                 <tr>
                                     <td>Отчество</td>
                                     <td>{{ $user->patronymic }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Почта</td>
+                                    <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
                                     <td>Возраст(лет)</td>
