@@ -78,11 +78,19 @@
                 </h6>
               </div>
               <p class="card-text">{{ product.category.title }}</p>
-              <p class="card-text text-secondary flex-grow-1">Артикул: {{ product.vendor_code }}</p>
               <p v-for="tag in product.tags" class="alert alert-warning p-1 d-inline-block">{{ tag.title }}</p>
-              <h5 class="card-text text-secondary fw-bold">{{ product.price.slice(0, -3) }}<h6 class="ms-2 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>
+              <div class="d-flex justify-content-between flex-grow-1 mb-3">
+                <h5 class="card-text text-secondary fw-bold w-100 m-0">{{ product.price.slice(0, -3) }}<h6 class="ms-1 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>
+                <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
+              </div>
               <div class="d-flex justify-content-between align-items-center">
-                <a @click.prevent="addToCart(product.id)" href="" class="w-100 m-0 btn btn-warning text-white border-0">В корзину <i class="fas fa-shopping-cart"></i></a>
+<!--                  добавление нескольких одинаковых товаров -->
+<!--                <div class="d-flex justify-content-between align-items-center">-->
+<!--                  <p class="pt-3">-</p>-->
+<!--                  <input class="w-75 h-50">-->
+<!--                  <p class="pt-3">+</p>-->
+<!--                </div>-->
+                <a @click.prevent="addToCart(product.id)" href="" class="w-100 m-0 btn btn-warning text-white border-0" style="white-space: nowrap;">В корзину <i class="fas fa-shopping-cart"></i></a>
                 <h5 class="p-0 m-0"><a @click.prevent="" class="p-2 pb-0 mb-0 text-danger ms-2"><i class="far fa-heart"></i></a></h5>
               </div>
             </div>

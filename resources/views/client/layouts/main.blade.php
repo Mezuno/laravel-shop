@@ -19,6 +19,6 @@
     @yield('content')
 </body>
 
-    <script type="module" src="{{ asset('main.js') }}"></script>
+{{--    <script type="module" src="{{ asset('main.js') }}"></script>--}}
     <script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
 </html>
