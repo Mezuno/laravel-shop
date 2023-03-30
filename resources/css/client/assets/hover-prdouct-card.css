@@ -1,0 +1,8 @@
+
+.product-card-hover:hover {
+    transition: .2s;
+    box-shadow: 0 0 25px #ddd;
+}
+.product-card-hover {
+    transition: .2s;
+}

@@ -9,16 +9,13 @@
     <title>Shop Vue App</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @vite(['/public/assets/css/cart.css'])
-    @vite(['/public/assets/css/hover-image.css'])
-    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 
 <body>
-@vite('resources/js/app.js')
     @yield('content')
 </body>
 
-{{--    <script type="module" src="{{ asset('main.js') }}"></script>--}}
-    <script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
+
 </html>

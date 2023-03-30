@@ -1,9 +1,7 @@
 
 .product-card-hover:hover {
-    /*transform: scale(1.05);*/
     transition: .2s;
     box-shadow: 0 0 25px #ddd;
-    /*background-color: #f00*/
 }
 .product-card-hover {
     transition: .2s;
