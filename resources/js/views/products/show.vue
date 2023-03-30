@@ -65,14 +65,11 @@ export default {
             this.axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.product = response.data.data
                 this.loaded = true
-                console.log(response)
             });
         },
         getCategoriesList() {
             this.axios.get('http://localhost:8000/api/categories').then(response => {
                 this.categories = response.data.data
-                // console.log(response)
-                // console.log(this.categories)
             });
         },
         pictureReplacement(uri) {
