@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $category->update($data);
 
-        return redirect()->route('category.show', compact('category'));
+        return redirect()->route('category.show', compact('category'))->with(['success' => 'Категория id' . $category->id . ' успешно обновлена']);
     }
 }

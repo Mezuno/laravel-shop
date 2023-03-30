@@ -18,6 +18,10 @@
     </div>
     <!-- /.content-header -->
 
+    @if (!empty(session()->get('success')))
+        <div class="success">{{ session()->get('success') }}</div>
+    @endif
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

@@ -10,6 +10,6 @@ class DeleteController extends Controller
     public function __invoke(Tag $tag)
     {
         $tag->delete();
-        return redirect()->route('tag.index');
+        return redirect()->route('tag.index')->with(['success' => 'Тег id' . $tag->id . ' успешно удален']);
     }
 }
