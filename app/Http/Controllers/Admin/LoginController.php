@@ -6,6 +6,6 @@ class LoginController
 {
     public function __invoke()
     {
-        return view('admin-login');
+        return view('admin.admin-login');
     }
 }

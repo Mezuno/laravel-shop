@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -19,7 +19,6 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
 
     <!-- Main content -->
     <section class="content">

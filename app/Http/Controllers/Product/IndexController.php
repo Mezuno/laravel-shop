@@ -72,6 +72,6 @@ class IndexController extends Controller
 
         $products = $query->whereBetween('price', [$priceFrom, $priceTo])->with('category')->orderByDesc('id')->paginate($limit);
 
-        return view('product.index')->with(['products' => $products]);
+        return view('admin.product.index')->with(['products' => $products]);
     }
 }

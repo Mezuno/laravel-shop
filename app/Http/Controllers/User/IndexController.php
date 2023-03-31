@@ -11,6 +11,6 @@ class IndexController extends Controller
     {
         $query = User::query();
         $users = $query->paginate(8);
-        return view('user.index', compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 }

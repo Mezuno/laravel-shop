@@ -12,6 +12,6 @@ class CreateController extends Controller
     {
         $tags = Tag::all();
         $categories = Category::all();
-        return view('product.create', compact('tags', 'categories'));
+        return view('admin.product.create', compact('tags', 'categories'));
     }
 }

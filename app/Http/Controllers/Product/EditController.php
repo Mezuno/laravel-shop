@@ -21,6 +21,6 @@ class EditController extends Controller
         } else {
             $productImagesCount = 0;
         }
-        return view('product.edit', compact('product', 'categories', 'tags', 'productImages', 'productImagesCount'));
+        return view('admin.product.edit', compact('product', 'categories', 'tags', 'productImages', 'productImagesCount'));
     }
 }

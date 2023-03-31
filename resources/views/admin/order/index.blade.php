@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -17,14 +17,6 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
-    @if (!empty(session()->get('success')))
-        <div class="notification success">{{ session()->get('success') }}</div>
-    @endif
-
-    @if (!empty(session()->get('error')))
-        <div class="notification error">{{ session()->get('error') }}</div>
-    @endif
 
     <!-- Content filter -->
     <div class="ml-3 p-3 pr-0 alert alert-default-dark d-inline-block">

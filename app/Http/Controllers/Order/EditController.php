@@ -13,6 +13,6 @@ class EditController extends Controller
         if ($order->deleted_at) {
             return back()->with(['error' => 'Сначала восстановите заказ, прежде чем редактировать его']);
         }
-        return view('order.edit', compact('order', 'order'));
+        return view('admin.order.edit', compact('order', 'order'));
     }
 }

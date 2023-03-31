@@ -12,6 +12,6 @@ class ShowController extends Controller
     {
         $product = $product->where('id', $product->id)->with('category')->with('tags')->first();
         $productImages = ProductImage::where('product_id', $product->id)->get();
-        return view('product.show', compact('product', 'productImages'));
+        return view('admin.product.show', compact('product', 'productImages'));
     }
 }

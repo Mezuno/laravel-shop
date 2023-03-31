@@ -57,6 +57,6 @@ class IndexController extends Controller
 
         $orders = $query->withTrashed()->with('orderer')->orderByDesc('id')->paginate($limit);
 
-        return view('order.index')->with(['orders' => $orders]);
+        return view('admin.order.index')->with(['orders' => $orders]);
     }
 }

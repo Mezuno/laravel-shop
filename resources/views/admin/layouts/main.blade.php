@@ -200,6 +200,14 @@
         <!-- /.sidebar -->
     </aside>
 
+    @if (!empty(session()->get('success')))
+        <div class="notification success">{{ session()->get('success') }}</div>
+    @endif
+
+    @if (!empty(session()->get('error')))
+        <div class="notification error">{{ session()->get('error') }}</div>
+    @endif
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @yield('content')
