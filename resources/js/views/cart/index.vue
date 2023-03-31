@@ -7,6 +7,7 @@
             <h1>Коризна</h1>
             <div class="d-flex flex-column">
                 <div class="row w-25">
+                    <div v-if="orderErrors" v-for="orderError in orderErrors" class="alert alert-danger">{{ orderError }}</div>
                     <input type="text" v-model="name" placeholder="name">
                     <input type="text" v-model="email" placeholder="email">
                     <input type="text" v-model="address" placeholder="address">
@@ -41,6 +42,7 @@ export default {
             name: '',
             email: '',
             address: '',
+            orderErrors: [],
         }
     },
 
@@ -60,15 +62,19 @@ export default {
         },
 
         storeOrder() {
-            console.log(123)
             this.axios.post('http://localhost:8000/api/orders', {
                 'products': this.productsInCart,
                 'name': this.name,
                 'email': this.email,
                 'address': this.address,
                 'total_price': this.totalPrice,
+                'error': this.orderErrors,
             }).then(response => {
                 console.log(response.data.data);
+            }).catch(error => {
+                console.log(error.response.data.errors)
+                this.orderErrors = Object.values(error.response.data.errors);
+                console.log(this.orderErrors);
             });
         },
     }

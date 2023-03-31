@@ -150,6 +150,7 @@ export default {
                 'title': product.title,
                 'price': product.price,
                 'image_url': product.image_url,
+                'vendor_code': product.vendor_code,
                 'qty': 1
             }]
 

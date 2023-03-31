@@ -62,7 +62,7 @@
                                         <td>{{ $user->surname }}</td>
                                         <td>{{ $user->patronymic }}</td>
                                         <td>{{ $user->age }}</td>
-                                        <td>{{ $user->genderTitle }}</td>
+                                        <td>@if($user->gender){{ $user->genderTitle }}@endif</td>
                                         <td>{{ $user->address }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-2"><i class="fas fa-pen"></i></a>

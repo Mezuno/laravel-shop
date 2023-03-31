@@ -6,7 +6,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-primary mb-3"><i class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к товарам</a>
+                    <a href="{{ route('product.index') }}" class="btn btn-outline-primary mb-3"><i
+                            class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к товарам</a>
+                    <a href="{{ route('order.index') }}" class="btn btn-outline-primary mb-3"><i
+                            class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к заказам</a>
+                    @if(URL::previous() != URL::current())
+                        <a href="{{ URL::previous() }}" class="btn btn-outline-primary mb-3">
+                            <i class="fas fa-arrow-left"></i>&nbsp&nbspНазад
+                        </a>
+                    @endif
                     <h1 class="m-0">Товар</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
@@ -36,7 +44,9 @@
                     <div class="card">
                         <div class="card-header d-flex p-3">
                             <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary mr-3">Редактировать</a>
-                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
+                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});"
+                                    class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{ $product->id }}">
                                 Удалить
                             </button>
                         </div>
@@ -87,9 +97,11 @@
                                 <tr>
                                     <td>Превью и остальные фото товара</td>
                                     <td>
-                                        <img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="200" height="200" alt="Изображение товара">
+                                        <img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="200"
+                                             height="200" alt="Изображение товара">
                                         @foreach($productImages as $productImage)
-                                            <img src="{{ URL::asset('storage/'.$productImage->file_path) }}" width="200" height="200" alt="Изображение товара">
+                                            <img src="{{ URL::asset('storage/'.$productImage->file_path) }}" width="200"
+                                                 height="200" alt="Изображение товара">
                                         @endforeach
                                     </td>
                                 </tr>
@@ -106,12 +118,14 @@
     <!-- /.content -->
 
     <!-- Modal -->
-    <div onclick="openModal({{ "deleteModal" . $product->id}})" class="deleteModal d-none" id="deleteModal{{ $product->id }}" tabindex="-1">
+    <div onclick="openModal({{ "deleteModal" . $product->id}})" class="deleteModal d-none"
+         id="deleteModal{{ $product->id }}" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Подтверждение действия</h5>
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     Вы действительно хотите удалить товар с артикулом {{ $product->vendor_code }}?

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,8 +24,15 @@ class StoreRequest extends FormRequest
     {
         return [
             'products' => 'required|array',
-            'name' => 'required|string',
-            'email' => 'required|string',
+            'name' => [
+                'required',
+                'max:70',
+                "regex:/^(([a-zA-Z'-]{1,70})|([а-яА-ЯЁё'-]{1,70}))$/u"
+            ],
+            'email' => [
+                'required',
+                'email:rfc,dns',
+            ],
             'address' => 'required|string',
             'total_price' => 'required|integer',
         ];

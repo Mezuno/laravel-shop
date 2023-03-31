@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <td>Пол</td>
-                                    <td>{{ $user->genderTitle }}</td>
+                                    <td>@if($user->gender){{ $user->genderTitle }}@endif</td>
                                 </tr>
                                 </tbody>
                             </table>

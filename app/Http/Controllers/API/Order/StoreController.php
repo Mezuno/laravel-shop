@@ -30,6 +30,7 @@ class StoreController extends Controller
             'user_id' => $user->id,
             'total_price' => $data['total_price'],
             'payment_status' => 0,
+            'address' => $data['address'],
         ]);
 
         return new OrderResource($order);
