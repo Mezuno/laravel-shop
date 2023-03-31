@@ -63,6 +63,10 @@
                         <input form="filter_form" type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif>
                         <label class="custom-control-label" for="customSwitch2">Не опубликованные</label>
                     </div>
+                    <div class="custom-control custom-switch">
+                        <input form="filter_form" type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif>
+                        <label class="custom-control-label" for="customSwitch3">Удаленные</label>
+                    </div>
                 </div>
                 <div class="form-group d-flex flex-column m-0 justify-content-end">
                     <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
@@ -118,11 +122,18 @@
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->publishedStatus }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->category->title }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">
+                                            @if(!$product->deleted_at)
                                             <a href="{{ route('product.edit', $product->id) }}" class="primary p-2 mr-4 d-inline"><i class="fas fa-pen"></i></a>
-
-                                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                                <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            @else
+                                                <form action="{{ route('product.restore', $product->id) }}" method="post" class="p-0 d-inline">
+                                                    @csrf
+                                                    @method('patch')
+                                                        <button class="btn btn-warning"><i class="fas fa-undo"></i></button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
 

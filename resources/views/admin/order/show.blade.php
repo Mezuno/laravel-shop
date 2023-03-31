@@ -38,7 +38,7 @@
                                 <form action="{{ route('order.restore', $order->id) }}" method="post">
                                     @csrf
                                     @method('patch')
-                                    <button class="btn btn-outline-warning">Восстановить заказ</button>
+                                    <button class="btn btn-warning">Восстановить заказ</button>
                                 </form>
                             @endif
                         </div>

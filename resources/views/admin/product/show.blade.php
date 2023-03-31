@@ -35,12 +35,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex p-3">
-                            <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary mr-3">Редактировать</a>
-                            <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});"
-                                    class="btn btn-outline-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ $product->id }}">
-                                Удалить
-                            </button>
+                            @if(!$product->deleted_at)
+                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary mr-3">Редактировать</a>
+                                <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});"
+                                        class="btn btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $product->id }}">
+                                    Удалить
+                                </button>
+                            @else
+                                <form action="{{ route('product.restore', $product->id) }}" method="post" class="p-0 d-inline">
+                                    @csrf
+                                    @method('patch')
+                                    <button class="btn btn-warning">Восстановить</button>
+                                </form>
+                            @endif
                         </div>
 
                         <div class="card-body table-responsive p-0">
