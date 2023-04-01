@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Entities\Category\Models\Category;
+use App\Entities\Product\Models\Product;
+use App\Entities\Product\Models\ProductTag;
+use App\Entities\Tag\Models\Tag;
+use App\Entities\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,9 +19,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(500)->create();
+        User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Кирилл',
             'surname' => 'Цыбульский',
             'patronymic' => 'Андреевич',
@@ -25,27 +30,27 @@ class DatabaseSeeder extends Seeder
             'is_admin' => 1,
         ]);
 
-        \App\Models\Category::factory()->create([
+        Category::factory()->create([
             'title' => 'Высшая категория',
         ]);
-        \App\Models\Category::factory()->create([
+        Category::factory()->create([
             'title' => 'Средняя категория',
         ]);
-        \App\Models\Category::factory()->create([
+        Category::factory()->create([
             'title' => 'Низшая категория',
         ]);
-        \App\Models\Tag::factory()->create([
+        Tag::factory()->create([
             'title' => 'Лучшая цена',
         ]);
-        \App\Models\Tag::factory()->create([
+        Tag::factory()->create([
             'title' => 'Хит',
         ]);
-        \App\Models\Tag::factory()->create([
+        Tag::factory()->create([
             'title' => 'Последняя партия',
         ]);
 
-        \App\Models\Product::factory(160)->sequence(fn (Sequence $sequence) => ['vendor_code' => $sequence->index+1])->create();
+        Product::factory(160)->sequence(fn (Sequence $sequence) => ['vendor_code' => $sequence->index+1])->create();
 
-        \App\Models\ProductTag::factory(320)->create();
+        ProductTag::factory(320)->create();
     }
 }

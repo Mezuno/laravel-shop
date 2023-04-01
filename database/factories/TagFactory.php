@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Entities\Tag\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<Tag>
  */
 class TagFactory extends Factory
 {

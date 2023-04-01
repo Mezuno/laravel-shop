@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
-use App\Models\Tag;
+use App\Entities\Product\Models\Product;
+use App\Entities\Product\Models\ProductTag;
+use App\Entities\Tag\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductTag>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<ProductTag>
  */
 class ProductTagFactory extends Factory
 {
