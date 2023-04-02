@@ -23,6 +23,7 @@
         <div class="">
             <h3>Фильтр</h3>
             <form action="{{ route('product.index') }}" class="w-100 d-flex" id="filter_form">
+                <input type="text" name="filter" value="true" hidden>
                 <div class="form-group d-flex flex-column">
                     <label for="filter_title">Наименование</label>
                     <input class="me-2 p-2 rounded-2 border" type="text" id="filter_title" name="title" value="{{ app('request')->input('title') }}" placeholder="Наименование">
@@ -85,6 +86,21 @@
                     <div class="card">
                         <div class="card-header">
                             <a href="{{ route('product.create') }}" class="btn btn-primary">Добавить</a>
+                            <form action="{{ route('product.from.query.export') }}" class="d-inline-block" id="filter_form">
+                                <input type="text" name="filter" value="true" hidden>
+                                    <input type="text" name="title" value="{{ app('request')->input('title') }}" placeholder="Наименование" hidden>
+                                    <input type="number" name="vendor_code" value="{{ app('request')->input('vendor_code') }}" placeholder="Артикул" hidden>
+                                    <input type="text" name="description" value="{{ app('request')->input('description') }}" placeholder="Описание" hidden>
+                                    <input type="text" name="content" value="{{ app('request')->input('content') }}" placeholder="Содержание" hidden>
+                                    <input type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей" hidden>
+                                    <input type="number" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Цена от" hidden>
+                                    <input type="number" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Цена до" hidden>
+                                    <input type="checkbox" name="is_published" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published') == 'on') checked @endif hidden>
+                                    <input type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif hidden>
+                                    <input type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif hidden>
+                                    <button class="btn btn-success">Выгрузить в Excel (с фильтром)</button>
+                            </form>
+                            <a href="{{ route('product.export') }}" class="btn btn-success">Выгрузить в Excel (все)</a>
                         </div>
 
                         <div class="card-body table-responsive p-0">
