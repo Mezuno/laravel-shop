@@ -1,0 +1,91 @@
+.hoverDiv {
+    position: relative;
+    border-radius: 15px;
+    /*background-color: #000;*/
+}
+
+.hoverDiv .imgHover {
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all ease-out 0.4s;
+}
+
+.hoverDiv:hover .imgHover {
+    /*-moz-transform: scale(1.05);*/
+    /*-webkit-transform: scale(1.05);*/
+    transform: scale(1.05);
+}
+
+.imgHover {
+    transition: all ease-out 0.4s;
+    position:relative;
+    z-index:1;
+}
+
+.imgHover:hover {
+    /*box-shadow: 0 0 15px #ccc;*/
+}
+
+.cropped-img {
+    object-fit: cover; /* Do not scale the image */
+    object-position: center; /* Center the image within the element */
+    width: 100%;
+    max-height: 270px;
+}
+
+.carousel-inner{
+    border-radius: 15px;
+}
+
+
+
+.hoverLink {
+    border-radius: 15px;
+    background: #000;
+    overflow: hidden;
+    opacity: 1;
+}
+.hoverLink{
+    display: inline-block;
+}
+.hoverLink .blackoutImg{
+    background: #000;  /* У блока, оборачивающего картинку при наведении будет просвечивать черный фон */
+    overflow: hidden;  /* Ограничиваем видиую область */
+}
+.hoverLink .blackoutDiv .blackoutImg{
+    opacity: 1;
+    transition: all ease-out 0.4s;  /* Плавное изменение прозрачности и увеличения */
+    display: block; /* Убираем полосу под картинкий */
+}
+.hoverLink:hover .blackoutDiv .blackoutImg{
+    opacity: 0.9; /* Высветляем картинку, но она становится темнее, так как под ней черный фон */
+    /*transform: scale(1.04); !* Увеличение картинки *!*/
+}
+.hoverLink + .hoverLink .blackoutImg{
+    background: #000; /* Если необходимо высветление картинки при наведении, оборачивающий div должен иметь белый фон */
+}
+
+
+/*.sliderLink {*/
+/*    background: #000;*/
+/*    overflow: hidden;*/
+/*    opacity: 1;*/
+/*}*/
+/*.sliderLink {*/
+/*    !*display: inline-block;*!*/
+/*}*/
+/*.sliderLink .sliderBlackoutImg {*/
+/*    background: #000;  !* У блока, оборачивающего картинку при наведении будет просвечивать черный фон *!*/
+/*    overflow: hidden;  !* Ограничиваем видиую область *!*/
+/*}*/
+/*.sliderLink .sliderBlackoutDiv .blackoutImg {*/
+/*    opacity: 1;*/
+/*    transition: all ease-out 0.4s;  !* Плавное изменение прозрачности и увеличения *!*/
+/*    display: block; !* Убираем полосу под картинкий *!*/
+/*}*/
+/*.sliderLink:hover .sliderBlackoutDiv .sliderBlackoutImg {*/
+/*    opacity: 0.9; !* Высветляем картинку, но она становится темнее, так как под ней черный фон *!*/
+/*}*/
+/*.sliderLink + .sliderLink .sliderBlackoutImg {*/
+/*    background: #000; !* Если необходимо высветление картинки при наведении, оборачивающий div должен иметь белый фон *!*/
+/*}*/
