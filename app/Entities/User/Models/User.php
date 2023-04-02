@@ -3,6 +3,7 @@
 namespace App\Entities\User\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,6 +19,12 @@ class User extends Authenticatable
     const GENDER_FEMALE = 2;
 
     protected $table = 'users';
+
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
 
     static function getGenders()
     {
