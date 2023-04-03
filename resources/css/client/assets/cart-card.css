@@ -1,0 +1,46 @@
+.cart-card {
+    border-radius: 15px;
+    box-shadow: 0 0 10px #ddd;
+    transition: all ease-out .2s;
+
+}
+
+.cart-card:hover {
+    box-shadow: 0 0 40px #ddd;
+}
+
+.productImgInCart {
+    border-radius: 10px;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.openCartList {
+    align-items: center;
+    justify-content: center;
+    transition: transform ease-out .2s;
+}
+
+
+
+/*.divMinus {*/
+/*    transition: all ease-out 0.2s;*/
+/*}*/
+
+/*.minus {*/
+/*    */
+/*}*/
+
+/*.divMinus:hover ~ .minus {*/
+/*    transform: scale(1.2);*/
+/*}*/
+
+/*.divPlus {*/
+/*    transition: all ease-out 0.2s;*/
+/*}*/
+
+/*.divPlus:hover {*/
+/*    transform: scale(1.2);*/
+/*}*/

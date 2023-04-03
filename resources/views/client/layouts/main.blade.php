@@ -12,7 +12,7 @@
     @vite('resources/js/app.js')
 </head>
 
-<body>
+<body class="bg-light" style=" overflow-y: scroll;">
     @yield('content')
 </body>
 
