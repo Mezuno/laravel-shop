@@ -127,6 +127,9 @@ export default {
     methods: {
         getProductsInCart() {
             this.productsInCart = JSON.parse(localStorage.getItem('cart'))
+        },
+        setProductsInCart(productsInCart) {
+             localStorage.setItem('cart', JSON.stringify(productsInCart))
         }
     }
 }
