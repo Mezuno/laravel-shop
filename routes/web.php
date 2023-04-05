@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -82,6 +83,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
     });
 });
 
+Auth::routes();
+
 Route::get('{page}', \App\Http\Controllers\Client\IndexController::class)->where('page', '.*')->name('client');
 
-Auth::routes();

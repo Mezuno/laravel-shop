@@ -34,13 +34,27 @@
                         <!--            </li>-->
                     </ul>
 
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li v-if="token" class="nav-item">
+                            <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
+                        </li>
+                        <li v-if="!token" class="nav-item">
+                            <router-link to="/user/login" class="nav-link">Войти</router-link>
+                        </li>
+                        <li v-if="!token" class="nav-item">
+                            <router-link to="/user/registration" class="nav-link">Регистрация</router-link>
+                        </li>
+                        <li v-if="token" class="nav-item">
+                            <a href="#" @click.prevent="logout()" class="nav-link">Выйти</a>
+                        </li>
+                    </ul>
 
                     <!--          Поиск (добавить позже)   -->
 
-                    <!--          <form class="d-flex">-->
-                    <!--            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-                    <!--            <button class="btn btn-outline-success" type="submit">Search</button>-->
-                    <!--          </form>-->
+<!--                              <form class="d-flex">-->
+<!--                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                                <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--                              </form>-->
 
                 </div>
             </div>
@@ -104,30 +118,62 @@
 
 export default {
     name: 'App',
-    mounted() {
-        this.getProductsInCart()
-    },
 
     data() {
         return {
             productsInCart: [],
+            token: null,
+            // user: null,
         }
     },
 
     computed: {
         totalPrice: function () {
             let total = 0
-            this.productsInCart.forEach(productInCart => {
-                total += Number(productInCart.price) * Number(productInCart.qty)
-            })
+            if (this.productsInCart) {
+                this.productsInCart.forEach(productInCart => {
+                    total += Number(productInCart.price) * Number(productInCart.qty)
+                })
+            }
             return total
         }
     },
 
+    mounted() {
+        this.getTokenFromLocalStorage()
+        this.getProductsInCart()
+        // this.getUserFromLocalStorage()
+    },
+
+    updated() {
+        this.getTokenFromLocalStorage()
+        // this.getUserFromLocalStorage()
+    },
+
     methods: {
+        getTokenFromLocalStorage() {
+            this.token = localStorage.getItem('x_xsrf_token')
+        },
+
+        getUserFromLocalStorage() {
+            return JSON.parse(localStorage.getItem('user'))
+        },
+
+        logout() {
+            axios.post('/logout').then(response => {
+                console.log(response)
+                this.token = null
+                this.user = null
+                localStorage.removeItem('x_xsrf_token')
+                localStorage.removeItem('user')
+                this.$router.push({name: 'user.login'})
+            })
+        },
+
         getProductsInCart() {
             this.productsInCart = JSON.parse(localStorage.getItem('cart'))
         },
+
         setProductsInCart(productsInCart) {
              localStorage.setItem('cart', JSON.stringify(productsInCart))
         }

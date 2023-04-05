@@ -208,7 +208,7 @@ export default {
             this.getProducts();
         },
         getProducts(page = 1) {
-            this.axios.post('http://localhost:8000/api/products', {
+            axios.post('/api/products', {
                 categories: this.categories,
                 tags: this.tags,
                 prices: this.price,
@@ -222,7 +222,7 @@ export default {
             });
         },
         getFilterList() {
-            this.axios.get('http://localhost:8000/api/products/filters').then(response => {
+            axios.get('http://localhost:8000/api/products/filters').then(response => {
                 this.filters = response.data
             });
         }
