@@ -91,7 +91,6 @@ export default {
         this.$nextTick(function () {
             this.openCartList()
         })
-
     },
 
     data() {
@@ -116,6 +115,7 @@ export default {
     },
 
     methods: {
+
         getHeight(id) {
             let idCartCard = document.getElementById(id)
             let styles = window.getComputedStyle(idCartCard, null)
@@ -230,7 +230,7 @@ export default {
         },
 
         storeOrder() {
-            this.axios.post('http://localhost:8000/api/orders', {
+            axios.post('http://localhost:8000/api/order', {
                 'products': this.productsInCart,
                 'name': this.name,
                 'email': this.email,

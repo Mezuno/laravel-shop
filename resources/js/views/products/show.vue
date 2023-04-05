@@ -62,13 +62,13 @@ export default {
     },
     methods: {
         getProduct(id) {
-            this.axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
+            axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.product = response.data.data
                 this.loaded = true
             });
         },
         getCategoriesList() {
-            this.axios.get('http://localhost:8000/api/categories').then(response => {
+            axios.get('http://localhost:8000/api/categories').then(response => {
                 this.categories = response.data.data
             });
         },
