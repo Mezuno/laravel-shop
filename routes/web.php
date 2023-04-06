@@ -79,6 +79,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::get('/export', App\Entities\Product\Http\Controllers\ExportController::class)->name('product.export');
         Route::get('/export-from-query', App\Entities\Product\Http\Controllers\ExportFromQueryController::class)->name('product.from.query.export');
 
+        Route::patch('/mass/publish', App\Entities\Product\Http\Controllers\MassPublishController::class)->where('product', '[0-9]+')->name('product.mass.publish');
+        Route::delete('/mass/delete', App\Entities\Product\Http\Controllers\MassDeleteController::class)->where('product', '[0-9]+')->name('product.mass.delete');
+
         Route::group(['prefix' => 'images/{product}'], function() {
             Route::patch('/{productImage}', App\Entities\Product\Http\Controllers\UpdateImageController::class)->where('product', '[0-9]+')->where('productImage', '[0-9]+')->name('product.image.update');
             Route::post('/', App\Entities\Product\Http\Controllers\StoreImageController::class)->where('product', '[0-9]+')->name('product.image.store');
