@@ -3,28 +3,18 @@
 namespace App\Entities\Order\Http\Controllers;
 
 use App\Entities\Order\Models\Order;
+use App\Entities\User\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class IndexController extends Controller
 {
     public function __invoke(Request $request)
     {
         $query = Order::query();
-
-        // Поиск по user name и user email
-        if ($request->has('user') && $request->get('user') != null) {
-            $query->where('user_id', '=', $request->get('user'));
-        }
-
-        // Поиск по товарам - как!?
-
-//        if ($request->has('vendor_code') && $request->get('vendor_code') != null) {
-//            dump($request->get('vendor_code'));
-//            $query->whereJsonContains('products->*->vendor_code', $request->get('vendor_code'));
-//            $query->whereRaw('JSON_VALUE(products, ?) = ?', ['$.vendor_code', $request->get('vendor_code')]);
-//            $query->whereRaw("jsonb_exists(json->'products', ". $request->get('vendor_code') .")");
-//        }
 
         if ($request->has('price_from') && $request->get('price_from') != null) {
             $query->where('total_price', '>=', $request->get('price_from'));
@@ -54,8 +44,79 @@ class IndexController extends Controller
             $limit = 8;
         }
 
-        $orders = $query->withTrashed()->with('orderer')->orderByDesc('id')->paginate($limit);
+        $orders = $query->withTrashed()->with('orderer')->orderByDesc('id')->get();
+
+        if ($request->has('user') && $request->get('user') != null) {
+            $filteredOrders = [];
+            foreach ($orders as $order) {
+                if ($this->likeMatch('%'.$request->get('user').'%', $order->orderer->name)) {
+                    array_push($filteredOrders, $order);
+                }
+                elseif ($this->likeMatch('%'.$request->get('user').'%', $order->orderer->email)) {
+                    array_push($filteredOrders, $order);
+                }
+                elseif ($this->likeMatch('%'.$request->get('user').'%', $order->orderer->id)) {
+                    array_push($filteredOrders, $order);
+                }
+            }
+
+            $orders = $this->toCollection($filteredOrders);
+        }
+
+        if ($request->has('product') && $request->get('product') != null) {
+            $filteredOrders = [];
+            foreach ($orders as $order) {
+                foreach (json_decode($order->products) as $product) {
+                    if ($product->vendor_code === (int)$request->get('product')) {
+                        array_push($filteredOrders, $order);
+                    }
+                    elseif ($this->likeMatch('%'.$request->get('product').'%', $product->title)) {
+                        array_push($filteredOrders, $order);
+                    }
+                }
+            }
+
+            $orders = $this->toCollection($filteredOrders);
+        }
+
+        if ($request->has('products_count') && $request->get('products_count') != null) {
+            $filteredOrders = [];
+            foreach ($orders as $order) {
+                $productsCount = count(json_decode($order->products));
+                if ($productsCount == (int)$request->get('products_count')) {
+                    array_push($filteredOrders, $order);
+                }
+            }
+
+            $orders = $this->toCollection($filteredOrders);
+        }
+
+        $orders = $this->paginate($orders, $limit);
 
         return view('admin.order.index')->with(['orders' => $orders]);
+    }
+
+    private function likeMatch($pattern, $subject): bool
+    {
+        $pattern = str_replace('%', '.*', preg_quote($pattern, '/'));
+        return (bool) preg_match("/^{$pattern}$/i", $subject);
+    }
+
+    private function toCollection(array $orders): Collection
+    {
+        $collectionOrders = new Collection();
+        foreach($orders as $order){
+            $collectionOrders->push((object)$order);
+        }
+        return $collectionOrders;
+    }
+
+    private function paginate($items, $perPage = 15, $page = null, $options = []): LengthAwarePaginator
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

@@ -59,6 +59,10 @@
                                     <td>{{ $product->id }}</td>
                                 </tr>
                                 <tr>
+                                    <td>Артикул</td>
+                                    <td>{{ $product->vendor_code }}</td>
+                                </tr>
+                                <tr>
                                     <td>Наименование</td>
                                     <td>{{ $product->title }}</td>
                                 </tr>
