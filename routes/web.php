@@ -51,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::patch('/{order}', App\Entities\Order\Http\Controllers\UpdateController::class)->where('order', '[0-9]+')->name('order.update');
         Route::delete('/{order}', App\Entities\Order\Http\Controllers\DeleteController::class)->where('order', '[0-9]+')->name('order.delete');
         Route::patch('/{order}/restore', App\Entities\Order\Http\Controllers\RestoreController::class)->where('order', '[0-9]+')->name('order.restore');
+
+        Route::get('/export', App\Entities\Order\Http\Controllers\ExportController::class)->name('order.export');
+        Route::get('/export-from-query', App\Entities\Order\Http\Controllers\ExportFromQueryController::class)->name('order.from.query.export');
     });
 
     Route::group(['prefix' => 'users'], function () {
