@@ -122,7 +122,9 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th class="align-text-bottom">Выбор</th>
+                                    <th class="align-text-bottom">
+                                        <input type="checkbox" id="massInput" onchange="massInputCheck()">
+                                    </th>
                                     <th class="align-text-bottom">Артикул</th>
                                     <th class="align-text-bottom">Изображение</th>
                                     <th class="align-text-bottom">Наименование</th>
@@ -215,6 +217,72 @@
             }
         }
 
+        function massInputCheck() {
+            let managementBar = document.getElementById('managmentBar');
+            let managementBar2 = document.getElementById('managmentBar2');
+            let switchesPublish = Array.from(document.getElementsByClassName('check-button-publish'));
+            let switchesDelete = Array.from(document.getElementsByClassName('check-button-delete'));
+            let activeSwitches = calculateChecked(switchesPublish, switchesDelete)
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (Number(urlParams.get('size')) !== 0) {
+                if (Number(urlParams.get('size')) * 2 === activeSwitches) {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, false)
+                } else {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, true)
+                }
+            } else {
+                if (activeSwitches === 16) {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, false)
+                } else {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, true)
+                }
+            }
+        }
+
+        function calculateChecked(switchesPublish, switchesDelete) {
+            let activeSwitches = []
+
+            switchesPublish.forEach((switchPublish) => {
+                if (switchPublish.checked) {
+                    activeSwitches.push(switchPublish)
+                }
+            })
+
+            switchesDelete.forEach((switchDelete) => {
+                if (switchDelete.checked) {
+                    activeSwitches.push(switchDelete)
+                }
+            })
+
+            return activeSwitches.length;
+        }
+
+        function checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, enable) {
+            if (enable) {
+                switchesPublish.forEach((switchPublish) => {
+                    switchPublish.checked = true
+                })
+                switchesDelete.forEach((switchDelete) => {
+                    switchDelete.checked = true
+                })
+
+                managementBar.style.display = 'none'
+                managementBar2.style.display = 'block'
+            }
+            else {
+                switchesPublish.forEach((switchPublish) => {
+                    switchPublish.checked = false
+                })
+                switchesDelete.forEach((switchDelete) => {
+                    switchDelete.checked = false
+                })
+
+                managementBar.style.display = 'block'
+                managementBar2.style.display = 'none'
+            }
+        }
+
         function switchBar() {
             let managementBar = document.getElementById('managmentBar');
             let managementBar2 = document.getElementById('managmentBar2');
@@ -228,7 +296,6 @@
                     switchesDelete.forEach(switchDelete => {
                         if (switchDelete.attributes.massDeleteProductId.value === switchPublish.attributes.massPublishProductId.value) {
                             switchDelete.checked = true
-                            switchDelete.classList.add('checked')
                         }
                     })
 
@@ -239,13 +306,10 @@
                     switchesDelete.forEach(switchDelete => {
                         if (switchDelete.attributes.massDeleteProductId.value === switchPublish.attributes.massPublishProductId.value) {
                             switchDelete.checked = false
-                            switchDelete.classList.remove('checked')
                         }
                     })
                 }
             })
-
-            console.log(activeSwitches.length);
 
             if (activeSwitches.length === 0) {
                 managementBar.style.display = 'block'
