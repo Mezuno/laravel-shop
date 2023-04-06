@@ -98,8 +98,16 @@
                                 <a @click.prevent="addToCart(product)" href=""
                                    class="w-100 m-0 btn btn-warning text-white border-0" style="white-space: nowrap;">В
                                     корзину <i class="fas fa-shopping-cart"></i></a>
-                                <h5 class="p-0 m-0"><a @click.prevent="" class="p-2 pb-0 mb-0 text-danger ms-2"><i
-                                    class="far fa-heart"></i></a></h5>
+                                <h5 v-if="this.$root.token" class="p-0 m-0">
+                                    <a @click.prevent="storeWish(product)" class="p-2 pb-0 mb-0 text-danger ms-2">
+                                        <i class="far fa-heart" :id="`heart${product.id}`"></i>
+                                    </a>
+                                    <div v-for="wish in wishlist" class="p-0 m-0">
+                                        <a @click.prevent="removeWish(wish)" v-if="wish.product_id === product.id">
+                                            <i class="fas fa-times" :id="`x${wish.id}`"></i>
+                                        </a>
+                                    </div>
+                                </h5>
                             </div>
                         </div>
 
@@ -157,6 +165,9 @@ export default {
     mounted() {
         this.getProducts();
         this.getFilterList();
+        if (this.$root.token) {
+            this.getWishlist()
+        }
     },
     data() {
         return {
@@ -168,6 +179,7 @@ export default {
             tags: [],
             price: [],
             pagination: [],
+            wishlist: [],
         }
     },
     methods: {
@@ -206,6 +218,46 @@ export default {
         filterProducts() {
             this.loadedProducts = false
             this.getProducts();
+        },
+        storeWish(product) {
+            console.log('wish');
+            axios.post('/api/wish', {
+                user_id: this.$root.user.id,
+                product_id: product.id
+            })
+                .then(response => {
+                    console.log(response);
+                    document.getElementById('heart'+product.id).classList.remove('far')
+                    document.getElementById('heart'+product.id).classList.add('fas')
+                    console.log('added to wishlist');
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        removeWish(wish) {
+            axios.delete('/api/wish/'+wish.id+'/delete')
+                .then(response => {
+                    console.log(response);
+                    document.getElementById('heart'+wish.product_id).classList.remove('fas')
+                    document.getElementById('heart'+wish.product_id).classList.add('far')
+                    document.getElementById('x'+wish.id).remove()
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        getWishlist() {
+            axios.post('/api/wishlist', {
+                user_id: this.$root.user.id
+            })
+                .then(response => {
+                    this.wishlist = response.data.data
+                    console.log(this.wishlist);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
         getProducts(page = 1) {
             axios.post('/api/products', {
