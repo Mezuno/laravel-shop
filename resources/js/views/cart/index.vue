@@ -86,13 +86,6 @@
 export default {
     name: "cart",
 
-    mounted() {
-        this.getProductsInCart()
-        this.$nextTick(function () {
-            this.openCartList()
-        })
-    },
-
     data() {
         return {
             productsInCart: [],
@@ -114,7 +107,26 @@ export default {
 
     },
 
+    mounted() {
+        this.getProductsInCart()
+        this.$nextTick(function () {
+            this.openCartList()
+        })
+        this.setName()
+        this.setEmail()
+        this.setAddress()
+    },
+
     methods: {
+        setName() {
+            this.name = this.$root.user.name
+        },
+        setEmail() {
+            this.email = this.$root.user.email
+        },
+        setAddress() {
+            this.address = this.$root.user.address
+        },
 
         getHeight(id) {
             let idCartCard = document.getElementById(id)
@@ -141,7 +153,6 @@ export default {
             let lengthProducts = this.productsInCart.length
             // let height = "1000px"
             if (this.isOpened === false) {
-                console.log("if")
                 // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
                 // height = this.getHeight("cart-card") + "px"
                 document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
@@ -155,7 +166,6 @@ export default {
                 this.isOpened = true
 
             } else {
-                console.log("else")
                 document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
                 document.getElementsByClassName("cart-card")[0].style.height = "960px"
 
@@ -216,9 +226,7 @@ export default {
         },
 
         deleteProductAsCart(product, indexInCart) {
-            let cart = localStorage.getItem('cart')
-            cart = JSON.parse(cart)
-            console.log(cart[indexInCart])
+            let cart = JSON.parse(localStorage.getItem('cart'))
             cart.splice(indexInCart, 1)
             localStorage.setItem('cart', JSON.stringify(cart))
             this.productsInCart = cart
@@ -238,6 +246,8 @@ export default {
                 'total_price': this.totalPrice,
                 'error': this.orderErrors,
             }).then(response => {
+                this.productsInCart = null
+                localStorage.removeItem('cart')
                 console.log(response.data.data);
             }).catch(error => {
                 console.log(error.response.data.errors)

@@ -123,7 +123,7 @@ export default {
         return {
             productsInCart: [],
             token: null,
-            // user: null,
+            user: null,
         }
     },
 
@@ -142,12 +142,12 @@ export default {
     mounted() {
         this.getTokenFromLocalStorage()
         this.getProductsInCart()
-        // this.getUserFromLocalStorage()
+        this.getUserFromLocalStorage()
     },
 
     updated() {
         this.getTokenFromLocalStorage()
-        // this.getUserFromLocalStorage()
+        this.getUserFromLocalStorage()
     },
 
     methods: {
@@ -156,7 +156,7 @@ export default {
         },
 
         getUserFromLocalStorage() {
-            return JSON.parse(localStorage.getItem('user'))
+            this.user = JSON.parse(localStorage.getItem('user'))
         },
 
         logout() {

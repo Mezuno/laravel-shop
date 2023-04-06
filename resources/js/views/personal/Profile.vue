@@ -2,9 +2,9 @@
     <div>
         <div class="container-xxl mt-5">
             <h1 class="mb-4">Профиль</h1>
-            <div v-if="user">
-                <p>{{ user.name }}</p>
-                <p>{{ user.email }}</p>
+            <div v-if="this.$root.user">
+                <p>{{ this.$root.user.name }}</p>
+                <p>{{ this.$root.user.email }}</p>
                 <h2>Заказы</h2>
 
                 <div v-if="!orderLoader" class="d-flex justify-content-center">
@@ -31,14 +31,14 @@ export default {
 
     data() {
         return {
-            user: null,
+            // user: null,
             orders: [],
             orderLoader: null
         }
     },
 
     mounted() {
-        this.user = this.$root.getUserFromLocalStorage()
+        // this.user = this.$root.getUserFromLocalStorage()
         this.getOrders()
     },
 
@@ -46,7 +46,7 @@ export default {
         getOrders() {
             this.orderLoader = false
             axios.post('/api/orders', {
-                user_id: this.user.id
+                user_id: this.$root.user.id
             })
                 .then(response => {
                     this.orders = response.data.data
