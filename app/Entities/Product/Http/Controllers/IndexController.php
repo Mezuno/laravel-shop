@@ -24,12 +24,6 @@ class IndexController extends Controller
         if ($request->has('content') && $request->get('content') != null) {
             $query->where('content', 'like', '%'.$request->get('content').'%');
         }
-        if ($request->has('price_from') && $request->get('content') != null) {
-            $query->where('price', '>', $request->get('price_from'));
-        }
-        if ($request->has('price_to') && $request->get('content') != null) {
-            $query->where('price', '<', $request->get('price_to'));
-        }
         if ($request->has('is_published') && $request->get('is_published') != null) {
             if ($request->get('is_published') == 'on' && $request->get('is_not_published') != 'on') {
                 $isPublished = 1;

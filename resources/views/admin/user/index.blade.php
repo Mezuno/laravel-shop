@@ -18,6 +18,68 @@
     </div>
     <!-- /.content-header -->
 
+    <!-- Content filter -->
+    <div class="ml-3 p-3 pr-0 alert alert-default-dark d-inline-block">
+        <div class="">
+            <h3>Фильтр</h3>
+            <form action="{{ route('user.index') }}" class="w-100 d-flex flex-wrap" id="filter_form">
+                <input type="text" name="filter" value="true" hidden>
+                <div class="form-group d-flex flex-column">
+                    <label for="filter_id">ID</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_id" name="id" value="{{ app('request')->input('id') }}" placeholder="ID">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_name">Имя</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_name" name="name" value="{{ app('request')->input('name') }}" placeholder="Имя">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_surname">Фамилия</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_surname" name="surname" value="{{ app('request')->input('surname') }}" placeholder="Фамилия">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_patronymic">Отчество</label>
+                    <input class="me-2 p-2 rounded-2 border flex-grow-1" id="filter_patronymic" type="text" name="patronymic" value="{{ app('request')->input('patronymic') }}" placeholder="Отчество">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_email">Email</label>
+                    <input class="me-2 p-2 rounded-2 border flex-grow-1" id="filter_email" type="text" name="email" value="{{ app('request')->input('email') }}" placeholder="Email">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_size">Сколько записей</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_size" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_age">Возраст</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_age" name="age" value="{{ app('request')->input('age') }}" placeholder="Возраст">
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_gender">Пол</label>
+                    <select class="form-control" name="gender" id="">
+                        <option value="" selected>Все</option>
+                        <option value="1" @if(app('request')->input('gender') == 1) selected @endif>Мужской</option>
+                        <option value="2" @if(app('request')->input('gender') == 2) selected @endif>Женский</option>
+                    </select>
+                </div>
+                <div class="form-group d-flex flex-column ml-2">
+                    <label for="filter_address">Адрес</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_address" name="address" value="{{ app('request')->input('address') }}" placeholder="Адрес">
+                </div>
+            </form>
+
+            <div class="d-flex justify-content-between align-items-end">
+                <div class="d-flex flex-column">
+                    <div class="custom-control custom-switch">
+                        <input form="filter_form" type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif>
+                        <label class="custom-control-label" for="customSwitch3">Удаленные</label>
+                    </div>
+                </div>
+                <div class="form-group d-flex flex-column m-0 justify-content-end">
+                    <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
