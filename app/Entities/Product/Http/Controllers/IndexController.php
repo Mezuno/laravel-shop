@@ -2,68 +2,95 @@
 
 namespace App\Entities\Product\Http\Controllers;
 
+use App\Entities\Product\Http\Requests\IndexRequest;
 use App\Entities\Product\Models\Product;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(IndexRequest $request)
     {
         $query = Product::query();
 
-        if ($request->has('title') && $request->get('title') != null) {
-            $query->where('title', 'like', '%'.$request->get('title').'%');
+        $validated = $request->validated();
+
+        if (!$validated) {
+            $limit = 8;
+            $products = $query->with('category')->orderByDesc('id')->paginate($limit);
+            return view('admin.product.index')->with(['products' => $products]);
         }
-        if ($request->has('vendor_code') && $request->get('vendor_code') != null) {
-            $query->where('vendor_code', '=', $request->get('vendor_code'));
+
+        if ($validated['title']) {
+            $query->where('title', 'like', '%'.$validated['title'].'%');
         }
-        if ($request->has('description') && $request->get('description') != null) {
-            $query->where('description', 'like', '%'.$request->get('description').'%');
+
+        if ($validated['vendor_code']) {
+            $query->where('vendor_code', '=', $validated['vendor_code']);
         }
-        if ($request->has('content') && $request->get('content') != null) {
-            $query->where('content', 'like', '%'.$request->get('content').'%');
+
+        if ($validated['description']) {
+            $query->where('description', 'like', '%'.$validated['description'].'%');
         }
-        if ($request->has('is_published') && $request->get('is_published') != null) {
-            if ($request->get('is_published') == 'on' && $request->get('is_not_published') != 'on') {
+
+        if ($validated['content']) {
+            $query->where('content', 'like', '%'.$validated['content'].'%');
+        }
+
+        if (!$request->has('is_published')) {
+            $validated['is_published'] = null;
+        }
+        if (!$request->has('is_not_published')) {
+            $validated['is_not_published'] = null;
+        }
+
+        if ($validated['is_published']) {
+            if ($validated['is_published'] == 'on' && $validated['is_not_published'] != 'on') {
                 $isPublished = 1;
                 $query->where('is_published', '=', $isPublished);
             }
         }
-        if ($request->has('is_not_published') && $request->get('is_not_published') != null) {
-            if ($request->get('is_not_published') == 'on' && $request->get('is_published') != 'on') {
+
+        if ($validated['is_not_published']) {
+            if ($validated['is_not_published'] == 'on' && $validated['is_published'] != 'on') {
                 $isNotPublished = 0;
                 $query->where('is_published', '=', $isNotPublished);
             }
         }
-        if ($request->has('price_from') || $request->get('price_from') == '') {
-            if ($request->get('price_from') < 0) {
+
+        if ($validated['price_from']) {
+            if ($validated['price_from'] < 0) {
                 $priceFrom = 0;
             } else {
-                $priceFrom = (int)$request->get('price_from');
+                $priceFrom = (int)$validated['price_from'];
             }
         } else {
             $priceFrom = 0;
         }
-        if ($request->has('price_to')) {
-            if ($request->get('price_to') > 100000 || $request->get('price_to') == '') {
+
+        if ($validated['price_to']) {
+            if ($validated['price_to'] > 100000 || $validated['price_to'] == '') {
                 $priceTo = 100000;
             } else {
-                $priceTo = (int)$request->get('price_to');
+                $priceTo = (int)$validated['price_to'];
             }
         } else {
             $priceTo = 100000;
         }
-        if ($request->has('size')) {
-            if ((int)$request->get('size') <= 0) {
+
+        if ($validated['size']) {
+            if ((int)$validated['size'] <= 0) {
                 $limit = 8;
             } else {
-                $limit = (int)$request->get('size');
+                $limit = (int)$validated['size'];
             }
         } else {
             $limit = 8;
         }
-        if ($request->has('deleted') && $request->get('deleted') != null) {
+
+        if (!$request->has('deleted')) {
+            $validated['deleted'] = null;
+        }
+        if ($validated['deleted']) {
             $query->withTrashed();
         }
 
