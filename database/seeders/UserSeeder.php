@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 10;
+        $recordCount = 100;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 'is_admin' => 0,
                 'gender' => rand(1,2),
                 'age' => [rand(18,34), rand(18,34), rand(18,34), rand(34,84)][rand(0,3)],
-                'password' => Hash::make('password'),
+                'password' => '$2y$10$Ccfvey1U9BHWEO073dB.cepIonRDv6.RAyy8EAaB9GPJ1xVNcpMz6', // password
                 'remember_token' => Str::random(10),
                 'created_at' => NOW(),
                 'updated_at' => NOW(),

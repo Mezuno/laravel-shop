@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 20;
+        $recordCount = 100;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $products = [];

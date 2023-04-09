@@ -9,7 +9,7 @@ class ShowController extends Controller
 {
     public function __invoke(int $orderId)
     {
-        $order = Order::withTrashed()->where('id', $orderId)->with('orderer')->first();
+        $order = Order::withTrashed()->where('id', $orderId)->with('user')->first();
         return view('admin.order.show', compact('order'));
     }
 }

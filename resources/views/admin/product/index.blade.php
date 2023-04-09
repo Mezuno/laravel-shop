@@ -10,7 +10,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Главная</li>
+                        <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Главная</a></li>
+                        <li class="breadcrumb-item active">Товары</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

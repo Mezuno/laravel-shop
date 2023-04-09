@@ -165,7 +165,7 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{ route('order.index') }}" class="nav-link">
-                            <i class="nav-icon  fas fa-shopping-cart"></i>
+                            <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>Заказы</p>
                         </a>
                     </li>
