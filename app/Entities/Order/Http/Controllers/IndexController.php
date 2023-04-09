@@ -44,7 +44,7 @@ class IndexController extends Controller
             $orders = $this->toCollection($filteredOrders);
         }
 
-        $orders = $this->paginate($orders, $limit);
+        $orders = $this->paginate($orders, $limit, null, ['path' => 'http://localhost:8000/admin/orders']);
 
         return view('admin.order.index')->with(['orders' => $orders]);
     }

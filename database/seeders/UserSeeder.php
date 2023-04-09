@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 20;
+        $recordCount = 10;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [

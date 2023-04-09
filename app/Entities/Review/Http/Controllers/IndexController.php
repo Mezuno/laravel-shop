@@ -34,7 +34,7 @@ class IndexController extends Controller
         $this->addUserPostFilter($reviews, $request, $validated);
         $this->addProductPostFilter($reviews, $request, $validated);
 
-        $reviews = $this->paginate($reviews, $limit);
+        $reviews = $this->paginate($reviews, $limit, null, ['path' => 'http://localhost:8000/admin/reviews']);
 
         return view('admin.review.index')->with(['reviews' => $reviews]);
     }
