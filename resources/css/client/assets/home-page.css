@@ -5,8 +5,8 @@
 }
 
 .hoverDiv .imgHover {
-    -moz-transition: all 0.4s;
-    -webkit-transition: all 0.4s;
+    /*-moz-transition: all 0.4s;*/
+    /*-webkit-transition: all 0.4s;*/
     transition: all ease-out 0.4s;
 }
 
