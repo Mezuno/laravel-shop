@@ -84,29 +84,47 @@
                 <div class="col-12">
                     <div class="d-inline text-dark text-black">{{ $products->withQueryString()->links() }}</div>
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" id="managmentBar">
                             <a href="{{ route('product.create') }}" class="btn btn-primary">Добавить</a>
                             <form action="{{ route('product.from.query.export') }}" class="d-inline-block" id="filter_form">
                                 <input type="text" name="filter" value="true" hidden>
-                                    <input type="text" name="title" value="{{ app('request')->input('title') }}" placeholder="Наименование" hidden>
-                                    <input type="number" name="vendor_code" value="{{ app('request')->input('vendor_code') }}" placeholder="Артикул" hidden>
-                                    <input type="text" name="description" value="{{ app('request')->input('description') }}" placeholder="Описание" hidden>
-                                    <input type="text" name="content" value="{{ app('request')->input('content') }}" placeholder="Содержание" hidden>
-                                    <input type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей" hidden>
-                                    <input type="number" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Цена от" hidden>
-                                    <input type="number" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Цена до" hidden>
-                                    <input type="checkbox" name="is_published" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published') == 'on') checked @endif hidden>
-                                    <input type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif hidden>
-                                    <input type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif hidden>
-                                    <button class="btn btn-success">Выгрузить в Excel (с фильтром)</button>
+                                <input type="text" name="title" value="{{ app('request')->input('title') }}" placeholder="Наименование" hidden>
+                                <input type="number" name="vendor_code" value="{{ app('request')->input('vendor_code') }}" placeholder="Артикул" hidden>
+                                <input type="text" name="description" value="{{ app('request')->input('description') }}" placeholder="Описание" hidden>
+                                <input type="text" name="content" value="{{ app('request')->input('content') }}" placeholder="Содержание" hidden>
+                                <input type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей" hidden>
+                                <input type="number" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Цена от" hidden>
+                                <input type="number" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Цена до" hidden>
+                                <input type="checkbox" name="is_published" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published') == 'on') checked @endif hidden>
+                                <input type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif hidden>
+                                <input type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif hidden>
+                                <button class="btn btn-success">Выгрузить в Excel (с фильтром)</button>
                             </form>
                             <a href="{{ route('product.export') }}" class="btn btn-success">Выгрузить в Excel (все)</a>
+                        </div>
+                        <div class="card-header" id="managmentBar2" style="display: none">
+
+                            <form action="{{ route('product.mass.publish') }}" method="post" id="massPublishForm" class="d-inline-block">
+                                @csrf
+                                @method('patch')
+                                <button class="btn btn-primary">Опубликовать выбранные</button>
+                            </form>
+
+                            <form action="{{ route('product.mass.delete') }}" method="post" id="massDeleteForm" class="d-inline-block">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger">Удалить выбранные</button>
+                            </form>
+
                         </div>
 
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
+                                    <th class="align-text-bottom">
+                                        <input type="checkbox" id="massInput" onchange="massInputCheck()">
+                                    </th>
                                     <th class="align-text-bottom">Артикул</th>
                                     <th class="align-text-bottom">Изображение</th>
                                     <th class="align-text-bottom">Наименование</th>
@@ -120,22 +138,16 @@
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
+                                        <td>
+                                            <input form="massPublishForm" name="products_ids[]" value="{{ $product->id }}" massPublishProductId="{{ $product->id }}" type="checkbox" onchange="switchBar()" class="check-button-publish">
+                                            <input form="massDeleteForm" name="products_ids[]" value="{{ $product->id }}" massDeleteProductId="{{ $product->id }}" type="checkbox" class="check-button-delete" hidden>
+                                        </td>
                                         <td class="pt-0 pb-0 align-text-bottom pl-4">{{ $product->vendor_code }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom"><img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="50" height="50" alt="Изображение товара"></td>
                                         <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->price }} ₽</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->count }}шт.</td>
-{{--                                        <td class="pt-0 pb-0 align-text-bottom">--}}
-{{--                                            <div class="custom-control custom-switch">--}}
-{{--                                                <form action="" method="post">--}}
-{{--                                                    @csrf--}}
-{{--                                                    @method('patch')--}}
-{{--                                                    <input onchange="updatePublished({{ $product->id }});" @if($product->is_published) checked @endif name="is_published" type="checkbox" class="custom-control-input" id="customSwitch{{ $product->id }}">--}}
-{{--                                                    <label class="custom-control-label" for="customSwitch{{ $product->id }}"></label>--}}
-{{--                                                </form>--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
-                                        <td class="pt-0 pb-0 align-text-bottom">{{ $product->publishedStatus }}</td>
+                                        <td class="pt-0 pb-0 align-text-bottom"><p class="p-0 pl-2 alert @if($product->is_published) alert-default-success @else alert-default-warning @endif">{{ $product->publishedStatus }}</p></td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->category->title }}</td>
                                         <td class="pt-0 pb-0 align-text-bottom">
                                             @if(!$product->deleted_at)
@@ -164,7 +176,8 @@
                 </div>
             </div>
             <!-- /.row -->
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 
@@ -201,6 +214,109 @@
             } else {
                 id.classList.remove('d-flex')
                 id.classList.add('d-none')
+            }
+        }
+
+        function massInputCheck() {
+            let managementBar = document.getElementById('managmentBar');
+            let managementBar2 = document.getElementById('managmentBar2');
+            let switchesPublish = Array.from(document.getElementsByClassName('check-button-publish'));
+            let switchesDelete = Array.from(document.getElementsByClassName('check-button-delete'));
+            let activeSwitches = calculateChecked(switchesPublish, switchesDelete)
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (Number(urlParams.get('size')) !== 0) {
+                if (Number(urlParams.get('size')) * 2 === activeSwitches) {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, false)
+                } else {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, true)
+                }
+            } else {
+                if (activeSwitches === 16) {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, false)
+                } else {
+                    checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, true)
+                }
+            }
+        }
+
+        function calculateChecked(switchesPublish, switchesDelete) {
+            let activeSwitches = []
+
+            switchesPublish.forEach((switchPublish) => {
+                if (switchPublish.checked) {
+                    activeSwitches.push(switchPublish)
+                }
+            })
+
+            switchesDelete.forEach((switchDelete) => {
+                if (switchDelete.checked) {
+                    activeSwitches.push(switchDelete)
+                }
+            })
+
+            return activeSwitches.length;
+        }
+
+        function checkAll(switchesPublish, switchesDelete, managementBar, managementBar2, enable) {
+            if (enable) {
+                switchesPublish.forEach((switchPublish) => {
+                    switchPublish.checked = true
+                })
+                switchesDelete.forEach((switchDelete) => {
+                    switchDelete.checked = true
+                })
+
+                managementBar.style.display = 'none'
+                managementBar2.style.display = 'block'
+            }
+            else {
+                switchesPublish.forEach((switchPublish) => {
+                    switchPublish.checked = false
+                })
+                switchesDelete.forEach((switchDelete) => {
+                    switchDelete.checked = false
+                })
+
+                managementBar.style.display = 'block'
+                managementBar2.style.display = 'none'
+            }
+        }
+
+        function switchBar() {
+            let managementBar = document.getElementById('managmentBar');
+            let managementBar2 = document.getElementById('managmentBar2');
+            let switchesPublish = Array.from(document.getElementsByClassName('check-button-publish'));
+            let switchesDelete = Array.from(document.getElementsByClassName('check-button-delete'));
+            let activeSwitches = [];
+
+            switchesPublish.forEach((switchPublish) => {
+                if (switchPublish.checked) {
+
+                    switchesDelete.forEach(switchDelete => {
+                        if (switchDelete.attributes.massDeleteProductId.value === switchPublish.attributes.massPublishProductId.value) {
+                            switchDelete.checked = true
+                        }
+                    })
+
+                    activeSwitches.push(switchPublish)
+
+                } else {
+
+                    switchesDelete.forEach(switchDelete => {
+                        if (switchDelete.attributes.massDeleteProductId.value === switchPublish.attributes.massPublishProductId.value) {
+                            switchDelete.checked = false
+                        }
+                    })
+                }
+            })
+
+            if (activeSwitches.length === 0) {
+                managementBar.style.display = 'block'
+                managementBar2.style.display = 'none'
+            } else {
+                managementBar.style.display = 'none'
+                managementBar2.style.display = 'block'
             }
         }
     </script>

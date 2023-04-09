@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::patch('/{order}', App\Entities\Order\Http\Controllers\UpdateController::class)->where('order', '[0-9]+')->name('order.update');
         Route::delete('/{order}', App\Entities\Order\Http\Controllers\DeleteController::class)->where('order', '[0-9]+')->name('order.delete');
         Route::patch('/{order}/restore', App\Entities\Order\Http\Controllers\RestoreController::class)->where('order', '[0-9]+')->name('order.restore');
+
+        Route::get('/export', App\Entities\Order\Http\Controllers\ExportController::class)->name('order.export');
+        Route::get('/export-from-query', App\Entities\Order\Http\Controllers\ExportFromQueryController::class)->name('order.from.query.export');
     });
 
     Route::group(['prefix' => 'users'], function () {
@@ -75,6 +79,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::get('/export', App\Entities\Product\Http\Controllers\ExportController::class)->name('product.export');
         Route::get('/export-from-query', App\Entities\Product\Http\Controllers\ExportFromQueryController::class)->name('product.from.query.export');
 
+        Route::patch('/mass/publish', App\Entities\Product\Http\Controllers\MassPublishController::class)->where('product', '[0-9]+')->name('product.mass.publish');
+        Route::delete('/mass/delete', App\Entities\Product\Http\Controllers\MassDeleteController::class)->where('product', '[0-9]+')->name('product.mass.delete');
+
         Route::group(['prefix' => 'images/{product}'], function() {
             Route::patch('/{productImage}', App\Entities\Product\Http\Controllers\UpdateImageController::class)->where('product', '[0-9]+')->where('productImage', '[0-9]+')->name('product.image.update');
             Route::post('/', App\Entities\Product\Http\Controllers\StoreImageController::class)->where('product', '[0-9]+')->name('product.image.store');
@@ -82,6 +89,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
     });
 });
 
+Auth::routes();
+
 Route::get('{page}', \App\Http\Controllers\Client\IndexController::class)->where('page', '.*')->name('client');
 
-Auth::routes();
