@@ -60,11 +60,11 @@
             <div class="d-flex justify-content-between align-items-end">
                 <div class="d-flex flex-column">
                     <div class="custom-control custom-switch">
-                        <input form="filter_form" type="checkbox" name="confirmed_true" class="custom-control-input" id="customSwitch1" @if(app('request')->input('confirmed_true') == 'on') checked @endif>
+                        <input form="filter_form" type="checkbox" name="confirmed_at_true" class="custom-control-input" id="customSwitch1" @if(app('request')->input('confirmed_at_true') == 'on') checked @endif>
                         <label class="custom-control-label" for="customSwitch1">Подтвержденные</label>
                     </div>
                     <div class="custom-control custom-switch">
-                        <input form="filter_form" type="checkbox" name="confirmed_false" class="custom-control-input" id="customSwitch2" @if(app('request')->input('confirmed_false') == 'on') checked @endif>
+                        <input form="filter_form" type="checkbox" name="confirmed_at_false" class="custom-control-input" id="customSwitch2" @if(app('request')->input('confirmed_at_false') == 'on') checked @endif>
                         <label class="custom-control-label" for="customSwitch2">Не подтвержденные</label>
                     </div>
                     <div class="custom-control custom-switch">

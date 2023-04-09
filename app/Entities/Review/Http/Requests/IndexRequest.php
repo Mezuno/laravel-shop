@@ -27,8 +27,8 @@ class IndexRequest extends FormRequest
             'title' => 'nullable|string',
             'rate_from' => 'nullable|integer',
             'rate_to' => 'nullable|integer',
-            'confirmed_true' => 'nullable|string',
-            'confirmed_false' => 'nullable|string',
+            'confirmed_at_true' => 'nullable|string',
+            'confirmed_at_false' => 'nullable|string',
             'size' => 'nullable|integer',
             'deleted' => 'nullable|string',
         ];

@@ -56,11 +56,11 @@
                                     </tr>
                                     <tr>
                                         <td>Клиент Имя</td>
-                                        <td>{{ $order->orderer->name }}</td>
+                                        <td>{{ $order->user->name }}</td>
                                     </tr>
                                     <tr>
                                         <td>Клиент Email</td>
-                                        <td>{{ $order->orderer->email }}</td>
+                                        <td>{{ $order->user->email }}</td>
                                     </tr>
                                     <tr>
                                         <td>Адрес заказа</td>

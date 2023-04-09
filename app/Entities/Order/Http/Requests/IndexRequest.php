@@ -23,12 +23,12 @@ class IndexRequest extends FormRequest
     {
         return [
             'user' => 'nullable|string',
-            'price_from' => 'nullable|integer',
-            'price_to' => 'nullable|integer',
+            'total_price_from' => 'nullable|integer',
+            'total_price_to' => 'nullable|integer',
             'payment_status_true' => 'nullable|string',
             'payment_status_false' => 'nullable|string',
             'size' => 'nullable|integer|max:255',
-            'product' => 'nullable|integer',
+            'product' => 'nullable|string',
             'products_count' => 'nullable|integer',
             'deleted' => 'nullable|string|max:255',
         ];
