@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::get('/{user}', App\Entities\User\Http\Controllers\ShowController::class)->where('user', '[0-9]+')->name('user.show');
         Route::get('/{user}/edit', App\Entities\User\Http\Controllers\EditController::class)->where('user', '[0-9]+')->name('user.edit');
         Route::patch('/{user}', App\Entities\User\Http\Controllers\UpdateController::class)->where('user', '[0-9]+')->name('user.update');
+        Route::patch('/{user}/restore', App\Entities\User\Http\Controllers\RestoreController::class)->where('user', '[0-9]+')->name('user.restore');
         Route::delete('/{user}', App\Entities\User\Http\Controllers\DeleteController::class)->where('user', '[0-9]+')->name('user.delete');
     });
 

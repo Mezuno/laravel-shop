@@ -23,6 +23,7 @@
         <div class="">
             <h3>Фильтр</h3>
             <form action="{{ route('order.index') }}" class="w-100 d-flex" id="filter_form">
+                <input type="text" name="filter" value="true" hidden>
                 <div class="form-group d-flex flex-column">
                     <label>Пользователь</label>
                     <input class="me-2 p-2 rounded-2 border" type="text" name="user" value="{{ app('request')->input('user') }}" placeholder="Имя, email или id">
@@ -60,7 +61,10 @@
                         <label class="custom-control-label" for="customSwitch2">Не оплаченные</label>
                     </div>
                 </div>
-                <div class="form-group d-flex flex-column m-0 justify-content-end">
+                <div class="form-group d-flex m-0 justify-content-end">
+                    @if( app('request')->input('filter') === 'true')
+                        <a href="{{ route('order.index') }}" class="btn btn-dark mr-2 text-decoration-none">Сбросить фильтры</a>
+                    @endif
                     <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
                 </div>
             </div>

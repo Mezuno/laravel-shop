@@ -8,7 +8,7 @@ use Illuminate\Pagination\Paginator;
 
 trait AdminFilterHelperTrait
 {
-    private function addWhereFilterToQuery(&$query, $request, $validated, $name, $operator, bool $like): void
+    private function addWhereFilterToQuery(&$query, $request, $validated, $name, $operator, bool $like = false): void
     {
         if ($like) {
             $prefixAndPostfix = '%';

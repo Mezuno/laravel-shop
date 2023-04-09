@@ -69,7 +69,10 @@
                         <label class="custom-control-label" for="customSwitch3">Удаленные</label>
                     </div>
                 </div>
-                <div class="form-group d-flex flex-column m-0 justify-content-end">
+                <div class="form-group d-flex m-0 justify-content-end">
+                    @if( app('request')->input('filter') === 'true')
+                        <a href="{{ route('product.index') }}" class="btn btn-dark mr-2 text-decoration-none">Сбросить фильтры</a>
+                    @endif
                     <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
                 </div>
             </div>
