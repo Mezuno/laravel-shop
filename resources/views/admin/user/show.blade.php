@@ -6,6 +6,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
+                    <a href="{{ route('user.index') }}" class="btn btn-outline-primary mb-3"><i
+                            class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к пользователям</a>
                     <h1 class="m-0">Пользователь</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">

@@ -33,7 +33,7 @@ class Order extends Model
 //        return self::getPaymentStatus()[$this->payment_status];
 //    }
 
-    public function orderer()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

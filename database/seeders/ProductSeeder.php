@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
                 'content' => json_encode(fake()->text(200)),
                 'price' => rand(1,100)*10,
                 'count' => rand(0, 100),
-                'vendor_code' => $i,
+                'vendor_code' => $i+1,
                 'is_published' => rand(0,1),
                 'category_id' => Category::get('id')->random()->id,
                 'preview_image' => 'images/products/jZTsJpuBQ9JiKrrUCiIcYNsfl7XZuQHOuR4CS25w.jpg',

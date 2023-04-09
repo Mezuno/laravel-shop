@@ -25,36 +25,36 @@
             <form action="{{ route('user.index') }}" class="w-100 d-flex flex-wrap" id="filter_form">
                 <input type="text" name="filter" value="true" hidden>
                 <div class="form-group d-flex flex-column">
-                    <label for="filter_id">ID</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_id" name="id" value="{{ app('request')->input('id') }}" placeholder="ID">
+                    <label>ID</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="id" value="{{ app('request')->input('id') }}" placeholder="ID">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_name">Имя</label>
-                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_name" name="name" value="{{ app('request')->input('name') }}" placeholder="Имя">
+                    <label>Имя</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" name="name" value="{{ app('request')->input('name') }}" placeholder="Имя">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_surname">Фамилия</label>
-                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_surname" name="surname" value="{{ app('request')->input('surname') }}" placeholder="Фамилия">
+                    <label>Фамилия</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" name="surname" value="{{ app('request')->input('surname') }}" placeholder="Фамилия">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_patronymic">Отчество</label>
-                    <input class="me-2 p-2 rounded-2 border flex-grow-1" id="filter_patronymic" type="text" name="patronymic" value="{{ app('request')->input('patronymic') }}" placeholder="Отчество">
+                    <label>Отчество</label>
+                    <input class="me-2 p-2 rounded-2 border flex-grow-1" type="text" name="patronymic" value="{{ app('request')->input('patronymic') }}" placeholder="Отчество">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_email">Email</label>
-                    <input class="me-2 p-2 rounded-2 border flex-grow-1" id="filter_email" type="text" name="email" value="{{ app('request')->input('email') }}" placeholder="Email">
+                    <label>Email</label>
+                    <input class="me-2 p-2 rounded-2 border flex-grow-1" type="text" name="email" value="{{ app('request')->input('email') }}" placeholder="Email">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_size">Сколько записей</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_size" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей">
+                    <label>Сколько записей</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_age">Возраст</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_age" name="age" value="{{ app('request')->input('age') }}" placeholder="Возраст">
+                    <label>Возраст</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="age" value="{{ app('request')->input('age') }}" placeholder="Возраст">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_gender">Пол</label>
-                    <select class="form-control" name="gender" id="">
+                    <label>Пол</label>
+                    <select class="form-control" name="gender">
                         <option value="" selected>Все</option>
                         <option value="1" @if(app('request')->input('gender') == 1) selected @endif>Мужской</option>
                         <option value="2" @if(app('request')->input('gender') == 2) selected @endif>Женский</option>
@@ -73,8 +73,13 @@
                         <label class="custom-control-label" for="customSwitch3">Удаленные</label>
                     </div>
                 </div>
-                <div class="form-group d-flex flex-column m-0 justify-content-end">
-                    <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
+                <div class="d-flex">
+                    @if( app('request')->input('filter') === 'true')
+                        <a href="{{ route('user.index') }}" class="btn btn-dark mr-2 text-decoration-none">Сбросить фильтры</a>
+                    @endif
+                    <div class="form-group d-flex flex-column m-0 justify-content-end">
+                        <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,10 +124,20 @@
                                         <td>@if($user->gender){{ $user->genderTitle }}@endif</td>
                                         <td>{{ $user->address }}</td>
                                         <td class="d-flex">
+                                        @if(!$user->deleted_at)
                                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-2"><i class="fas fa-pen"></i></a>
                                             <button type="button" onclick="openModal({{ "deleteModal" . $user->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                        @else
+                                            <form action="{{ route('user.restore', $user->id) }}" method="post">
+                                                @csrf
+                                                @method('patch')
+                                                <button class="btn btn-warning">
+                                                    <i class="fas fa-undo"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -91,7 +91,7 @@ class OrderFromQueryExport implements FromQuery, WithHeadings, WithMapping, Shou
 //        dd($query->whereBetween('total_price', [$this->total_price_from, $this->total_price_to])->with('category')->orderByDesc('id')->get());
 
         // ->take($this->size) если надо будет выгружать не все а по фильтру (кол-во)
-        return $query->whereBetween('total_price', [$this->price_from, $this->price_to])->with('orderer')->orderByDesc('id');
+        return $query->whereBetween('total_price', [$this->price_from, $this->price_to])->with('user')->orderByDesc('id');
     }
 
 

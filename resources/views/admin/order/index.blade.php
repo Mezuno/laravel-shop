@@ -23,29 +23,30 @@
         <div class="">
             <h3>Фильтр</h3>
             <form action="{{ route('order.index') }}" class="w-100 d-flex" id="filter_form">
+                <input type="text" name="filter" value="true" hidden>
                 <div class="form-group d-flex flex-column">
-                    <label for="filter_user">Пользователь</label>
-                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_user" name="user" value="{{ app('request')->input('user') }}" placeholder="Имя, email или id">
+                    <label>Пользователь</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" name="user" value="{{ app('request')->input('user') }}" placeholder="Имя, email или id">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_product">Товар в заказе</label>
-                    <input class="me-2 p-2 rounded-2 border" type="text" id="filter_product" name="product" value="{{ app('request')->input('product') }}" placeholder="Товар (артикул или название)">
+                    <label>Товар в заказе</label>
+                    <input class="me-2 p-2 rounded-2 border" type="text" name="product" value="{{ app('request')->input('product') }}" placeholder="Товар (артикул или название)">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_size">Сколько записей</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_size" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей">
+                    <label>Сколько записей</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_products_count">Кол-во товаров</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_products_count" name="products_count" value="{{ app('request')->input('products_count') }}" placeholder="Кол-во товаров">
+                    <label>Кол-во товаров</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="products_count" value="{{ app('request')->input('products_count') }}" placeholder="Кол-во товаров">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_price_from">Сумма от</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_price_from" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Сумма от">
+                    <label>Сумма от</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="total_price_from" value="{{ app('request')->input('total_price_from') }}" placeholder="Сумма от">
                 </div>
                 <div class="form-group d-flex flex-column ml-2">
-                    <label for="filter_price_to">Сумма до</label>
-                    <input class="me-2 p-2 rounded-2 border" type="number" id="filter_price_to" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Сумма до">
+                    <label>Сумма до</label>
+                    <input class="me-2 p-2 rounded-2 border" type="number" name="total_price_to" value="{{ app('request')->input('total_price_to') }}" placeholder="Сумма до">
                 </div>
             </form>
 
@@ -60,7 +61,10 @@
                         <label class="custom-control-label" for="customSwitch2">Не оплаченные</label>
                     </div>
                 </div>
-                <div class="form-group d-flex flex-column m-0 justify-content-end">
+                <div class="form-group d-flex m-0 justify-content-end">
+                    @if( app('request')->input('filter') === 'true')
+                        <a href="{{ route('order.index') }}" class="btn btn-dark mr-2 text-decoration-none">Сбросить фильтры</a>
+                    @endif
                     <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
                 </div>
             </div>
@@ -83,10 +87,10 @@
                             <form action="{{ route('order.from.query.export') }}" class="d-inline-block" id="filter_form">
                                 <input type="text" name="filter" value="true" hidden>
                                 <input type="text" name="title" value="{{ app('request')->input('title') }}" placeholder="Наименование" hidden>
-                                <input type="number" name="vendor_code" value="{{ app('request')->input('vendor_code') }}" placeholder="Артикул" hidden>
+                                <input type="number" name="vendor_code" value="{{ app('request')->input('product') }}" placeholder="Артикул" hidden>
                                 <input type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей" hidden>
-                                <input type="number" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Цена от" hidden>
-                                <input type="number" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Цена до" hidden>
+                                <input type="number" name="total_price_from" value="{{ app('request')->input('total_price_from') }}" placeholder="Цена от" hidden>
+                                <input type="number" name="total_price_to" value="{{ app('request')->input('total_price_to') }}" placeholder="Цена до" hidden>
                                 <input type="checkbox" name="payment_status_true" class="custom-control-input" id="customSwitch1" @if(app('request')->input('payment_status_true') == 'on') checked @endif hidden>
                                 <input type="checkbox" name="payment_status_false" class="custom-control-input" id="customSwitch2" @if(app('request')->input('payment_status_false') == 'on') checked @endif hidden>
                                 {{--                            <input type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif hidden>--}}
@@ -109,6 +113,7 @@
                                     <th>Статус оплаты</th>
                                     <th>Адрес</th>
                                     <th>Дата заказа</th>
+                                    <th>Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -116,9 +121,9 @@
                                     <tr>
                                         <td><a href="{{ route('order.show', $order->id) }}">{{ $order->id }}</a></td>
                                         <td>
-                                            <a href="{{ route('user.show', $order->orderer->id) }}">{{ $order->orderer->name }}</a>
+                                            <a href="{{ route('user.show', $order->user->id) }}">{{ $order->user->name }}</a>
                                         </td>
-                                        <td>{{ $order->orderer->email }}</td>
+                                        <td>{{ $order->user->email }}</td>
                                         <td>
                                             @foreach(json_decode($order->products) as $orderProduct)
                                                 <a href="{{ route('product.show', $orderProduct->id) }}">{{ $orderProduct->title }}</a>,
@@ -152,7 +157,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $orders->withQueryString()->links() }}
                         </div>
 
                     </div>

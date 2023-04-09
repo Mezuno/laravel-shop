@@ -193,6 +193,12 @@
                             <p>Пользователи</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('review.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-comments"></i>
+                            <p>Отзывы</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

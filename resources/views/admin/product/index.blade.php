@@ -57,11 +57,11 @@
             <div class="d-flex justify-content-between align-items-end">
                 <div class="d-flex flex-column">
                     <div class="custom-control custom-switch">
-                        <input form="filter_form" type="checkbox" name="is_published" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published') == 'on') checked @endif>
+                        <input form="filter_form" type="checkbox" name="is_published_true" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published_true') == 'on') checked @endif>
                         <label class="custom-control-label" for="customSwitch1">Опубликованные</label>
                     </div>
                     <div class="custom-control custom-switch">
-                        <input form="filter_form" type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif>
+                        <input form="filter_form" type="checkbox" name="is_published_false" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_published_false') == 'on') checked @endif>
                         <label class="custom-control-label" for="customSwitch2">Не опубликованные</label>
                     </div>
                     <div class="custom-control custom-switch">
@@ -69,7 +69,10 @@
                         <label class="custom-control-label" for="customSwitch3">Удаленные</label>
                     </div>
                 </div>
-                <div class="form-group d-flex flex-column m-0 justify-content-end">
+                <div class="form-group d-flex m-0 justify-content-end">
+                    @if( app('request')->input('filter') === 'true')
+                        <a href="{{ route('product.index') }}" class="btn btn-dark mr-2 text-decoration-none">Сбросить фильтры</a>
+                    @endif
                     <button form="filter_form" class="btn btn-dark flex-grow-0" value="Поиск">Применить</button>
                 </div>
             </div>
@@ -95,8 +98,8 @@
                                 <input type="number" name="size" value="{{ app('request')->input('size') }}" placeholder="Сколько записей" hidden>
                                 <input type="number" name="price_from" value="{{ app('request')->input('price_from') }}" placeholder="Цена от" hidden>
                                 <input type="number" name="price_to" value="{{ app('request')->input('price_to') }}" placeholder="Цена до" hidden>
-                                <input type="checkbox" name="is_published" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published') == 'on') checked @endif hidden>
-                                <input type="checkbox" name="is_not_published" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_not_published') == 'on') checked @endif hidden>
+                                <input type="checkbox" name="is_published_true" class="custom-control-input" id="customSwitch1" @if(app('request')->input('is_published_true') == 'on') checked @endif hidden>
+                                <input type="checkbox" name="is_published_false" class="custom-control-input" id="customSwitch2" @if(app('request')->input('is_published_false') == 'on') checked @endif hidden>
                                 <input type="checkbox" name="deleted" class="custom-control-input" id="customSwitch3" @if(app('request')->input('deleted') == 'on') checked @endif hidden>
                                 <button class="btn btn-success">Выгрузить в Excel (с фильтром)</button>
                             </form>

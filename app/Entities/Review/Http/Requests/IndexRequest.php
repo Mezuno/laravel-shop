@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Order\Http\Requests;
+namespace App\Entities\Review\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,14 +23,14 @@ class IndexRequest extends FormRequest
     {
         return [
             'user' => 'nullable|string',
-            'total_price_from' => 'nullable|integer',
-            'total_price_to' => 'nullable|integer',
-            'payment_status_true' => 'nullable|string',
-            'payment_status_false' => 'nullable|string',
-            'size' => 'nullable|integer|max:255',
             'product' => 'nullable|string',
-            'products_count' => 'nullable|integer',
-            'deleted' => 'nullable|string|max:255',
+            'title' => 'nullable|string',
+            'rate_from' => 'nullable|integer',
+            'rate_to' => 'nullable|integer',
+            'confirmed_at_true' => 'nullable|string',
+            'confirmed_at_false' => 'nullable|string',
+            'size' => 'nullable|integer',
+            'deleted' => 'nullable|string',
         ];
     }
 }
