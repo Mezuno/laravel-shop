@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="col-4">
-                        <img :src="product.image_url" class="figure-img w-100 show-product-img" alt="..." id="bigProductImage">
+                        <img :src="product.image_url" class="figure-img w-100 show-product-img" alt="" id="bigProductImage">
                     </div>
 
                     <div class="col-4">
@@ -30,14 +30,14 @@
 
                     <div class="card border border-0 cart-card col-3 h-100 p-4">
 
-                        <h5 class="card-text     text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
+                        <h5 class="card-text text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
                             class="ms-2 d-inline text-dark">₽</h5></h5>
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="#" class="w-100 m-0 btn btn-outline-dark">В корзину
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                             <h5 class="p-0 m-0 p-2 pb-0 mb-0 ms-2 text-danger">
-                                    <div @click.prevent="addToWishList()" class="position-relative">
+                                    <div @click.prevent="" class="position-relative">
                                         <i class="far fa-heart heart-far position-absolute" style="display: block; opacity: 1; cursor: pointer;"></i>
                                         <i class="fas fa-heart heart-fas position-absolute" style="display: none; opacity: 0.5; cursor: pointer;"></i>
                                     </div>
