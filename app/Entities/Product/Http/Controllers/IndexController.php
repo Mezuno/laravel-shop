@@ -20,19 +20,19 @@ class IndexController extends Controller
             return view('admin.product.index')->with(['products' => $products]);
         }
 
-        if ($validated['title']) {
+        if ($request->has('title') && $validated['title']) {
             $query->where('title', 'like', '%'.$validated['title'].'%');
         }
 
-        if ($validated['vendor_code']) {
+        if ($request->has('vendor_code') && $validated['vendor_code']) {
             $query->where('vendor_code', '=', $validated['vendor_code']);
         }
 
-        if ($validated['description']) {
+        if ($request->has('description') && $validated['description']) {
             $query->where('description', 'like', '%'.$validated['description'].'%');
         }
 
-        if ($validated['content']) {
+        if ($request->has('content') && $validated['content']) {
             $query->where('content', 'like', '%'.$validated['content'].'%');
         }
 
@@ -57,7 +57,7 @@ class IndexController extends Controller
             }
         }
 
-        if ($validated['price_from']) {
+        if ($request->has('price_from') && $validated['price_from']) {
             if ($validated['price_from'] < 0) {
                 $priceFrom = 0;
             } else {
@@ -67,7 +67,7 @@ class IndexController extends Controller
             $priceFrom = 0;
         }
 
-        if ($validated['price_to']) {
+        if ($request->has('price_to') && $validated['price_to']) {
             if ($validated['price_to'] > 100000 || $validated['price_to'] == '') {
                 $priceTo = 100000;
             } else {
@@ -77,7 +77,7 @@ class IndexController extends Controller
             $priceTo = 100000;
         }
 
-        if ($validated['size']) {
+        if ($request->has('size') && $validated['size']) {
             if ((int)$validated['size'] <= 0) {
                 $limit = 8;
             } else {

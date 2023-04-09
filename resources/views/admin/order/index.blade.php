@@ -109,6 +109,7 @@
                                     <th>Статус оплаты</th>
                                     <th>Адрес</th>
                                     <th>Дата заказа</th>
+                                    <th>Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -152,7 +153,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $orders->withQueryString()->links() }}
                         </div>
 
                     </div>

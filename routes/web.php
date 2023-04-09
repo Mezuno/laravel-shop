@@ -82,10 +82,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
         Route::patch('/mass/publish', App\Entities\Product\Http\Controllers\MassPublishController::class)->where('product', '[0-9]+')->name('product.mass.publish');
         Route::delete('/mass/delete', App\Entities\Product\Http\Controllers\MassDeleteController::class)->where('product', '[0-9]+')->name('product.mass.delete');
 
-        Route::group(['prefix' => 'images/{product}'], function() {
+        Route::group(['prefix' => 'images/{product}'], function () {
             Route::patch('/{productImage}', App\Entities\Product\Http\Controllers\UpdateImageController::class)->where('product', '[0-9]+')->where('productImage', '[0-9]+')->name('product.image.update');
             Route::post('/', App\Entities\Product\Http\Controllers\StoreImageController::class)->where('product', '[0-9]+')->name('product.image.store');
         });
+    });
+
+    Route::group(['prefix' => 'reviews'], function () {
+        Route::get('/', App\Entities\Review\Http\Controllers\IndexController::class)->name('review.index');
+        Route::patch('/{review}/restore', App\Entities\Review\Http\Controllers\RestoreController::class)->where('review', '[0-9]+')->name('review.restore');
+        Route::patch('/{review}/confirm', App\Entities\Review\Http\Controllers\ConfirmController::class)->where('review', '[0-9]+')->name('review.confirm');
+        Route::delete('/{review}/delete', App\Entities\Review\Http\Controllers\DeleteController::class)->where('review', '[0-9]+')->name('review.delete');
+        Route::get('/{review}', App\Entities\Review\Http\Controllers\ShowController::class)->where('review', '[0-9]+')->name('review.show');
     });
 });
 

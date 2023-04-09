@@ -63,6 +63,32 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
+            ], [
+                'name' => 'PriliPal',
+                'surname' => '',
+                'patronymic' => '',
+                'email' => 'prilipal17@mail.ru',
+                'email_verified_at' => now(),
+                'is_admin' => 1,
+                'gender' => rand(1,2),
+                'age' => [rand(18,34), rand(18,34), rand(18,34), rand(34,84)][rand(0,3)],
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+                'created_at' => NOW(),
+                'updated_at' => NOW(),
+            ], [
+                'name' => 'PriliPal2',
+                'surname' => '',
+                'patronymic' => '',
+                'email' => 'prilipal18@mail.ru',
+                'email_verified_at' => now(),
+                'is_admin' => 0,
+                'gender' => rand(1,2),
+                'age' => [rand(18,34), rand(18,34), rand(18,34), rand(34,84)][rand(0,3)],
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+                'created_at' => NOW(),
+                'updated_at' => NOW(),
             ]
         ]);
 
