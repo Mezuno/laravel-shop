@@ -74,83 +74,8 @@
 
 
                 <div v-if="loadedProducts" class="row">
-
-                    <div v-for="product in products" class="card col-4 me-4 mb-4 product-card-hover p-0" style="width: 15rem;">
-
-                        <img :src="product.image_url" class="card-img-top" width="200px" alt="">
-
-                        <div class="d-flex flex-column p-3 flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="card-title text-black">
-                                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
-                                        {{ product.title }}
-                                    </router-link>
-                                </h6>
-                            </div>
-                            <p class="card-text">{{ product.category.title }}</p>
-                            <p v-for="tag in product.tags" class="alert alert-warning p-1 d-inline-block">{{ tag.title }}</p>
-                            <div class="d-flex justify-content-between flex-grow-1 mb-3">
-                                <h5 class="card-text text-secondary fw-bold w-100 m-0">{{ product.price.slice(0, -3) }}
-                                    <h6 class="ms-1 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>
-                                <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a @click.prevent="addToCart(product)" href=""
-                                   class="w-100 m-0 btn btn-warning text-white border-0" style="white-space: nowrap;">В
-                                    корзину <i class="fas fa-shopping-cart"></i></a>
-                                <h5 v-if="this.$root.token" class="p-0 m-0">
-                                    <a @click.prevent="storeWish(product)" class="p-2 pb-0 mb-0 text-danger ms-2">
-                                        <i class="far fa-heart" :id="`heart${product.id}`"></i>
-                                    </a>
-                                    <div v-for="wish in wishlist" class="p-0 m-0">
-                                        <a @click.prevent="removeWish(wish)" v-if="wish.product_id === product.id">
-                                            <i class="fas fa-times" :id="`x${wish.id}`"></i>
-                                        </a>
-                                    </div>
-                                </h5>
-                            </div>
-                        </div>
-
-                    </div>
+                    <product-card-in-catalog v-for="product in products" :product="product" class="card col-4 me-4 mb-4 product-card-hover p-0" :key="product.id" style="width: 15rem;"/>
                 </div>
-
-
-
-
-
-<!--                <div v-if="loadedProducts" class="d-flex flex-wrap justify-content-between">-->
-
-
-<!--                    <div v-for="product in products" class="card d-inline-flex col-4 mb-4 product-card-hover"-->
-<!--                         style="width: 15rem;">-->
-<!--                        &lt;!&ndash; data-bs-toggle="modal" :data-bs-target="`#exampleModal${product.id}`" &ndash;&gt;-->
-
-<!--                        <img :src="product.image_url" class="card-img-top" width="200px" alt="...">-->
-<!--                        <div class="d-flex flex-column p-3 flex-grow-1">-->
-<!--                            <div class="d-flex justify-content-between align-items-center">-->
-<!--                                <h6 class="card-title text-black">-->
-<!--                                    <router-link :to="{name: 'products.show', params: {id: product.id}}"-->
-<!--                                                 class="text-dark text-decoration-none">{{ product.title }}-->
-<!--                                    </router-link>-->
-<!--                                </h6>-->
-<!--                            </div>-->
-<!--                            <p class="card-text">{{ product.category.title }}</p>-->
-<!--                            <p v-for="tag in product.tags" class="alert alert-warning p-1 d-inline-block">{{ tag.title }}</p>-->
-<!--                            <div class="d-flex justify-content-between flex-grow-1 mb-3">-->
-<!--                                <h5 class="card-text text-secondary fw-bold w-100 m-0">{{ product.price.slice(0, -3) }}-->
-<!--                                    <h6 class="ms-1 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>-->
-<!--                                <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>-->
-<!--                            </div>-->
-<!--                            <div class="d-flex justify-content-between align-items-center">-->
-<!--                                <a @click.prevent="addToCart(product)" href=""-->
-<!--                                   class="w-100 m-0 btn btn-warning text-white border-0" style="white-space: nowrap;">В-->
-<!--                                    корзину <i class="fas fa-shopping-cart"></i></a>-->
-<!--                                <h5 class="p-0 m-0"><a @click.prevent="" class="p-2 pb-0 mb-0 text-danger ms-2"><i-->
-<!--                                    class="far fa-heart"></i></a></h5>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
 
             </div>
 
@@ -160,14 +85,16 @@
 </template>
 
 <script>
+import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 export default {
     name: "products.index",
+    components: {
+        ProductCardInCatalog,
+
+    },
     mounted() {
         this.getProducts();
         this.getFilterList();
-        if (this.$root.token) {
-            this.getWishlist()
-        }
     },
     data() {
         return {
@@ -183,81 +110,9 @@ export default {
         }
     },
     methods: {
-        addToCart(product) {
-
-            let cart = localStorage.getItem('cart')
-
-            let newProduct = [{
-                'id': product.id,
-                'title': product.title,
-                'price': product.price,
-                'image_url': product.image_url,
-                'vendor_code': product.vendor_code,
-                'qty': 1
-            }]
-
-            if (!cart) {
-                localStorage.setItem('cart', JSON.stringify(newProduct))
-            } else {
-                cart = JSON.parse(cart)
-
-                cart.forEach(productInCart => {
-                    if (productInCart.id === product.id) {
-                        productInCart.qty = Number(productInCart.qty) + 1
-                        newProduct = null
-                    }
-                })
-                Array.prototype.push.apply(cart, newProduct)
-
-                localStorage.setItem('cart', JSON.stringify(cart))
-                this.$root.getProductsInCart()
-            }
-
-
-        },
         filterProducts() {
             this.loadedProducts = false
             this.getProducts();
-        },
-        storeWish(product) {
-            console.log('wish');
-            axios.post('/api/wish', {
-                user_id: this.$root.user.id,
-                product_id: product.id
-            })
-                .then(response => {
-                    console.log(response);
-                    document.getElementById('heart'+product.id).classList.remove('far')
-                    document.getElementById('heart'+product.id).classList.add('fas')
-                    console.log('added to wishlist');
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
-        removeWish(wish) {
-            axios.delete('/api/wish/'+wish.id+'/delete')
-                .then(response => {
-                    console.log(response);
-                    document.getElementById('heart'+wish.product_id).classList.remove('fas')
-                    document.getElementById('heart'+wish.product_id).classList.add('far')
-                    document.getElementById('x'+wish.id).remove()
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
-        getWishlist() {
-            axios.post('/api/wishlist', {
-                user_id: this.$root.user.id
-            })
-                .then(response => {
-                    this.wishlist = response.data.data
-                    console.log(this.wishlist);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
         },
         getProducts(page = 1) {
             axios.post('/api/products', {
@@ -268,7 +123,7 @@ export default {
             }).then(response => {
                 this.products = response.data.data
                 this.pagination = response.data.meta
-                console.log(this.products);
+                // console.log(this.products);
                 this.loaded = true
                 this.loadedProducts = true
             });

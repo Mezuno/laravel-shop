@@ -16,6 +16,16 @@
     @yield('content')
 </body>
 
-<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}">
+import productCardInCatalog from "../../../js/components/productCardInCatalog.vue";
+import wishHeart from "../../../js/components/UI/wishHeart.vue";
+
+export default {
+    productCardInCatalog,
+    wishHeart,
+}
+
+
+</script>
 
 </html>

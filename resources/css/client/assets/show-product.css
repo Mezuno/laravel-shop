@@ -3,16 +3,16 @@
 }
 
 .heart-far {
-    transition: all linear 0.35s;
-    -webkit-transition: all linear 0.35s;
-    -moz-transition: all linear 0.35s;
-    -o-transition: all linear 0.35s;
+    transition: all linear 0.15s;
+    -webkit-transition: all linear 0.15s;
+    -moz-transition: all linear 0.15s;
+    -o-transition: all linear 0.15s;
 }
 
 .heart-fas {
-    transition: all linear 0.35s;
-    -webkit-transition: all linear 0.35s;
-    -moz-transition: all linear 0.35s;
-    -o-transition: all linear 0.35s;
+    transition: all linear 0.15s;
+    -webkit-transition: all linear 0.15s;
+    -moz-transition: all linear 0.15s;
+    -o-transition: all linear 0.15s;
 
 }
