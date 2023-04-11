@@ -1,7 +1,12 @@
-
 @import url('../css/client/assets/cart.css');
 @import url('../css/client/assets/hover-prdouct-card.css');
 @import url('../css/client/assets/scroll-barr.css');
 @import url('../css/client/assets/home-page.css');
 @import url('../css/client/assets/cart-card.css');
 @import url('../css/client/assets/show-product.css');
+@import url('client/assets/content-in-modal.css');
+
+.body-scroll {
+    overflow-y: scroll;
+    min-height: 100vh;
+}

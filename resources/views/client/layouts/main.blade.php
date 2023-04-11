@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
@@ -12,18 +12,22 @@
     @vite('resources/js/app.js')
 </head>
 
-<body class="bg-light" style=" overflow-y: scroll;">
+<body class="bg-light body-scroll">
     @yield('content')
 </body>
 
 <script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}">
 import productCardInCatalog from "../../../js/components/productCardInCatalog.vue";
 import wishHeart from "../../../js/components/UI/wishHeart.vue";
+import modalWindow from "../../../js/components/UI/modalWindow.vue";
 
 export default {
     productCardInCatalog,
     wishHeart,
+    modalWindow
 }
+let exampleEl = document.getElementById('example')
+let tooltip = new bootstrap.Tooltip(exampleEl, options)
 
 
 </script>

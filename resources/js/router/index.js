@@ -38,6 +38,21 @@ const router = createRouter({
             name: 'user.registration', // route level code-splitting
             component: () => import('../views/auth/Registration.vue')
         },
+        {
+            path: '/wishlist',
+            name: 'wishlist', // route level code-splitting
+            component: () => import('../views/wishlist/wishlist.vue')
+        },
+        {
+            path: '/orders',
+            name: 'orders', // route level code-splitting
+            component: () => import('../views/orders/orders.vue')
+        },
+        {
+            path: '/purchases',
+            name: 'purchases', // route level code-splitting
+            component: () => import('../views/purchases/purchases.vue')
+        },
     ]
 })
 

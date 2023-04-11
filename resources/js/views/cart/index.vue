@@ -1,7 +1,7 @@
 <template>
-    <!--    <div v-for="productInCart in productsInCart">-->
-    <!--        {{ productInCart.title }}-->
-    <!--    </div>-->
+<!--        <div v-for="productInCart in productsInCart">-->
+<!--            {{ productInCart.title }}-->
+<!--        </div>-->
     <div>
         <div class="container-xxl mt-5 mb-5">
 
@@ -13,7 +13,7 @@
                         <div class="d-flex flex-wrap justify-content-between" id="cartTitle">
                             <h3 class="card-title mt-1 ">Корзина<h3 v-if="this.productsInCart.length === 0" class="">
                                 пока пуста</h3></h3>
-                            <div v-if="this.productsInCart.length > 6" @click="openCartList()" class="btn openCartList">
+                            <div v-show="this.productsInCart.length > 6" @click="openCartList()" class="btn openCartList">
                                 <i class="fas fa-chevron-up h4 openCartListIcon"></i>
                             </div>
                         </div>
@@ -56,17 +56,37 @@
                     </div>
                 </div>
 
-                <div v-if="this.productsInCart.length !== 0" class="card border border-0 cart-card w-25 h-100">
+                <div v-show="this.productsInCart.length !== 0" class="card border border-0 cart-card w-25 h-100">
                     <div v-if="orderErrors" v-for="orderError in orderErrors" class="alert alert-danger">
                         {{ orderError }}
                     </div>
                     <div class="card-body px-4">
                         <h3 class="card-title mt-1 mb-3">Оформить заказ</h3>
                         <div>
-                            <input class="w-100 mb-3 border border-dark rounded form-control" type="text" v-model="name" placeholder="Ваше имя" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-dark rounded form-control" type="text" v-model="email" placeholder="Электронная почта" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-dark rounded form-control" type="text" v-model="address" placeholder="Адресс доставки" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="name" placeholder="Ваше имя" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="email" placeholder="Электронная почта" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="address" placeholder="Адресс доставки" style="height: 45px;">
                         </div>
+<!--                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">-->
+<!--                        <label class="btn btn-outline-secondary" for="btn-check-2-outlined">Запомнить данные?</label><br>-->
+                        <div class="form-check ">
+                            <input class="form-check-input shadow-none border-dark" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
+                            <label class="form-check-label shadow-none " for="flexCheckDefault">
+                                Запомнить данные?
+                            </label>
+                        </div>
+<!--                        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Подсказка</em> <u>с</u> <b>HTML</b>">-->
+<!--                            Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом-->
+<!--                        </button>-->
+
+
+<!--                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off">-->
+<!--                        <label class="btn btn-outline-dark" for="btn-check-2-outlined">Запомнить данные?</label><br>-->
+
+<!--                        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Подсказка</em> <u>с</u> <b>HTML</b>">-->
+<!--                            Всплывающая подсказка с HTML-->
+<!--                        </button>-->
+
                         <div class="mt-2">
                             <h6 class="text-dark text-nowrap">Итого: {{ totalPrice }} ₽</h6>
                             <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-dark w-100">
@@ -75,7 +95,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -112,9 +131,12 @@ export default {
         this.$nextTick(function () {
             this.openCartList()
         })
-        this.setName()
-        this.setEmail()
-        this.setAddress()
+        if (this.$root.user) {
+            this.setName()
+            this.setEmail()
+            this.setAddress()
+        }
+
     },
 
     methods: {
@@ -128,26 +150,26 @@ export default {
             this.address = this.$root.user.address
         },
 
-        getHeight(id) {
-            let idCartCard = document.getElementById(id)
-            let styles = window.getComputedStyle(idCartCard, null)
-            let height = styles.height;
-            return (height)
-        },
-
-        getMargin(id) {
-            let idCartCard = document.getElementById(id)
-            let styles = window.getComputedStyle(idCartCard, null)
-            let margin = styles.marginTop + styles.marginBottom;
-            return (margin)
-        },
-
-        getPadding(id) {
-            let idCartCard = document.getElementById(id)
-            let styles = window.getComputedStyle(idCartCard, null)
-            let margin = styles.paddingTop + styles.paddingBottom;
-            return (margin)
-        },
+        // getHeight(id) {
+        //     let idCartCard = document.getElementById(id)
+        //     let styles = window.getComputedStyle(idCartCard, null)
+        //     let height = styles.height;
+        //     return (height)
+        // },
+        //
+        // getMargin(id) {
+        //     let idCartCard = document.getElementById(id)
+        //     let styles = window.getComputedStyle(idCartCard, null)
+        //     let margin = styles.marginTop + styles.marginBottom;
+        //     return (margin)
+        // },
+        //
+        // getPadding(id) {
+        //     let idCartCard = document.getElementById(id)
+        //     let styles = window.getComputedStyle(idCartCard, null)
+        //     let margin = styles.paddingTop + styles.paddingBottom;
+        //     return (margin)
+        // },
 
         openCartList() {
             let lengthProducts = this.productsInCart.length

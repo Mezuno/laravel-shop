@@ -11,6 +11,8 @@ import productCardInCatalog from "./components/productCardInCatalog.vue";
 app.component('product-card-in-catalog', productCardInCatalog)
 import wishHeart from "./components/UI/wishHeart.vue";
 app.component('wish-heart', wishHeart)
+import modalWindow from "./components/UI/modalWindow.vue";
+app.component('modal-window', modalWindow)
 
 app.use(router)
 // app.config.globalProperties.axios = axios

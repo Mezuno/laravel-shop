@@ -1,4 +1,4 @@
 @extends('client.layouts.main')
 @section('content')
-    <div id="app"></div>
+    <div id="app" style="min-height: 100vh"></div>
 @endsection

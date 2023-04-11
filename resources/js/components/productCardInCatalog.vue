@@ -18,20 +18,13 @@
                 <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
             </div>
             <div class="row px-2">
-                <a @click.prevent="addToCart(product)" href="" class=" m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;">
+                <a @click.prevent="addToCart(product)" href="" class=" m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
                 </a>
 
                 <h5 v-if="this.$root.token" class="p-0 m-0 ps-1 col-2">
-
-                    <div v-if="wishLoad" class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-
-                    <a v-if="!wishLoad" class="p-2 pb-0 mb-0 text-danger ms-2">
+                    <a class="p-2 pb-0 mb-0 text-danger ms-2">
 
                         <i @click.prevent="switchWish(product)" class="far fa-heart" :id="`heart${product.id}`" style="cursor: pointer;"></i>
                     </a>
@@ -67,26 +60,32 @@ export default {
             if (this.$root.token) {
                 this.getWishlist(this.product)
                 // this.checkWishlist(this.product, this.wishlist)
+            } else {
+                this.stretchCartButton(this.product)
             }
         })
 
 
     },
     methods: {
-        checkWishlist(product, wish) {
-
-            if (this.wishlist.length !== 0) {
-                for (let i = 0; i < this.wishlist.length; i++) {
-                    if (this.wishlist[i].product_id === product.id) {
-
-                        document.getElementById('heart'+product.id).classList.remove('far')
-                        document.getElementById('heart'+product.id).classList.add('fas')
-
-                    }
-                }
-            }
-
+        stretchCartButton(product) {
+            document.getElementById('addCart'+product.id).classList.remove('col-10')
+            document.getElementById('addCart'+product.id).classList.add('col-12')
         },
+        // checkWishlist(product, wish) {
+        //
+        //     if (this.wishlist.length !== 0) {
+        //         for (let i = 0; i < this.wishlist.length; i++) {
+        //             if (this.wishlist[i].product_id === product.id) {
+        //
+        //                 document.getElementById('heart'+product.id).classList.remove('far')
+        //                 document.getElementById('heart'+product.id).classList.add('fas')
+        //
+        //             }
+        //         }
+        //     }
+        //
+        // },
 
         addToCart(product) {
 
