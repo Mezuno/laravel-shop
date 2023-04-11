@@ -10,9 +10,15 @@
                     <a href="{{ route('product.show', $product->id) }}" class="btn btn-outline-primary mb-3">Страница товара</a>
                     <h1 class="m-0">Редактировать товар id{{ $product->id }}</h1>
                 </div><!-- /.col -->
-                <div class="col-sm-6 d-flex justify-content-between align-items-end">
-                    <h1 class="m-0">Изображения товара id{{ $product->id }}</h1>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Товары</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('product.show', $product->id) }}">{{ $product->vendor_code }}</a></li>
+                        <li class="breadcrumb-item active">Редактирование</li>
+                    </ol>
                 </div><!-- /.col -->
+
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>

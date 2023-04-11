@@ -9,7 +9,7 @@ class EditController extends Controller
 {
     public function __invoke(int $orderId)
     {
-        $order = Order::withTrashed()->where('id', $orderId)->with('orderer')->first();
+        $order = Order::withTrashed()->where('id', $orderId)->with('user')->first();
         if ($order->deleted_at) {
             return back()->with(['error' => 'Сначала восстановите заказ, прежде чем редактировать его']);
         }

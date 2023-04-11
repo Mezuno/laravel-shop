@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 20;
+        $recordCount = 100;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $products = [];
@@ -41,8 +41,8 @@ class OrderSeeder extends Seeder
                 'payment_status' => rand(0,1),
                 'address' => fake()->address(),
                 'deleted_at' => [fake()->dateTime, null][array_rand([fake()->dateTime, null])],
-                'updated_at' => now(),
-                'created_at' => now(),
+                'updated_at' => now()->add('day', 30),
+                'created_at' => (now()->year . '-' . now()->month . '-' . rand(1, 29) . ' ' . now()->hour . ':' . now()->minute . ':' . now()->second),
             ];
         }
 

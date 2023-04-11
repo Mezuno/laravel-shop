@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <!-- notifications -->
     @vite('resources/css/admin/notifications.css')
     <!-- admin -->
@@ -165,7 +167,7 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{ route('order.index') }}" class="nav-link">
-                            <i class="nav-icon  fas fa-shopping-cart"></i>
+                            <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>Заказы</p>
                         </a>
                     </li>
