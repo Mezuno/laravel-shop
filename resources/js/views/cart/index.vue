@@ -6,6 +6,38 @@
         <div class="container-xxl mt-5 mb-5">
 
 
+<!--            <p>-->
+<!--                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
+<!--                    Link with href-->
+<!--                </a>-->
+<!--                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
+<!--                    Button with data-target-->
+<!--                </button>-->
+<!--            </p>-->
+<!--            <div class="collapse" id="collapseExample">-->
+<!--                <div class="card card-body">-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="card-header d-flex align-items-center justify-content-between">-->
+<!--                <p class="h4 mb-0">Добавить новость</p>-->
+<!--                <button class="btn rounded-circle shadow-none" data-bs-toggle="collapse" href="#collapseCreateNews" @click="adsasd">-->
+<!--                    <i class="fas fa-chevron-up"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="collapse" id="collapseCreateNews">-->
+<!--                <div class="card-body d-flex flex-column">-->
+<!--                    <form class="d-flex flex-column" method="post" enctype="multipart/form-data">-->
+
+<!--                        <div class="alert alert-danger w-100">-->
+<!--                            <ul>аааааа</ul>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
             <div class="d-flex">
 
                 <div class="card border border-0 cart-card w-75 me-5 overflow-hidden" id="cart-card">
@@ -111,7 +143,9 @@ export default {
             name: '',
             email: '',
             address: '',
-            orderErrors: []
+            orderErrors: [],
+            cartOpened: true,
+            isOpenA: false,
         }
     },
 
@@ -140,6 +174,14 @@ export default {
     },
 
     methods: {
+        // adsasd() {
+        //     if (this.cartOpened){
+        //         document.getElementById("collapseCreateNews").classList.add('collapse')
+        //         document.getElementById("collapseCreateNews").classList.remove('show')
+        //     } else {
+        //         document.getElementById("collapseCreateNews").classList.add('show')
+        //     }
+        // },
         setName() {
             this.name = this.$root.user.name
         },
@@ -189,9 +231,9 @@ export default {
 
             } else {
                 document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
-                document.getElementsByClassName("cart-card")[0].style.height = "960px"
-
-                console.log(lengthProducts)
+                // document.getElementsByClassName("cart-card")[0].style.height = "960px"
+                document.getElementsByClassName("cart-card")[0].style.height = ""
+                // console.log(lengthProducts)
                 for (let i = 0; i < lengthProducts; i++) {
                     document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
                 }

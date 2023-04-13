@@ -3,7 +3,10 @@ import wishHeart from "./UI/wishHeart.vue";
 import modalWindow from "./UI/modalWindow.vue";
 
 export default {
-    productCardInCatalog,
-    wishHeart,
-    modalWindow,
+    components: {
+        productCardInCatalog,
+        wishHeart,
+        modalWindow,
+    }
+
 }

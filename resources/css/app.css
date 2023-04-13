@@ -6,6 +6,7 @@
 @import url('../css/client/assets/show-product.css');
 @import url('client/assets/content-in-modal.css');
 
+
 .body-scroll {
     overflow-y: scroll;
     min-height: 100vh;

@@ -1,7 +1,9 @@
 <template>
     <div class="all">
-        <img :src="product.image_url" class="card-img-top" width="200px" alt="">
 
+        <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
+            <img :src="product.image_url" class="card-img-top" width="200px" alt="">
+        </router-link>
         <div class="d-flex flex-column p-3 flex-grow-1">
             <div class="d-flex justify-content-between align-items-center">
                 <h6 class="card-title text-black">

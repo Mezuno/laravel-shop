@@ -41,17 +41,17 @@ const router = createRouter({
         {
             path: '/wishlist',
             name: 'wishlist', // route level code-splitting
-            component: () => import('../views/wishlist/wishlist.vue')
+            component: () => import('../views/wishlist/index.vue')
         },
         {
             path: '/orders',
             name: 'orders', // route level code-splitting
-            component: () => import('../views/orders/orders.vue')
+            component: () => import('../views/orders/index.vue')
         },
         {
             path: '/purchases',
             name: 'purchases', // route level code-splitting
-            component: () => import('../views/purchases/purchases.vue')
+            component: () => import('../views/purchases/index.vue')
         },
     ]
 })
