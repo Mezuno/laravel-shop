@@ -6,8 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ route('order.index') }}" class="btn btn-outline-primary mb-3"><i class="fas fa-arrow-left"></i>&nbsp&nbspВсе заказы</a>
-                    <a href="{{ route('order.show', $order->id) }}" class="btn btn-outline-primary mb-3">Страница заказа</a>
                     <h1 class="m-0">Редактировать заказ</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">

@@ -6,8 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ route('category.index') }}" class="btn btn-outline-primary mb-3"><i
-                            class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к категориям</a>
                     <h1 class="m-0">Категория</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">

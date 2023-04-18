@@ -22,7 +22,7 @@
     <!-- admin -->
     @vite('resources/css/admin/admin.css')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="dark-mode hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
     <!-- Preloader -->
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-dark">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -126,10 +126,10 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
-            <div class="nav-item mx-1">
+            <div class="nav-item mx-1 ml-3">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button class="btn btn-outline-danger" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         Выйти
                     </button>
                 </form>
@@ -142,7 +142,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ route('main.index') }}" class="brand-link">
-            <span class="brand-text font-weight-light">Магазин</span>
+            <span class="brand-text font-weight-light">Администрирование</span>
         </a>
 
         <!-- Sidebar -->
@@ -166,11 +166,13 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{ route('order.index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-shopping-cart"></i>
-                            <p>Заказы</p>
+                        <a href="{{ route('main.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>Главная</p>
                         </a>
                     </li>
+
+                    <li class="nav-header">ТОВАРЫ</li>
                     <li class="nav-item">
                         <a href="{{ route('product.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-wrench"></i>
@@ -189,10 +191,18 @@
                             <p>Теги</p>
                         </a>
                     </li>
+
+                    <li class="nav-header">КЛИЕНТЫ</li>
                     <li class="nav-item">
                         <a href="{{ route('user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Пользователи</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('order.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>Заказы</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -217,7 +227,7 @@
     @endif
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper pl-2">
         @yield('content')
     </div>
     <!-- /.content-wrapper -->

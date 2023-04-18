@@ -20,7 +20,7 @@
     <!-- /.content-header -->
 
     <!-- Content filter -->
-    <div class="ml-3 p-3 pr-0 alert alert-default-dark d-inline-block">
+    <div class="ml-3 p-3 pr-0 alert alert-dark d-inline-block">
         <div class="">
             <h3>Фильтр</h3>
             <form action="{{ route('product.index') }}" class="w-100 d-flex" id="filter_form">
@@ -86,7 +86,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-12">
-                    <div class="d-inline text-dark text-black">{{ $products->withQueryString()->links() }}</div>
+                    <div class="d-inline">{{ $products->withQueryString()->links() }}</div>
                     <div class="card">
                         <div class="card-header" id="managmentBar">
                             <a href="{{ route('product.create') }}" class="btn btn-primary">Добавить</a>
@@ -133,8 +133,8 @@
                                     <th class="align-text-bottom">Изображение</th>
                                     <th class="align-text-bottom">Наименование</th>
                                     <th class="align-text-bottom">Цена</th>
-                                    <th class="align-text-bottom">Кол-во в наличии</th>
-                                    <th class="align-text-bottom">Публикация</th>
+                                    <th class="align-text-bottom">Наличие</th>
+                                    <th class="align-text-bottom">Статус</th>
                                     <th class="align-text-bottom">Категория</th>
                                     <th class="align-text-bottom">Действия</th>
                                 </tr>
@@ -146,17 +146,36 @@
                                             <input form="massPublishForm" name="products_ids[]" value="{{ $product->id }}" massPublishProductId="{{ $product->id }}" type="checkbox" onchange="switchBar()" class="check-button-publish">
                                             <input form="massDeleteForm" name="products_ids[]" value="{{ $product->id }}" massDeleteProductId="{{ $product->id }}" type="checkbox" class="check-button-delete" hidden>
                                         </td>
+
                                         <td class="pt-0 pb-0 align-text-bottom pl-4">{{ $product->vendor_code }}</td>
-                                        <td class="pt-0 pb-0 align-text-bottom"><img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="50" height="50" alt="Изображение товара"></td>
-                                        <td class="pt-0 pb-0 align-text-bottom"><a href="{{ route('product.show', $product->id) }}" class="">{{ mb_strimwidth($product->title, 0, 60, "...") }}</a></td>
+
+                                        <td class="pt-0 pb-0 align-text-bottom">
+                                            <img src="{{ URL::asset('storage/'.$product->preview_image) }}" width="50" height="50" alt="Изображение товара">
+                                        </td>
+
+                                        <td class="pt-0 pb-0 align-text-bottom text-decoration-underline">
+                                            {{ mb_strimwidth($product->title, 0, 60, "...") }}
+                                        </td>
+
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->price }} ₽</td>
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->count }}шт.</td>
-                                        <td class="pt-0 pb-0 align-text-bottom"><p class="p-0 pl-2 alert @if($product->is_published) alert-default-success @else alert-default-warning @endif">{{ $product->publishedStatus }}</p></td>
+
+                                        <td class="pt-0 pb-0 align-text-bottom">
+                                            <p class="badge @if($product->is_published) badge-success @else badge-warning @endif">{{ $product->publishedStatus }}</p>
+                                        </td>
+
                                         <td class="pt-0 pb-0 align-text-bottom">{{ $product->category->title }}</td>
+
                                         <td class="pt-0 pb-0 align-text-bottom">
                                             @if(!$product->deleted_at)
-                                            <a href="{{ route('product.edit', $product->id) }}" class="primary p-2 mr-4 d-inline"><i class="fas fa-pen"></i></a>
-                                                <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
+                                            <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+                                                <button type="button" onclick="openModal({{ "deleteModal" . $product->id }});"
+                                                        class="btn btn-danger"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal{{ $product->id }}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             @else
@@ -167,6 +186,7 @@
                                                 </form>
                                             @endif
                                         </td>
+
                                     </tr>
 
                                 @endforeach

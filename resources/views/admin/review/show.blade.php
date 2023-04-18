@@ -6,8 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ route('order.index') }}" class="btn btn-outline-primary mb-3"><i
-                            class="fas fa-arrow-left"></i>&nbsp&nbspВернуться к отзывам</a>
                     @if(URL::previous() != URL::current())
                         <a href="{{ URL::previous() }}" class="btn btn-outline-primary mb-3">
                             <i class="fas fa-arrow-left"></i>&nbsp&nbspНазад

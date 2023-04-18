@@ -14,57 +14,24 @@ class IndexController extends Controller
 {
     use AdminFilterHelperTrait;
 
+    public function __construct(
+        private IndexService $service,
+    ) {
+    }
+
     public function __invoke()
     {
         $orders = Order::all();
 
-        $mostPopularProductsCount = [];
-
-        foreach ($orders as $order) {
-            foreach (json_decode($order->products) as $product) {
-                $mostPopularProductsCount[] = $product->id;
-            }
-        }
-
-        $mostPopularProductsCount = array_count_values($mostPopularProductsCount);
-        arsort($mostPopularProductsCount);
-        $mostPopularProductsCount = array_slice($mostPopularProductsCount, 0, 3, true);
-        $mostPopularProducts = [];
-
-        foreach ($mostPopularProductsCount as $id => $count) {
-            $mostPopularProducts[] = Product::where('id', '=', $id)->get()->first();
-        }
-
-
-        $orders = Order::all();
-
-        $ordersPerDayCount = [];
-
-        foreach ($orders as $order) {
-            if ($order->created_at->format('m') == now()->month) {
-                $ordersPerDayCount[] = $order->created_at->format('d');
-            }
-        }
-        $ordersPerDayCount = array_count_values($ordersPerDayCount);
-        ksort($ordersPerDayCount);
-
+        $mostPopularProductsCount = $this->service->getMostPopularProductsCount($orders);
+        $mostPopularProducts = $this->service->getMostPopularProducts($mostPopularProductsCount);
+        $ordersPerDayCount = $this->service->getOrdersPerDayCount($orders);
+        $lastOrders = $this->service->getLastOrders(5);
 
         $wishlist = Wishlist::all();
 
-        $mostPopularWishesCount = [];
-
-        foreach ($wishlist as $wish) {
-            $mostPopularWishesCount[] = $wish->product_id;
-        }
-
-        $mostPopularWishesCount = array_count_values($mostPopularWishesCount);
-        arsort($mostPopularWishesCount);
-        $mostPopularWishesCount = array_slice($mostPopularWishesCount, 0, 3, true);
-        $mostPopularWishes = [];
-
-        foreach ($mostPopularWishesCount as $id => $count) {
-            $mostPopularWishes[] = Product::where('id', '=', $id)->get()->first();
-        }
+        $mostPopularWishesCount = $this->service->getMostPopularWishesCount($wishlist);
+        $mostPopularWishes = $this->service->getMostPopularWishesProducts($mostPopularWishesCount);
 
         $dataCount = [
             'usersCount' => User::all()->count(),
@@ -73,6 +40,13 @@ class IndexController extends Controller
             'reviewsCount' => Review::all()->count(),
         ];
 
-        return view('admin.main.index', compact('dataCount', 'mostPopularProducts', 'mostPopularProductsCount', 'ordersPerDayCount', 'mostPopularWishes', 'mostPopularWishesCount'));
+        return view('admin.main.index', compact(
+            'mostPopularProductsCount',
+            'mostPopularProducts',
+            'ordersPerDayCount',
+            'lastOrders',
+            'mostPopularWishesCount',
+            'mostPopularWishes',
+            'dataCount'));
     }
 }

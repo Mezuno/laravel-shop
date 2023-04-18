@@ -84,17 +84,79 @@
                 </div>
                 <!-- ./col -->
             </div>
+
             <div class="row">
-                <div class="col-md-6">
-                    <h3>Популярность в заказах</h3>
+
+                <div class="col mb-2">
+                    <div class="bg-dark text-white rounded-3 p-3 mr-4">
+                        <h3>График заказов за {{ now()->format('F') }}</h3>
+                        <canvas id="orderChart" style="width:100%;max-width:700px"></canvas>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card">
+                        <div class="card-header border-transparent">
+                            <h1 class="card-title">Последние заказы</h1>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table m-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Заказ ID</th>
+                                        <th>Товары</th>
+                                        <th>Статус</th>
+                                        <th>Сумма</th>
+                                        <th>Дата</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    @foreach($lastOrders as $order)
+                                    <tr>
+                                        <td><a href="{{ route('order.show', $order->id) }}">{{ $order->id }}</a></td>
+                                        <td>
+                                            @foreach(json_decode($order->products) as $product)
+                                                <a href="{{ route('product.show', $product->id) }}" class="text-white">{{ $product->vendor_code }}</a>,
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <span class="badge @if($order->payment_status) badge-success @else badge-warning @endif">
+                                                {{ $order->paymentStatusString }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $order->total_price }}</td>
+                                        <td>{{ $order->created_at }}</td>
+                                    </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer clearfix">
+                            <a href="{{ route('order.index') }}" class="btn btn-sm btn-primary float-right">Посмотреть все заказы</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+                    <h3 class="mb-3">Популярное в заказах</h3>
                     <div class="row">
                         @foreach($mostPopularProducts as $product)
-                            <div class="card col-lg-3 col-4">
-                                <img class="card-img-top" src="{{ $product->imageUrl }}" alt="Card image cap">
+                            <div class="card col mr-3 ml-3 p-0">
+                                <img class="card-img-top" height="240" src="{{ $product->imageUrl }}" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->title }}</h5>
                                     <p class="card-text">
-                                        В {{ $mostPopularProductsCount[$product->id] }}х заказах
+                                        В {{ $mostPopularProductsCount[$product->id] }} заказах
                                     </p>
                                     <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">К товару</a>
                                 </div>
@@ -103,22 +165,16 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <h3>График заказов за {{ now()->format('F') }}</h3>
-                    <canvas id="orderChart" style="width:100%;max-width:700px"></canvas>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Популярность в желаемом</h3>
+                <div class="col-6">
+                    <h3 class="mb-3">Популярное в желаемом</h3>
                     <div class="row">
                         @foreach($mostPopularWishes as $product)
-                            <div class="card col-lg-3 col-4">
-                                <img class="card-img-top" src="{{ $product->imageUrl }}" alt="Card image cap">
+                            <div class="card col mr-3 ml-3 p-0">
+                                <img class="card-img-top" height="240" src="{{ $product->imageUrl }}" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->title }}</h5>
                                     <p class="card-text">
-                                        Добавили в желаемое {{ $mostPopularWishesCount[$product->id] }}х раз
+                                        Добавили {{ $mostPopularWishesCount[$product->id] }} раз
                                     </p>
                                     <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">К товару</a>
                                 </div>
@@ -126,7 +182,10 @@
                         @endforeach
                     </div>
                 </div>
+
+
             </div>
+
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 

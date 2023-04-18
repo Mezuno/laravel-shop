@@ -6,9 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{ route('tag.index') }}" class="btn btn-outline-primary mb-3"><i class="fas fa-arrow-left"></i>&nbsp&nbspВсе теги</a>
-                    <a href="{{ route('tag.show', $tag->id) }}" class="btn btn-outline-primary mb-3">Страница тега</a>
-                    <h1 class="m-0">Редактировать тег</h1>
+                    <h1 class="m-0">Редактировать тег {{ $tag->title }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
