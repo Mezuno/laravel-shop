@@ -17,21 +17,21 @@ class Order extends Model
     protected $guarded = false;
 
 
-//    const PAYMENT_TRUE = 1;
-//    const PAYMENT_FALSE = 0;
-//
-//    static function getPaymentStatus()
-//    {
-//        return [
-//            self::PAYMENT_TRUE => 'Оплачен',
-//            self::PAYMENT_FALSE => 'Не оплачен',
-//        ];
-//    }
-//
-//    public function getPaymentStatusAttribute()
-//    {
-//        return self::getPaymentStatus()[$this->payment_status];
-//    }
+    const PAYMENT_TRUE = 1;
+    const PAYMENT_FALSE = 0;
+
+    static function getPaymentStatusString()
+    {
+        return [
+            self::PAYMENT_TRUE => 'Оплачен',
+            self::PAYMENT_FALSE => 'Не оплачен',
+        ];
+    }
+
+    public function getPaymentStatusStringAttribute()
+    {
+        return self::getPaymentStatusString()[$this->payment_status];
+    }
 
     public function user()
     {

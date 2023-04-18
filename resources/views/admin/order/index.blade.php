@@ -110,7 +110,7 @@
                                     <th>Email</th>
                                     <th>Товары</th>
                                     <th>Сумма</th>
-                                    <th>Кол-во товаров</th>
+                                    <th>Товары (шт.)</th>
                                     <th>Статус оплаты</th>
                                     <th>Адрес</th>
                                     <th>Дата заказа</th>
@@ -132,7 +132,7 @@
                                         </td>
                                         <td>{{ $order->total_price }}₽</td>
                                         <td>{{ count(json_decode($order->products)) }}</td>
-                                        <td>{{ $order->payment_status }}</td>
+                                        <td class="pt-0 pb-0 align-text-bottom"><p class="p-0 pl-2 alert @if($order->payment_status) alert-default-success @else alert-default-warning @endif">{{ $order->paymentStatusString }}</p></td>
                                         <td>{{ $order->address }}</td>
                                         <td>{{ $order->created_at }}</td>
                                         <td class="d-flex">
