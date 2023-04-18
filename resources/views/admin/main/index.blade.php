@@ -86,7 +86,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Самые популярные товары</h3>
+                    <h3>Популярность в заказах</h3>
                     <div class="row">
                         @foreach($mostPopularProducts as $product)
                             <div class="card col-lg-3 col-4">
@@ -105,7 +105,26 @@
 
                 <div class="col-md-6">
                     <h3>График заказов за {{ now()->format('F') }}</h3>
-                    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+                    <canvas id="orderChart" style="width:100%;max-width:700px"></canvas>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Популярность в желаемом</h3>
+                    <div class="row">
+                        @foreach($mostPopularWishes as $product)
+                            <div class="card col-lg-3 col-4">
+                                <img class="card-img-top" src="{{ $product->imageUrl }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $product->title }}</h5>
+                                    <p class="card-text">
+                                        Добавили в желаемое {{ $mostPopularWishesCount[$product->id] }}х раз
+                                    </p>
+                                    <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">К товару</a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
             <!-- /.row -->
@@ -115,19 +134,19 @@
     <!-- /.content -->
     <script>
 
-        const chartData = [
+        const orderChartData = [
             @foreach($ordersPerDayCount as $day => $orders) {day: {{ $day }}, count: {{ $orders }} }, @endforeach
         ];
 
-        new Chart("myChart", {
+        new Chart("orderChart", {
             type: "bar",
 
             data: {
-                labels: chartData.map(row => row.day),
+                labels: orderChartData.map(row => row.day),
                 datasets: [{
                     label: 'Заказы',
                     backgroundColor: '#17a2b8',
-                    data: chartData.map(row => row.count)
+                    data: orderChartData.map(row => row.count)
                 }],
             },
         });

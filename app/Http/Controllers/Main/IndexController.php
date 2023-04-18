@@ -6,6 +6,7 @@ use App\Entities\Order\Models\Order;
 use App\Entities\Product\Models\Product;
 use App\Entities\Review\Models\Review;
 use App\Entities\User\Models\User;
+use App\Entities\Wishlist\Models\Wishlist;
 use App\Http\Controllers\Controller;
 use App\Traits\AdminFilterHelperTrait;
 
@@ -47,6 +48,24 @@ class IndexController extends Controller
         $ordersPerDayCount = array_count_values($ordersPerDayCount);
         ksort($ordersPerDayCount);
 
+
+        $wishlist = Wishlist::all();
+
+        $mostPopularWishesCount = [];
+
+        foreach ($wishlist as $wish) {
+            $mostPopularWishesCount[] = $wish->product_id;
+        }
+
+        $mostPopularWishesCount = array_count_values($mostPopularWishesCount);
+        arsort($mostPopularWishesCount);
+        $mostPopularWishesCount = array_slice($mostPopularWishesCount, 0, 3, true);
+        $mostPopularWishes = [];
+
+        foreach ($mostPopularWishesCount as $id => $count) {
+            $mostPopularWishes[] = Product::where('id', '=', $id)->get()->first();
+        }
+
         $dataCount = [
             'usersCount' => User::all()->count(),
             'productsCount' => Product::all()->count(),
@@ -54,6 +73,6 @@ class IndexController extends Controller
             'reviewsCount' => Review::all()->count(),
         ];
 
-        return view('admin.main.index', compact('dataCount', 'mostPopularProducts', 'mostPopularProductsCount', 'ordersPerDayCount'));
+        return view('admin.main.index', compact('dataCount', 'mostPopularProducts', 'mostPopularProductsCount', 'ordersPerDayCount', 'mostPopularWishes', 'mostPopularWishesCount'));
     }
 }

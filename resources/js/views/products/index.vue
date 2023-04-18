@@ -61,7 +61,7 @@
                             <input v-model="tags" type="checkbox" :id="tag.id" :value="tag.id">
                         </div>
 
-                        <button @click.prevent="filterProducts()" class="btn btn-primary">Применить</button>
+                        <button @click.prevent="filterProducts()" class="btn btn-my-theme">Применить</button>
                     </form>
                 </div>
 
