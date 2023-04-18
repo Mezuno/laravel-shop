@@ -20,7 +20,7 @@
     <!-- /.content-header -->
 
     <!-- Content filter -->
-    <div class="ml-3 p-3 pr-0 alert alert-default-dark d-inline-block">
+    <div class="ml-3 p-3 pr-0 alert alert-dark d-inline-block">
         <div class="">
             <h3>Фильтр</h3>
             <form action="{{ route('review.index') }}" class="w-100 d-flex" id="filter_form">
