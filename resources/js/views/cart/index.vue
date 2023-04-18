@@ -5,34 +5,6 @@
     <div>
         <div class="container-xxl mt-5 mb-5">
 
-            <p>
-<!--                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
-<!--                    Link with href-->
-<!--                </a>-->
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Button with data-bs-target
-                </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                </div>
-            </div>
-
-            <p>
-<!--                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
-<!--                    Link with href-->
-<!--                </a>-->
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Button with data-bs-target
-                </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                </div>
-            </div>
-
 <!--            <p>-->
 <!--                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
 <!--                    Link with href-->
@@ -329,30 +301,24 @@ export default {
         },
 
         storeOrder() {
-            axios.post('http://localhost:8000/api/order', {
+            window.axios.post('http://localhost:8000/api/order', {
                 'products': this.productsInCart,
                 'name': this.name,
                 'email': this.email,
                 'address': this.address,
                 'total_price': this.totalPrice,
-                'error': this.orderErrors,
-            }).then(response => {
+            }).then((response) => {
                 this.productsInCart = null
-                localStorage.removeItem('cart')
+                // localStorage.removeItem('cart')
+                console.log(1);
                 console.log(response.data.data);
-            }).catch(error => {
-                console.log(error.response.data.errors)
-                this.orderErrors = Object.values(error.response.data.errors);
-                console.log(this.orderErrors);
+            }).catch((e) => {
+                console.log(2);
+                console.log(e.toJSON());
             });
         },
     }
 }
-
-var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-var collapseList = collapseElementList.map(function (collapseEl) {
-    return new bootstrap.Collapse(collapseEl)
-})
 
 </script>
 

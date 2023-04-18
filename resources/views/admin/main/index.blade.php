@@ -87,8 +87,8 @@
 
             <div class="row">
 
-                <div class="col mb-2">
-                    <div class="bg-dark text-white rounded-3 p-3 mr-4">
+                <div class="col mb-4">
+                    <div class="bg-dark text-white rounded-3 p-3">
                         <h3>График заказов за {{ now()->format('F') }}</h3>
                         <canvas id="orderChart" style="width:100%;max-width:700px"></canvas>
                     </div>

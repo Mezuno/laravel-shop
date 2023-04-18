@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/products', App\Http\API\Controllers\Product\IndexController::class)->name('product.index');
 Route::get('/products/filters', App\Http\API\Controllers\Product\FilterListController::class)->name('product.filter.list');
@@ -26,6 +23,9 @@ Route::post('/order', App\Http\API\Controllers\Order\StoreController::class)->na
 Route::post('/reviews', App\Http\API\Controllers\Review\IndexController::class)->name('review.index');
 
 Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
     Route::post('/orders', App\Http\API\Controllers\Order\IndexController::class)->name('order.index');
     Route::post('/wish', App\Http\API\Controllers\Wishlist\StoreController::class)->name('wish.store');
     Route::post('/wishlist', App\Http\API\Controllers\Wishlist\IndexController::class)->name('wish.index');
