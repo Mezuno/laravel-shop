@@ -70,19 +70,19 @@
                             </div>
                         </div>
 
-                        <div v-show="productsInCart" v-for="(productInCart, index) in productsInCart" class="row mt-4 productsInCartList"
+                        <div v-show="productsInCart" v-for="(product, index) in productsInCart" class="row mt-4 productsInCartList"
                              id="productsInCartList">
                             <div class="col-2">
-                                <router-link :to="{name: 'products.show', params: {id: productInCart.id}}">
-                                    <img src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg"
-                                         class="w-100 productImgInCart">
+                                <router-link :to="{name: 'products.show', params: {id: product.id}}">
+                                    <img :src="product.image_url"
+                                         class="w-100 productImgInCart" height="100">
                                 </router-link>
 
                             </div>
 
                             <div class="col-3">
-                                <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: productInCart.id}}">
-                                    <p class="card-text h5 text-dark">{{ index + 1 }}. {{ productInCart.title }}</p>
+                                <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: product.id}}">
+                                    <p class="card-text h5 text-dark">{{ index + 1 }}. {{ product.title }}</p>
                                 </router-link>
                                 <p class="text-secondary h6">Инфо о товаре</p>
                             </div>
@@ -90,17 +90,17 @@
 
                             </div>
                             <div class="col-3">
-                                <div @click="decQty(productInCart, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
+                                <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
                                     class="fas fa-minus text-dark"></i></div>
-                                <input @change="changeQty(productInCart, index)"  maxlength="3" class="w-25 me-2 border-0 input-qty" :value="productInCart.qty">
-                                <div @click="incQty(productInCart, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
+                                <input @change="changeQty(product, index)"  maxlength="3" class="w-25 me-2 border-0 input-qty" :value="product.qty">
+                                <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
                                     class="fas fa-plus plus"></i></div>
                                 </div>
                             <div class="col-1 text-nowrap">
-                                {{ productInCart.qty * productInCart.price }} ₽
+                                {{ product.qty * product.price }} ₽
                             </div>
                             <div class="col-1">
-                                <div @click="deleteProductAsCart(productInCart, index)" type="button" class="btn">
+                                <div @click="deleteProductAsCart(product, index)" type="button" class="btn">
                                     <i class="fas fa-trash"></i>
                                 </div>
                             </div>

@@ -2,7 +2,7 @@
     <div>
         <div class="container-xxl mt-5">
 
-            <modal-window v-model:openModal="modalVisibility">
+            <modal-window v-model:openModal="modalVisibility" style="z-index: 1000">
                 <div class="content-in-modal">
                     <h3 class="mb-3">
                         Выберите что хотите изменить
@@ -105,7 +105,7 @@
                                 <h2>Корзина</h2>
                                 <h4><i class="fas fa-shopping-cart pe-4"></i></h4>
                             </div>
-                            <p v-if="!productsInCart" class="d-inline">Корзина пока пуста</p>
+                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>
                             <div v-if="productsInCart" v-for="(product, index) in productsInCart" class="d-flex align-items-center">
                                 <div class="p-2">#{{ index + 1 }}</div>
                                 <router-link class="p-2" :to="`/products/${product.id}`">
@@ -178,10 +178,6 @@ export default {
     },
 
     methods: {
-        handleHover(hovered) {
-
-        },
-
         deleteProductAsCart(product, indexInCart) {
             let cart = JSON.parse(localStorage.getItem('cart'))
             cart.splice(indexInCart, 1)
@@ -190,16 +186,8 @@ export default {
             this.productsInCart = this.$root.productsInCart
         },
 
-        showInputName() {
-            if (this.inputShow.name) {
-                this.inputShow.name = false
-            } else {
-                this.inputShow.name = true
-            }
-        },
-
         // ?????? недописано?
-        saveChanges(){
+        saveChanges() {
             this.modalVisibility = false
             this.inputShow.name = false
             this.inputShow.mail = false

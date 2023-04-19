@@ -14,20 +14,21 @@
             </div>
             <p class="card-text">{{ product.category.title }}</p>
             <p v-for="tag in product.tags" class="alert alert-warning p-1 d-inline-block">{{ tag.title }}</p>
-            <div class="d-flex justify-content-between flex-grow-1 mb-3">
+
+            <div class="d-flex justify-content-between flex-grow-1 align-items-end mb-3">
                 <h5 class="card-text text-secondary fw-bold w-100 m-0">{{ product.price.slice(0, -3) }}
                     <h6 class="ms-1 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>
                 <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
             </div>
-            <div class="row px-2">
+
+            <div class="row px-2 align-items-center">
                 <a @click.prevent="addToCart(product)" href="" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
                 </a>
 
-                <h5 v-if="authenticated" class="p-0 m-0 ps-1 col-2">
-                    <a class="p-2 pb-0 mb-0 text-danger ms-2">
-
+                <h5 v-if="authenticated" class="p-0 m-0 col-2">
+                    <a class="text-danger ms-3">
                         <i @click.prevent="switchWish(product)" class="far fa-heart" :id="`heart${product.id}`" style="cursor: pointer;"></i>
                     </a>
                 </h5>
@@ -42,24 +43,26 @@ import wishHeart from "./UI/wishHeart.vue";
 
 export default {
     name: "productCardInCatalog",
+
     components: {
         wishHeart
     },
+
     props: {
         product: {
             type: Object,
             required: true,
         },
-
     },
+
     data() {
         return {
             authenticated: this.$store.state.auth.authenticated,
             productsInCart: this.$root.productsInCart,
             user: this.$store.state.auth.user,
-            wishlist: this.$root.wishlist
         }
     },
+
     mounted: function () {
         this.$nextTick(function (){
             if (this.authenticated) {
@@ -71,6 +74,7 @@ export default {
             this.getCartList(this.product)
         })
     },
+
     methods: {
         stretchCartButton(product) {
             document.getElementById('addCart'+product.id).classList.remove('col-10')
@@ -136,67 +140,78 @@ export default {
 
         getCartList(product) {
             if (this.productsInCart?.length !== 0) {
-                for (let i = 0; i < this.productsInCart?.length; i++) {
-                    if (this.productsInCart[i].id === product.id) {
-                        document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + this.productsInCart[i].qty + 'шт.)'
+                this.productsInCart.forEach((productInCart) => {
+                    if (productInCart.id === product.id) {
+                        document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
                         document.getElementById('addCart'+product.id).classList.remove('btn-warning')
                         document.getElementById('addCart'+product.id).classList.add('btn-success')
                     }
-                }
+                })
             }
 
         },
 
         switchWish(product) {
             let removed = false
-            if (this.wishlist.length === 0) {
+            if (this.$parent.wishlist.length === 0) {
                 this.storeWish(product)
             } else {
-                for (let i = 0; i < this.wishlist.length; i++) {
-                    if (this.wishlist[i].product_id === product.id) {
-                        this.removeWish(this.wishlist[i])
+                this.$parent.wishlist.forEach((wish) => {
+                    if (wish.product_id === product.id) {
+                        this.removeWish(wish)
                         removed = true
-                        break
+                        return;
                     }
-                }
+                })
+
                 if (!removed) {
                     this.storeWish(product)
                 }
             }
             this.$root.getWishlist()
+            this.$parent.getWishlist()
         },
+
         storeWish(product) {
+            document.getElementById('heart'+product.id).classList.remove('far')
+            document.getElementById('heart'+product.id).classList.add('fas')
             // console.log(product.id)
             axios.post('/api/wish', {
                 user_id: this.user.id,
                 product_id: product.id
             })
                 .then(response => {
-                    document.getElementById('heart'+product.id).classList.remove('far')
-                    document.getElementById('heart'+product.id).classList.add('fas')
+                    // console.log(response);
                     // console.log('added to wishlist');
                 })
                 .catch(error => {
+                    document.getElementById('heart'+product.id).classList.remove('fas')
+                    document.getElementById('heart'+product.id).classList.add('far')
                     // console.log(error);
+                    // console.log('error add to wishlist');
                 })
         },
+
         removeWish(wish) {
+            document.getElementById('heart'+wish.product.id).classList.remove('fas')
+            document.getElementById('heart'+wish.product.id).classList.add('far')
             axios.delete('/api/wish/'+wish.id+'/delete')
                 .then(response => {
                     // console.log(response);
-                    document.getElementById('heart'+wish.product.id).classList.remove('fas')
-                    document.getElementById('heart'+wish.product.id).classList.add('far')
-                    document.getElementById('x'+wish.id).remove()
+                    // console.log('removed from wishlist');
                 })
                 .catch(error => {
+                    document.getElementById('heart'+wish.product.id).classList.add('fas')
+                    document.getElementById('heart'+wish.product.id).classList.remove('far')
                     // console.log(error);
+                    // console.log('error remove from wishlist');
                 })
         },
 
         matchWishlist(product) {
-            if (this.wishlist.length !== 0) {
-                for (let i = 0; i < this.wishlist.length; i++) {
-                    if (this.wishlist[i].product_id === product.id) {
+            if (this.$parent.wishlist.length !== 0) {
+                for (let i = 0; i < this.$parent.wishlist.length; i++) {
+                    if (this.$parent.wishlist[i].product_id === product.id) {
                         document.getElementById('heart'+product.id).classList.remove('far')
                         document.getElementById('heart'+product.id).classList.add('fas')
                     }

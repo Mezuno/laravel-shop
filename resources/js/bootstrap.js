@@ -16,7 +16,6 @@ import 'bootstrap'
 
 import router from "@/router";
 import axios from 'axios';
-import {mapActions} from "vuex";
 window.axios = axios;
 
 window.axios.defaults.withCredentials = true;

@@ -150,7 +150,9 @@ export default {
     },
 
     mounted() {
-        this.getWishlist()
+        if (this.authenticated) {
+            this.getWishlist()
+        }
         this.getProductsInCart()
     },
 

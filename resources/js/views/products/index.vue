@@ -5,28 +5,29 @@
 
             <!-- Pagination -->
             <div class="row" v-if="pagination.last_page > 1">
-                <ul class="pagination text-center">
+                <ul class="pagination text-center align-items-center">
                     <li v-if="pagination.current_page !== 1" class="next"><a
                         @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark"><i
                         class="fas fa-arrow-left"></i></a></li>
 
                     <li v-for="link in pagination.links" class="pe-1 ps-1">
                         <template v-if="Number(link.label) &&
-              (pagination.current_page - link.label < 2 &&
-              pagination.current_page - link.label > -2) ||
-              Number(link.label) === 1 || Number(link.label) === pagination.last_page
-              ">
+                              (pagination.current_page - link.label < 2 &&
+                              pagination.current_page - link.label > -2) ||
+                              Number(link.label) === 1 || Number(link.label) === pagination.last_page
+                        ">
                             <a @click.prevent="getProducts(link.label)"
-                               :class="link.active ? 'nav-link text-dark rounded-circle btn btn-warning' : 'nav-link rounded-circle text-light btn btn-dark'"
-                               href="#">{{ link.label }}</a>
+                               :class="link.active ? 'text-dark rounded-circle btn btn-warning' : 'rounded-circle text-light btn btn-dark'"
+                               href="#"
+                               style="width: 40px">{{ link.label }}</a>
                         </template>
                         <template v-if="Number(link.label) &&
-              pagination.current_page !== 3 &&
-              (pagination.current_page - link.label === 2) ||
-              (pagination.current_page !== pagination.last_page - 2 &&
-              pagination.current_page - link.label === -2)
-              ">
-                            <a class="nav-link text-dark">...</a>
+                              pagination.current_page !== 3 &&
+                              (pagination.current_page - link.label === 2) ||
+                              (pagination.current_page !== pagination.last_page - 2 &&
+                              pagination.current_page - link.label === -2)
+                        ">
+                            <a class="nav-link text-dark p-2">...</a>
                         </template>
                     </li>
 
@@ -92,11 +93,6 @@ export default {
         ProductCardInCatalog,
 
     },
-    mounted() {
-        this.getProducts()
-        this.getFilterList()
-        this.getWishlist()
-    },
     data() {
         return {
             loadedProducts: false,
@@ -107,10 +103,17 @@ export default {
             tags: [],
             price: [],
             pagination: [],
-            wishlist: [],
+            wishlist: this.$root.wishlist,
             user: this.$store.state.auth.user,
         }
     },
+
+    mounted() {
+        this.getProducts()
+        this.getFilterList()
+        this.getWishlist()
+    },
+
     methods: {
         filterProducts() {
             this.loadedProducts = false
