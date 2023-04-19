@@ -20,12 +20,12 @@
                 <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
             </div>
             <div class="row px-2">
-                <a @click.prevent="addToCart(product)" href="" class=" m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${product.id}`">
+                <a @click.prevent="addToCart(product)" href="" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
                 </a>
 
-                <h5 v-if="this.$root.token" class="p-0 m-0 ps-1 col-2">
+                <h5 v-if="authenticated" class="p-0 m-0 ps-1 col-2">
                     <a class="p-2 pb-0 mb-0 text-danger ms-2">
 
                         <i @click.prevent="switchWish(product)" class="far fa-heart" :id="`heart${product.id}`" style="cursor: pointer;"></i>
@@ -54,20 +54,22 @@ export default {
     },
     data() {
         return {
-
+            authenticated: this.$store.state.auth.authenticated,
+            productsInCart: this.$root.productsInCart,
+            user: this.$store.state.auth.user,
+            wishlist: this.$root.wishlist
         }
     },
     mounted: function () {
         this.$nextTick(function (){
-            if (this.$root.token) {
-                this.getWishlist(this.product)
+            if (this.authenticated) {
+                this.matchWishlist(this.product)
                 // this.checkWishlist(this.product, this.wishlist)
             } else {
                 this.stretchCartButton(this.product)
             }
+            this.getCartList(this.product)
         })
-
-
     },
     methods: {
         stretchCartButton(product) {
@@ -91,6 +93,9 @@ export default {
 
         addToCart(product) {
 
+            document.getElementById('addCart'+product.id).innerText = 'Добавляем'
+            let productInCartQty
+
             let cart = localStorage.getItem('cart')
 
             let newProduct = [{
@@ -104,6 +109,7 @@ export default {
 
             if (!cart) {
                 localStorage.setItem('cart', JSON.stringify(newProduct))
+                productInCartQty = 1
             } else {
                 cart = JSON.parse(cart)
 
@@ -111,13 +117,34 @@ export default {
                     if (productInCart.id === product.id) {
                         productInCart.qty = Number(productInCart.qty) + 1
                         newProduct = null
+                        productInCartQty = productInCart.qty
                     }
                 })
+                if (newProduct != null) {
+                    productInCartQty = 1
+                }
                 Array.prototype.push.apply(cart, newProduct)
 
                 localStorage.setItem('cart', JSON.stringify(cart))
                 this.$root.getProductsInCart()
             }
+
+            document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
+            document.getElementById('addCart'+product.id).classList.remove('btn-warning')
+            document.getElementById('addCart'+product.id).classList.add('btn-success')
+        },
+
+        getCartList(product) {
+            if (this.productsInCart?.length !== 0) {
+                for (let i = 0; i < this.productsInCart?.length; i++) {
+                    if (this.productsInCart[i].id === product.id) {
+                        document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + this.productsInCart[i].qty + 'шт.)'
+                        document.getElementById('addCart'+product.id).classList.remove('btn-warning')
+                        document.getElementById('addCart'+product.id).classList.add('btn-success')
+                    }
+                }
+            }
+
         },
 
         switchWish(product) {
@@ -136,12 +163,12 @@ export default {
                     this.storeWish(product)
                 }
             }
-            this.getWishlist()
+            this.$root.getWishlist()
         },
         storeWish(product) {
             // console.log(product.id)
             axios.post('/api/wish', {
-                user_id: this.$root.user.id,
+                user_id: this.user.id,
                 product_id: product.id
             })
                 .then(response => {
@@ -165,29 +192,17 @@ export default {
                     // console.log(error);
                 })
         },
-        getWishlist(product) {
-            axios.post('/api/wishlist', {
-                user_id: this.$root.user.id
-            })
-                .then(response => {
-                    this.wishlist = response.data.data
-                    if (this.wishlist.length !== 0) {
-                        for (let i = 0; i < this.wishlist.length; i++) {
-                            if (this.wishlist[i].product_id === product.id) {
-                                document.getElementById('heart'+product.id).classList.remove('far')
-                                document.getElementById('heart'+product.id).classList.add('fas')
-                            }
-                        }
+
+        matchWishlist(product) {
+            if (this.wishlist.length !== 0) {
+                for (let i = 0; i < this.wishlist.length; i++) {
+                    if (this.wishlist[i].product_id === product.id) {
+                        document.getElementById('heart'+product.id).classList.remove('far')
+                        document.getElementById('heart'+product.id).classList.add('fas')
                     }
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
+                }
+            }
         },
-
-
     }
 }
 </script>

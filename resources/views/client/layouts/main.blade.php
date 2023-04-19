@@ -14,22 +14,18 @@
 </body>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}">
 
-<script>
-
-import productCardInCatalog from "../../../js/components/productCardInCatalog.vue";
-import wishHeart from "../../../js/components/UI/wishHeart.vue";
-import modalWindow from "../../../js/components/UI/modalWindow.vue";
-
-export default {
-    productCardInCatalog,
-    wishHeart,
-    modalWindow
-}
-let exampleEl = document.getElementById('example')
-let tooltip = new bootstrap.Tooltip(exampleEl, options)
-
+    // import productCardInCatalog from "../../../js/components/productCardInCatalog.vue";
+    // import wishHeart from "../../../js/components/UI/wishHeart.vue";
+    // import modalWindow from "../../../js/components/UI/modalWindow.vue";
+    // export default {
+    //     productCardInCatalog,
+    //     wishHeart,
+    //     modalWindow
+    // }
+    // let exampleEl = document.getElementById('example')
+    // let tooltip = new bootstrap.Tooltip(exampleEl, options)
 
 </script>
 

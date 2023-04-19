@@ -35,16 +35,21 @@
                     </ul>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li v-if="token" class="nav-item">
+<!--                        <li class="nav-item">-->
+<!--                            <a href="" class="nav-link">-->
+<!--                                {{ authenticated }}-->
+<!--                            </a>-->
+<!--                        </li>-->
+                        <li v-show="authenticated" class="nav-item">
                             <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
                         </li>
-                        <li v-if="!token" class="nav-item">
+                        <li v-show="!authenticated" class="nav-item">
                             <router-link to="/user/login" class="nav-link">Войти</router-link>
                         </li>
-                        <li v-if="!token" class="nav-item">
+                        <li v-show="!authenticated" class="nav-item">
                             <router-link to="/user/registration" class="nav-link">Регистрация</router-link>
                         </li>
-                        <li v-if="token" class="nav-item">
+                        <li v-show="authenticated" class="nav-item">
                             <a href="#" @click.prevent="logout()" class="nav-link">Выйти</a>
                         </li>
                     </ul>
@@ -116,14 +121,16 @@
 
 <script>
 
+import {mapActions} from 'vuex'
 export default {
     name: 'App',
 
     data() {
         return {
             productsInCart: [],
-            token: null,
-            user: null,
+            wishlist: [],
+            user: this.$store.state.auth.user,
+
         }
     },
 
@@ -136,37 +143,29 @@ export default {
                 })
             }
             return total
+        },
+        authenticated: function () {
+            return this.$store.state.auth.authenticated
         }
     },
 
     mounted() {
-        this.getTokenFromLocalStorage()
+        this.getWishlist()
         this.getProductsInCart()
-        this.getUserFromLocalStorage()
     },
 
-    updated() {
-        this.getTokenFromLocalStorage()
-        this.getUserFromLocalStorage()
-    },
+    // renderTriggered({ key, target, type }) {
+    //     console.log({ key, target, type })
+    // },
 
     methods: {
-        getTokenFromLocalStorage() {
-            this.token = localStorage.getItem('x_xsrf_token')
-        },
-
-        getUserFromLocalStorage() {
-            this.user = JSON.parse(localStorage.getItem('user'))
-        },
-
-        logout() {
-            axios.post('/logout').then(response => {
-                console.log(response)
-                this.token = null
-                this.user = null
-                localStorage.removeItem('x_xsrf_token')
-                localStorage.removeItem('user')
-                this.$router.push({name: 'user.login'})
+        ...mapActions({
+            signOut:"auth/logout"
+        }),
+        async logout(){
+            await axios.post('/logout').then(({data})=>{
+                this.signOut()
+                this.$router.push({name:"user.login"})
             })
         },
 
@@ -176,7 +175,20 @@ export default {
 
         setProductsInCart(productsInCart) {
              localStorage.setItem('cart', JSON.stringify(productsInCart))
-        }
+        },
+
+        getWishlist() {
+            axios.post('/api/wishlist', {
+                user_id: this.user.id
+            })
+                .then(response => {
+                    this.wishlist = response.data.data
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
     }
 }
 </script>

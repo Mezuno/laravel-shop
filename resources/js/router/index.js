@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import store from '@/store'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL), routes: [
@@ -25,31 +26,49 @@ const router = createRouter({
         },
         {
             path: '/profile',
+            meta: {
+                middleware: "auth"
+            },
             name: 'profile', // route level code-splitting
             component: () => import('../views/personal/Profile.vue')
         },
         {
             path: '/user/login',
             name: 'user.login', // route level code-splitting
+            meta: {
+                middleware: "guest"
+            },
             component: () => import('../views/auth/Login.vue')
         },
         {
             path: '/user/registration',
             name: 'user.registration', // route level code-splitting
+            meta: {
+                middleware: "guest"
+            },
             component: () => import('../views/auth/Registration.vue')
         },
         {
             path: '/wishlist',
+            meta: {
+                middleware: "auth"
+            },
             name: 'wishlist', // route level code-splitting
             component: () => import('../views/wishlist/index.vue')
         },
         {
             path: '/orders',
+            meta: {
+                middleware: "auth"
+            },
             name: 'orders', // route level code-splitting
             component: () => import('../views/orders/index.vue')
         },
         {
             path: '/purchases',
+            meta: {
+                middleware: "auth"
+            },
             name: 'purchases', // route level code-splitting
             component: () => import('../views/purchases/index.vue')
         },
@@ -57,24 +76,23 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('x_xsrf_token')
-    if (!token) {
-        if (to.name === 'profile') {
-            return next({
-                name: 'user.login'
-            })
-        } else {
-            return next()
-        }
-    }
 
-    if (to.name === 'user.login' || to.name === 'user.registration' && token) {
-        return next({
-            name: 'profile'
-        })
+    document.title = to.meta.title
+
+    if (to.meta.middleware == "guest") {
+        if (store.state.auth.authenticated) {
+            next({ name: "profile" })
+        }
+        next()
+    } else if (to.meta.middleware == "auth") {
+        if (store.state.auth.authenticated) {
+            next()
+        } else {
+            next({ name: "login" })
+        }
+    } else {
+        next()
     }
-    // explicitly return false to cancel the navigation
-    return next()
 })
 
 export default router

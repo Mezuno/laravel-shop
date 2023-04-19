@@ -71,7 +71,6 @@ export default {
             })
                 .then(response => {
                     this.orders = response.data.data
-                    console.log(response);
                     this.orderLoader = true
                 })
                 .catch(error => {

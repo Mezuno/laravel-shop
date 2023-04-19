@@ -1,7 +1,8 @@
 import './bootstrap'
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from '@/router'
+import store from '@/store'
 import '../css/app.css'
 import "../css/client/scss/booooootstrap-up.scss"
 
@@ -15,7 +16,10 @@ app.component('wish-heart', wishHeart)
 import modalWindow from "./components/UI/modalWindow.vue";
 app.component('modal-window', modalWindow)
 
+
+
 app.use(router)
+app.use(store)
 // app.config.globalProperties.axios = axios
 app.mount('#app')
 

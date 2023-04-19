@@ -93,8 +93,9 @@ export default {
 
     },
     mounted() {
-        this.getProducts();
-        this.getFilterList();
+        this.getProducts()
+        this.getFilterList()
+        this.getWishlist()
     },
     data() {
         return {
@@ -107,6 +108,7 @@ export default {
             price: [],
             pagination: [],
             wishlist: [],
+            user: this.$store.state.auth.user,
         }
     },
     methods: {
@@ -114,6 +116,7 @@ export default {
             this.loadedProducts = false
             this.getProducts();
         },
+
         getProducts(page = 1) {
             axios.post('/api/products', {
                 categories: this.categories,
@@ -128,11 +131,25 @@ export default {
                 this.loadedProducts = true
             });
         },
+
         getFilterList() {
             axios.get('http://localhost:8000/api/products/filters').then(response => {
                 this.filters = response.data
             });
-        }
+        },
+
+        getWishlist() {
+            axios.post('/api/wishlist', {
+                user_id: this.user.id
+            })
+                .then(response => {
+                    this.wishlist = response.data.data
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
     }
 }
 </script>
