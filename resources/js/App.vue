@@ -1,7 +1,72 @@
 <template>
     <div style="overflow: hidden; min-height: 100vh">
+        <nav class="navbar navbar-expand p-0">
+            <div class="d-flex justify-content-center w-100">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Доставка и оплата</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">О компании</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Отызвы клиентов</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Как сделать заказ?</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Промокоды</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Контакты</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link">Корпоративным клиентам</router-link>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand p-4 navbar-light bg-light bg-img">
+            <div class="container-xxl" style="z-index: 3">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <h1><router-link to="/" class="nav-link">LOGO</router-link></h1>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto me-auto">
+                    <li class="nav-item d-flex text-dark">
+                        <h2 class="d-flex align-items-center mb-0"><i class="fas fa-phone"></i></h2>
+                        <div>
+                            <h4 class="m-0 pb-0">
+                                <router-link to="tel:+79999999999" class="nav-link link-dark pb-0">
+                                    +7 (999) 999-99-99
+                                </router-link>
+                            </h4>
+                            <div class="ps-2">
+                                9:00-21:00 Каждый день
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto me-auto">
+                    <li class="nav-item">
+                        <router-link to="#" class="nav-link btn btn-warning text-dark">Перезвоните мне</router-link>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item d-flex align-items-center btn btn-warning me-2">
+                        <h4 class="m-0"><router-link to="/wishlist" class="cart-img text-dark m-0 p-0"><i class="fas fa-heart"></i></router-link></h4>
+                    </li>
+                    <li class="nav-item d-flex align-items-center btn btn-warning text-dark">
+                        <h4 class="mb-0"><router-link to="/cart" class="cart-img text-dark me-2"><i class="fas fa-shopping-cart"></i></router-link></h4><h5 class="p-0 m-0">{{ totalPrice }}</h5><i class="fas fa-ruble-sign"></i>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-expand-lg navbar-warning bg-warning">
             <div class="container-xxl">
                 <router-link class="navbar-brand" to="/">Магазин</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -64,7 +129,7 @@
                 </div>
             </div>
             <div>
-                <router-link to="/cart" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></router-link>
+<!--                <router-link to="/cart" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></router-link>-->
                 <div class="cart pt-3" style="z-index: 100">
                     <div class="w-25">
 

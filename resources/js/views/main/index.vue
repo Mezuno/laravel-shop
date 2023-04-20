@@ -1,8 +1,6 @@
 <template>
     <div>
         <div class="container-xxl mt-5">
-            <h1>Главная</h1>
-
             <div class="d-flex justify-content-center mb-5">
 
                 <div id="carouselExampleCaptions" class="carousel slide w-100 d-flex " data-bs-ride="carousel" data-bs-interval="3000" style="height: 300px; ">

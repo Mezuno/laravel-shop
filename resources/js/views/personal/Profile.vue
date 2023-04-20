@@ -107,7 +107,6 @@
                             </div>
 <!--                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>-->
                             <div v-if="productsInCart" v-for="(product, index) in productsInCart" class="d-flex align-items-center">
-                                <div class="p-2">#{{ index + 1 }}</div>
                                 <router-link class="p-2" :to="`/products/${product.id}`">
                                     <img :src="product.image_url" width="50" height="50" alt="">
                                 </router-link>
