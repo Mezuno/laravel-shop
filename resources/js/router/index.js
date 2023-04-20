@@ -7,26 +7,39 @@ const router = createRouter({
             path: '/', name: 'index', // route level code-splitting
             // this generates a separate chunk (About.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
+            meta: {
+                title: "VueShop | Главная",
+            },
             component: () => import('../views/main/index.vue')
         },
         {
             path: '/products',
             name: 'products.index',
+            meta: {
+                title: "VueShop | Каталог",
+            },
             component: () => import('../views/products/index.vue')
         },
         {
             path: '/products/:id',
             name: 'products.show',
+            meta: {
+                title: "VueShop | Товар",
+            },
             component: () => import('../views/products/show.vue')
         },
         {
             path: '/cart',
             name: 'cart',
+            meta: {
+                title: "VueShop | Корзина",
+            },
             component: () => import('../views/cart/index.vue')
         },
         {
             path: '/profile',
             meta: {
+                title: "VueShop | Профиль",
                 middleware: "auth"
             },
             name: 'profile', // route level code-splitting
@@ -36,6 +49,7 @@ const router = createRouter({
             path: '/user/login',
             name: 'user.login', // route level code-splitting
             meta: {
+                title: "VueShop | Вход",
                 middleware: "guest"
             },
             component: () => import('../views/auth/Login.vue')
@@ -44,6 +58,7 @@ const router = createRouter({
             path: '/user/registration',
             name: 'user.registration', // route level code-splitting
             meta: {
+                title: "VueShop | Регистрация",
                 middleware: "guest"
             },
             component: () => import('../views/auth/Registration.vue')
@@ -51,6 +66,7 @@ const router = createRouter({
         {
             path: '/wishlist',
             meta: {
+                title: "VueShop | Избранное",
                 middleware: "auth"
             },
             name: 'wishlist', // route level code-splitting
@@ -59,6 +75,7 @@ const router = createRouter({
         {
             path: '/orders',
             meta: {
+                title: "VueShop | Заказы",
                 middleware: "auth"
             },
             name: 'orders', // route level code-splitting
@@ -67,6 +84,7 @@ const router = createRouter({
         {
             path: '/purchases',
             meta: {
+                title: "VueShop | Покупки",
                 middleware: "auth"
             },
             name: 'purchases', // route level code-splitting
