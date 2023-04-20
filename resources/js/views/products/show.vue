@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-xxl mt-5 ">
+        <div class="container-xxl mt-5" >
 
             <div v-if="!loaded" class="d-flex justify-content-center pt-5">
                 <div class="spinner-border" role="status">
@@ -8,7 +8,7 @@
                 </div>
             </div>
 
-            <div v-if="loaded" class="row mb-5">
+            <div v-if="loaded" class="row mb-5" style="padding-left: 30px; padding-right: 30px;">
 
                 <div class="col-1">
                     <img @click="pictureReplacement(product.image_url)" :src="product.image_url" alt="" class="mb-2 w-100" style="cursor: pointer; border-radius: 7px;" >
@@ -47,7 +47,7 @@
 
             <carousel :items-to-show="3">
 
-                    <slide v-for="review in reviews" :key="review.id" class="p-3">
+                    <slide v-for="review in reviews" :key="review.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
 
                             <div class="cart-card p-4 h-100 card-pointer d-flex flex-column align-items-start">
                                 <div class="d-flex justify-content-between w-100">
@@ -94,7 +94,7 @@
 
                     <template #addons>
                         <navigation />
-                        <pagination />
+
                     </template>
             </carousel>
 
@@ -104,14 +104,14 @@
 
 <script>
 
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
 export default {
     name: "products.show",
     components: {
         Carousel,
         Slide,
-        Pagination,
+
         Navigation,
     },
     mounted() {
