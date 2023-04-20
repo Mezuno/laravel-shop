@@ -40,9 +40,9 @@
                         <h2 class="d-flex align-items-center mb-0"><i class="fas fa-phone"></i></h2>
                         <div>
                             <h4 class="m-0 pb-0">
-                                <router-link to="tel:+79999999999" class="nav-link link-dark pb-0">
+                                <a href="tel:+79999999999" class="nav-link link-dark pb-0">
                                     +7 (999) 999-99-99
-                                </router-link>
+                                </a>
                             </h4>
                             <div class="ps-2">
                                 9:00-21:00 Каждый день
@@ -59,8 +59,8 @@
                     <li class="nav-item d-flex align-items-center btn btn-warning me-2">
                         <h4 class="m-0"><router-link to="/wishlist" class="cart-img text-dark m-0 p-0"><i class="fas fa-heart"></i></router-link></h4>
                     </li>
-                    <li class="nav-item d-flex align-items-center btn btn-warning text-dark">
-                        <h4 class="mb-0"><router-link to="/cart" class="cart-img text-dark me-2"><i class="fas fa-shopping-cart"></i></router-link></h4><h5 class="p-0 m-0">{{ totalPrice }}</h5><i class="fas fa-ruble-sign"></i>
+                    <li class="nav-item">
+                        <router-link to="/cart" class="cart-img btn btn-warning text-dark d-flex align-items-center"><h4 class="mb-0 me-2"><i class="fas fa-shopping-cart"></i></h4><h5 class="p-0 m-0">{{ totalPrice }}</h5><i class="fas fa-ruble-sign"></i></router-link>
                     </li>
                 </ul>
             </div>
