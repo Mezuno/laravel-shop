@@ -47,21 +47,23 @@
 
                     <slide v-for="review in reviews" :key="review.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
 
-                            <div class="cart-card p-4 h-100 card-pointer d-flex flex-column align-items-start">
+                            <div class="cart-card p-4 w-100 h-100 card-pointer d-flex flex-column align-items-start">
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
                                         <h5>{{ review.user.name }}</h5>
                                     </div>
-                                    <div>
-                                        <i class="fas fa-star rate d-none text-warning"></i>
-                                        <i class="far fa-star rate d-none text-warning"></i>
-                                        <i class="far fa-star rate d-none text-warning"></i>
-                                        <i class="far fa-star rate d-none text-warning"></i>
-                                        <i class="far fa-star rate d-none text-warning"></i>
+                                    <div class="float-left" v-if="loaded">
+                                        <i v-for="star in review.rate" class="fas fa-star rate text-warning"></i>
+                                        <i v-for="star in 5 - review.rate" class="far fa-star rate text-warning"></i>
+<!--                                        <i class="fas fa-star rate d-none text-warning" :ref="`reviewStar${review.id}1`"></i>-->
+<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}2`"></i>-->
+<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}3`"></i>-->
+<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}4`"></i>-->
+<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}5`"></i>-->
                                     </div>
                                 </div>
 
-                                <div class="float-left">
+                                <div class="float-left mb-2">
                                     <span class="text-secondary">{{ review.created }}</span>
                                 </div>
 
@@ -207,7 +209,6 @@ export default {
         this.getCategoriesList();
         this.getProduct(this.$router.currentRoute._value.params.id);
         this.getReviews();
-        this.getRate();
         if (this.$store.state.auth.authenticated) {
             this.getUserReview();
         }
@@ -241,10 +242,10 @@ export default {
                 this.product = response.data.data
                 this.loaded = true
                 this.getSameProducts()
-                    setTimeout(() => {
-                        this.getCartList(this.product)
-                        this.matchWishlist(this.product)
-                    }, 1000);
+                setTimeout(() => {
+                    this.getCartList(this.product)
+                    this.matchWishlist(this.product)
+                }, 1000);
             });
         },
         getCategoriesList() {
@@ -290,23 +291,6 @@ export default {
                     console.log(error);
                 })
         },
-        getRate() {
-            setTimeout(() => {
-                let rate = document.getElementsByClassName("rate")
-                let counter = 0
-                this.reviews.forEach(review => {
-                    for (let i = 0; i < review.rate; i++) {
-                        rate[i+counter*5].classList.remove('far')
-                        rate[i+counter*5].classList.add('fas')
-                    }
-                    for (let i = 0; i < 5; i++) {
-                        rate[i+counter*5].classList.remove('d-none')
-                    }
-                    counter++
-                })
-            }, 2000)
-        },
-
 
         getSameProducts() {
             axios.post('/api/products', {
