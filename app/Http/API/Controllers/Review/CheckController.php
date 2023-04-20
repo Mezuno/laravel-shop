@@ -13,9 +13,7 @@ class CheckController extends Controller
     {
         $data = $request->validated();
 
-        $review = Review::where('user_id', $data['user_id'])->where('product_id', $data['product_id'])->get();
-
-        return $review;
+        $review = Review::where('user_id', $data['user_id'])->where('product_id', $data['product_id'])->first();
 
         return new ReviewResource($review);
     }

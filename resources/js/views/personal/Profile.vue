@@ -127,7 +127,6 @@
                             </div>
                             <p v-if="Object.keys(wishlist).length <= 0" class="d-inline">Список желаемых товров пуст</p>
                             <div v-if="wishlist" v-for="(wish, index) in wishlist" class="d-flex align-items-center">
-<!--                                <div class="p-2">#{{ index + 1 }}</div>-->
                                 <router-link class="p-2" :to="`/products/${wish.product.id}`">
                                     <img :src="wish.product.image_url" width="50" height="50" alt="">
                                 </router-link>
@@ -141,9 +140,6 @@
 
                 </div>
             </div>
-<!--            <div v-else>-->
-<!--                <h3 class="mb-4">Войдите или зарегистрируйтесь чтобы просматривать профиль</h3>-->
-<!--            </div>-->
         </div>
     </div>
 </template>

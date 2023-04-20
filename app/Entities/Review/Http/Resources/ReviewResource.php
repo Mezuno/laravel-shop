@@ -25,6 +25,7 @@ class ReviewResource extends JsonResource
             'advantages' => $this->advantages,
             'product' => new ProductResource($this->product),
             'created' => date('d F Y, H:i', strtotime($this->created_at)),
+            'confirmed' => date('d F Y, H:i', strtotime($this->confirmed_at)),
         ];
     }
 }

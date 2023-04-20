@@ -2,7 +2,7 @@
     <div class="all">
 
         <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
-            <img :src="product.image_url" class="card-img-top" width="200px" alt="">
+            <img :src="product.image_url" class="card-img-top" width="200px" height="200" alt="">
         </router-link>
         <div class="d-flex flex-column p-3 flex-grow-1">
             <div class="d-flex justify-content-between align-items-center">
@@ -67,7 +67,6 @@ export default {
         this.$nextTick(function (){
             if (this.authenticated) {
                 this.matchWishlist(this.product)
-                // this.checkWishlist(this.product, this.wishlist)
             } else {
                 this.stretchCartButton(this.product)
             }
@@ -80,20 +79,6 @@ export default {
             document.getElementById('addCart'+product.id).classList.remove('col-10')
             document.getElementById('addCart'+product.id).classList.add('col-12')
         },
-        // checkWishlist(product, wish) {
-        //
-        //     if (this.wishlist.length !== 0) {
-        //         for (let i = 0; i < this.wishlist.length; i++) {
-        //             if (this.wishlist[i].product_id === product.id) {
-        //
-        //                 document.getElementById('heart'+product.id).classList.remove('far')
-        //                 document.getElementById('heart'+product.id).classList.add('fas')
-        //
-        //             }
-        //         }
-        //     }
-        //
-        // },
 
         addToCart(product) {
 
@@ -150,10 +135,10 @@ export default {
 
         switchWish(product) {
             let removed = false
-            if (this.$parent.wishlist.length === 0) {
+            if (this.$root.wishlist.length === 0) {
                 this.storeWish(product)
             } else {
-                this.$parent.wishlist.forEach((wish) => {
+                this.$root.wishlist.forEach((wish) => {
                     if (wish.product_id === product.id) {
                         this.removeWish(wish)
                         removed = true
@@ -166,7 +151,6 @@ export default {
                 }
             }
             this.$root.getWishlist()
-            this.$parent.getWishlist()
         },
 
         storeWish(product) {
@@ -179,13 +163,10 @@ export default {
             })
                 .then(response => {
                     // console.log(response);
-                    // console.log('added to wishlist');
                 })
                 .catch(error => {
                     document.getElementById('heart'+product.id).classList.remove('fas')
                     document.getElementById('heart'+product.id).classList.add('far')
-                    // console.log(error);
-                    // console.log('error add to wishlist');
                 })
         },
 
@@ -195,20 +176,17 @@ export default {
             axios.delete('/api/wish/'+wish.id+'/delete')
                 .then(response => {
                     // console.log(response);
-                    // console.log('removed from wishlist');
                 })
                 .catch(error => {
                     document.getElementById('heart'+wish.product.id).classList.add('fas')
                     document.getElementById('heart'+wish.product.id).classList.remove('far')
-                    // console.log(error);
-                    // console.log('error remove from wishlist');
                 })
         },
 
         matchWishlist(product) {
-            if (this.$parent.wishlist.length !== 0) {
-                for (let i = 0; i < this.$parent.wishlist.length; i++) {
-                    if (this.$parent.wishlist[i].product_id === product.id) {
+            if (this.$root.wishlist.length !== 0) {
+                for (let i = 0; i < this.$root.wishlist.length; i++) {
+                    if (this.$root.wishlist[i].product_id === product.id) {
                         document.getElementById('heart'+product.id).classList.remove('far')
                         document.getElementById('heart'+product.id).classList.add('fas')
                     }

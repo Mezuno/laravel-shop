@@ -31,14 +31,12 @@
                     <h5 class="card-text text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
                         class="ms-2 d-inline text-dark">₽</h5></h5>
                     <div class="d-flex justify-content-between align-items-center">
-                        <a href="#" class="w-100 m-0 btn btn-outline-dark">В корзину
+                        <a @click.prevent="addToCart(product)" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
+                            В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
-                        <h5 class="p-0 m-0 p-2 pb-0 mb-0 ms-2 text-danger">
-                                <div @click.prevent="" class="position-relative">
-                                    <i class="far fa-heart heart-far position-absolute" style="display: block; opacity: 1; cursor: pointer;"></i>
-                                    <i class="fas fa-heart heart-fas position-absolute" style="display: none; opacity: 0.5; cursor: pointer;"></i>
-                                </div>
+                        <h5 class="ps-3 m-0 text-danger">
+                            <i @click.prevent="switchWish(product)" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
                         </h5>
                     </div>
                 </div>
@@ -177,11 +175,22 @@
                 </div>
             </div>
 
+            <h2 v-if="loaded">Похожие товары</h2>
+            <carousel :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+                    <product-card-in-catalog :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
+                </slide>
+                <template #addons>
+                    <navigation />
+                </template>
+            </carousel>
+
         </div>
     </div>
 </template>
 
 <script>
+import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
@@ -222,6 +231,7 @@ export default {
             authenticated: this.$store.state.auth.authenticated,
             successReview: {},
             userReview: {},
+            sameProducts: {}
         }
     },
 
@@ -230,6 +240,11 @@ export default {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.product = response.data.data
                 this.loaded = true
+                this.getSameProducts()
+                    setTimeout(() => {
+                        this.getCartList(this.product)
+                        this.matchWishlist(this.product)
+                    }, 1000);
             });
         },
         getCategoriesList() {
@@ -267,8 +282,8 @@ export default {
                 product_id: this.$router.currentRoute._value.params.id,
             })
                 .then((response) => {
-                    if (response.data) {
-                        this.userReview = response.data[0]
+                    if (response.data.data) {
+                        this.userReview = response.data.data
                     }
                 })
                 .catch((error) => {
@@ -292,6 +307,130 @@ export default {
             }, 2000)
         },
 
+
+        getSameProducts() {
+            axios.post('/api/products', {
+                categories: this.product.category,
+                // tags: this.product.tags,
+                page: 1
+            }).then(response => {
+                this.sameProducts = response.data.data
+            });
+        },
+
+        addToCart(product) {
+
+            document.getElementById('addCart'+product.id).innerText = 'Добавляем'
+            let productInCartQty
+
+            let cart = localStorage.getItem('cart')
+
+            let newProduct = [{
+                'id': product.id,
+                'title': product.title,
+                'price': product.price,
+                'image_url': product.image_url,
+                'vendor_code': product.vendor_code,
+                'qty': 1
+            }]
+
+            if (!cart) {
+                localStorage.setItem('cart', JSON.stringify(newProduct))
+                productInCartQty = 1
+            } else {
+                cart = JSON.parse(cart)
+
+                cart.forEach(productInCart => {
+                    if (productInCart.id === product.id) {
+                        productInCart.qty = Number(productInCart.qty) + 1
+                        newProduct = null
+                        productInCartQty = productInCart.qty
+                    }
+                })
+                if (newProduct != null) {
+                    productInCartQty = 1
+                }
+                Array.prototype.push.apply(cart, newProduct)
+
+                localStorage.setItem('cart', JSON.stringify(cart))
+                this.$root.getProductsInCart()
+            }
+
+            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
+            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
+            document.getElementById('addToCartButton').classList.add('btn-dark')
+        },
+
+        getCartList(product) {
+            this.$root.productsInCart?.forEach((productInCart) => {
+                if (productInCart.id === product.id) {
+                    document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
+                    document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
+                    document.getElementById('addToCartButton').classList.add('btn-dark')
+                }
+            })
+        },
+
+        switchWish(product) {
+            let removed = false
+            if (this.$root.wishlist.length === 0) {
+                this.storeWish(product)
+            } else {
+                this.$root.wishlist.forEach((wish) => {
+                    if (wish.product_id === product.id) {
+                        this.removeWish(wish)
+                        removed = true
+                        return;
+                    }
+                })
+
+                if (!removed) {
+                    this.storeWish(product)
+                }
+            }
+            this.$root.getWishlist()
+        },
+
+        storeWish(product) {
+            document.getElementById('addToWishlistHeart').classList.add('fas')
+            document.getElementById('addToWishlistHeart').classList.remove('far')
+            // console.log(product.id)
+            axios.post('/api/wish', {
+                user_id: this.$store.state.auth.user.id,
+                product_id: this.product.id
+            })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    document.getElementById('addToWishlistHeart').classList.add('far')
+                    document.getElementById('addToWishlistHeart').classList.remove('fas')
+                })
+        },
+
+        removeWish(wish) {
+            document.getElementById('addToWishlistHeart').classList.add('far')
+            document.getElementById('addToWishlistHeart').classList.remove('fas')
+            axios.delete('/api/wish/'+wish.id+'/delete')
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    document.getElementById('addToWishlistHeart').classList.add('fas')
+                    document.getElementById('addToWishlistHeart').classList.remove('far')
+                })
+        },
+
+        matchWishlist(product) {
+            if (this.$root.wishlist.length !== 0) {
+                for (let i = 0; i < this.$root.wishlist.length; i++) {
+                    if (this.$root.wishlist[i].product_id === product.id) {
+                        document.getElementById('addToWishlistHeart').classList.add('fas')
+                        document.getElementById('addToWishlistHeart').classList.remove('far')
+                    }
+                }
+            }
+        },
     }
 }
 </script>
