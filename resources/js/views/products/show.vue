@@ -45,64 +45,58 @@
 
             </div>
 
-            <carousel :items-to-show="1.5">
-                <slide v-for="slide in 10" :key="slide">
-                    {{ slide }}
-                </slide>
+            <carousel :items-to-show="3">
 
-                <template #addons>
-                    <navigation />
-                    <pagination />
-                </template>
+                    <slide v-for="review in reviews" :key="review.id" class="p-3">
+
+                            <div class="cart-card p-4 h-100 card-pointer d-flex flex-column align-items-start">
+                                <div class="d-flex justify-content-between w-100">
+                                    <div>
+                                        <h5>{{ review.user.name }}</h5>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-star rate d-none text-warning"></i>
+                                        <i class="far fa-star rate d-none text-warning"></i>
+                                        <i class="far fa-star rate d-none text-warning"></i>
+                                        <i class="far fa-star rate d-none text-warning"></i>
+                                        <i class="far fa-star rate d-none text-warning"></i>
+                                    </div>
+                                </div>
+
+                                <div class="float-left">
+                                    <span class="text-secondary">{{ review.created }}</span>
+                                </div>
+
+                                <div class="float-left">
+                                    <h6>{{ review.title }}</h6>
+                                </div>
+                                <div class="float-left">
+                                    {{ review.body }}
+                                </div>
+<!--                                <div>-->
+<!--                                    достоинства-->
+<!--                                    <div v-if="review.advantages">-->
+<!--                                        {{ review.advantages }}-->
+<!--                                    </div>-->
+<!--                                    <div v-else>-->
+<!--                                        достоинства не указаны-->
+<!--                                    </div>-->
+<!--                                    недостатки-->
+<!--                                    <div v-if="review.flaws">-->
+<!--                                        {{ review.flaws }}-->
+<!--                                    </div>-->
+<!--                                    <div v-else>-->
+<!--                                        недостатки не указаны-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                    </slide>
+
+                    <template #addons>
+                        <navigation />
+                        <pagination />
+                    </template>
             </carousel>
-
-            <div class="reviews row">
-                <div v-for="review in reviews" class="col-4">
-
-                    <div class="cart-card p-4 h-100 card-pointer">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>{{ review.user.name }}</h5>
-                            </div>
-                            <div>
-                                <i class="fas fa-star rate d-none text-warning"></i>
-                                <i class="far fa-star rate d-none text-warning"></i>
-                                <i class="far fa-star rate d-none text-warning"></i>
-                                <i class="far fa-star rate d-none text-warning"></i>
-                                <i class="far fa-star rate d-none text-warning"></i>
-                            </div>
-                        </div>
-
-                        <div>
-                            <span class="text-secondary">{{ review.created }}</span>
-                        </div>
-
-                        <div>
-                            <h6>{{ review.title }}</h6>
-                        </div>
-                        <div>
-                            {{ review.body }}
-                        </div>
-<!--                        <div>-->
-<!--                            достоинства-->
-<!--                            <div v-if="review.advantages">-->
-<!--                                {{ review.advantages }}-->
-<!--                            </div>-->
-<!--                            <div v-else>-->
-<!--                                достоинства не указаны-->
-<!--                            </div>-->
-<!--                            недостатки-->
-<!--                            <div v-if="review.flaws">-->
-<!--                                {{ review.flaws }}-->
-<!--                            </div>-->
-<!--                            <div v-else>-->
-<!--                                недостатки не указаны-->
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div>
-
-                </div>
-            </div>
 
         </div>
     </div>
@@ -176,7 +170,8 @@ export default {
                     counter++
                 })
             }, 2000)
-        }
+        },
+
     }
 }
 </script>

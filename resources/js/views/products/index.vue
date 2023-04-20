@@ -111,7 +111,9 @@ export default {
     mounted() {
         this.getProducts()
         this.getFilterList()
-        this.getWishlist()
+        if (this.$store.state.auth.authenticated) {
+            this.getWishlist()
+        }
     },
 
     methods: {
