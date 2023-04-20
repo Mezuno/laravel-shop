@@ -18,11 +18,13 @@ class ReviewResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => $this->user,
+            'title' => $this->title,
             'body' => $this->body,
             'rate' => $this->rate,
             'flaws' => $this->flaws,
             'advantages' => $this->advantages,
             'product' => new ProductResource($this->product),
+            'created' => date('d F Y, H:i', strtotime($this->created_at)),
         ];
     }
 }

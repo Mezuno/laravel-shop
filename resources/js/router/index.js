@@ -54,7 +54,7 @@ const router = createRouter({
                 middleware: "auth"
             },
             name: 'wishlist', // route level code-splitting
-            component: () => import('../views/wishlist/index.vue')
+            component: () => import('../views/personal/wishlist/index.vue')
         },
         {
             path: '/orders',
@@ -62,7 +62,7 @@ const router = createRouter({
                 middleware: "auth"
             },
             name: 'orders', // route level code-splitting
-            component: () => import('../views/orders/index.vue')
+            component: () => import('../views/personal/orders/index.vue')
         },
         {
             path: '/purchases',
@@ -70,7 +70,7 @@ const router = createRouter({
                 middleware: "auth"
             },
             name: 'purchases', // route level code-splitting
-            component: () => import('../views/purchases/index.vue')
+            component: () => import('../views/personal/purchases/index.vue')
         },
     ]
 })

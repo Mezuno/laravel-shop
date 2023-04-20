@@ -5,6 +5,7 @@ import router from '@/router'
 import store from '@/store'
 import '../css/app.css'
 import "../css/client/scss/booooootstrap-up.scss"
+import 'vue3-carousel/dist/carousel.css'
 
 const app = createApp(App)
 
@@ -15,7 +16,6 @@ import wishHeart from "./components/UI/wishHeart.vue";
 app.component('wish-heart', wishHeart)
 import modalWindow from "./components/UI/modalWindow.vue";
 app.component('modal-window', modalWindow)
-
 
 
 app.use(router)

@@ -139,16 +139,13 @@ export default {
         },
 
         getCartList(product) {
-            if (this.productsInCart?.length !== 0) {
-                this.productsInCart.forEach((productInCart) => {
-                    if (productInCart.id === product.id) {
-                        document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
-                        document.getElementById('addCart'+product.id).classList.remove('btn-warning')
-                        document.getElementById('addCart'+product.id).classList.add('btn-success')
-                    }
-                })
-            }
-
+            this.productsInCart?.forEach((productInCart) => {
+                if (productInCart.id === product.id) {
+                    document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
+                    document.getElementById('addCart'+product.id).classList.remove('btn-warning')
+                    document.getElementById('addCart'+product.id).classList.add('btn-success')
+                }
+            })
         },
 
         switchWish(product) {

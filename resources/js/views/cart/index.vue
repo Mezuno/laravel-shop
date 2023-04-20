@@ -63,7 +63,7 @@
                         <div class="d-flex flex-wrap justify-content-between" id="cartTitle">
                             <h3 class="card-title mt-1 ">
                                 Корзина
-                                <div v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</div>
+<!--                                <div v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</div>-->
                             </h3>
                             <div v-if="productsInCart" v-show="productsInCart.length > 6" @click="openCartList()" class="btn openCartList">
                                 <i class="fas fa-chevron-up h4 openCartListIcon"></i>
@@ -75,35 +75,37 @@
                             <div class="col-2">
                                 <router-link :to="{name: 'products.show', params: {id: product.id}}">
                                     <img :src="product.image_url"
-                                         class="w-100 productImgInCart" height="100">
+                                         class="w-100 productImgInCart">
                                 </router-link>
 
                             </div>
-
-                            <div class="col-3">
-                                <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: product.id}}">
-                                    <p class="card-text h5 text-dark">{{ index + 1 }}. {{ product.title }}</p>
-                                </router-link>
-                                <p class="text-secondary h6">Инфо о товаре</p>
-                            </div>
-                            <div class="col-2">
-
-                            </div>
-                            <div class="col-3">
-                                <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
-                                    class="fas fa-minus text-dark"></i></div>
-                                <input @change="changeQty(product, index)"  maxlength="3" class="w-25 me-2 border-0 input-qty" :value="product.qty">
-                                <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
-                                    class="fas fa-plus plus"></i></div>
+                            <div class="col-10 row ">
+                                <div class="col-3">
+                                    <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: product.id}}">
+                                        <p class="card-text h5 text-dark">{{ index + 1 }}. {{ product.title }}</p>
+                                    </router-link>
+                                    <p class="text-secondary h6">Инфо о товаре</p>
                                 </div>
-                            <div class="col-1 text-nowrap">
-                                {{ product.qty * product.price }} ₽
-                            </div>
-                            <div class="col-1">
-                                <div @click="deleteProductAsCart(product, index)" type="button" class="btn">
-                                    <i class="fas fa-trash"></i>
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-3 text-nowrap">
+                                    <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
+                                        class="fas fa-minus text-dark"></i></div>
+                                    <input @change="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
+                                    <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
+                                        class="fas fa-plus plus"></i></div>
+                                </div>
+                                <div class="col-2 text-nowrap">
+                                    {{ product.qty * product.price }} ₽
+                                </div>
+                                <div class="col-1">
+                                    <div @click="deleteProductAsCart(product, index)" type="button" class="">
+                                        <i class="fas fa-trash"></i>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

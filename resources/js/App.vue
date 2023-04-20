@@ -168,6 +168,7 @@ export default {
             await axios.post('/logout').then(({data})=>{
                 this.signOut()
                 this.$router.push({name:"user.login"})
+                localStorage.removeItem('cart')
             })
         },
 

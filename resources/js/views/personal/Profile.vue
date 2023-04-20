@@ -46,10 +46,10 @@
                 <div class="row">
 
                     <router-link to="/profile" class="col-6 pe-3 text-decoration-none text-dark" href="#" @click.prevent="openModal">
-                        <div class=" cart-card p-4 pe-0 h-100">
+                        <div class=" cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2 class="mb-3">{{ user.name }}</h2>
-                                <h5><i class="fas fa-pen pe-4"></i></h5>
+                                <h5><i class="fas fa-pen"></i></h5>
                             </div>
                             <h2 class="mb-3">Почта: {{ user.email }}</h2>
                             <h2 class="">Телефон:</h2>
@@ -57,10 +57,10 @@
                     </router-link>
 
                     <router-link to="/orders" class="col-6 ps-3 text-decoration-none text-dark" href="#">
-                        <div class="cart-card p-4 pe-0 h-100">
+                        <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2>Заказы</h2>
-                                <h5><i class="fas fa-truck-moving pe-4"></i></h5>
+                                <h5><i class="fas fa-truck-moving"></i></h5>
                             </div>
 
 <!--                            <i class="fas fa-truck-moving"></i>-->
@@ -100,12 +100,12 @@
                     </router-link>
 
                     <router-link to="/cart" class="col-4 ps-3 text-decoration-none text-dark" href="#">
-                        <div class="cart-card ps-4 pt-4 pb-4 h-100">
+                        <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-w2ap justify-content-between">
                                 <h2>Корзина</h2>
-                                <h4><i class="fas fa-shopping-cart pe-4"></i></h4>
+                                <h4><i class="fas fa-shopping-cart"></i></h4>
                             </div>
-                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>
+<!--                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>-->
                             <div v-if="productsInCart" v-for="(product, index) in productsInCart" class="d-flex align-items-center">
                                 <div class="p-2">#{{ index + 1 }}</div>
                                 <router-link class="p-2" :to="`/products/${product.id}`">
@@ -120,10 +120,10 @@
                     </router-link>
 
                     <router-link to="/wishlist" class="col-4 ps-3 text-decoration-none text-dark" href="#">
-                        <div class="cart-card ps-4 pt-4 pb-4 h-100">
+                        <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-w2ap justify-content-between">
                                 <h2>Желаемое</h2>
-                                <h4><i class="fas fa-heart text-red pe-4"></i></h4>
+                                <h4><i class="fas fa-heart text-red"></i></h4>
                             </div>
                             <p v-if="Object.keys(wishlist).length <= 0" class="d-inline">Список желаемых товров пуст</p>
                             <div v-if="wishlist" v-for="(wish, index) in wishlist" class="d-flex align-items-center">

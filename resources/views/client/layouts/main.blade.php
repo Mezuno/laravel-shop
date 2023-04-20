@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="ru" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
@@ -14,19 +14,6 @@
 </body>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}">
-
-    // import productCardInCatalog from "../../../js/components/productCardInCatalog.vue";
-    // import wishHeart from "../../../js/components/UI/wishHeart.vue";
-    // import modalWindow from "../../../js/components/UI/modalWindow.vue";
-    // export default {
-    //     productCardInCatalog,
-    //     wishHeart,
-    //     modalWindow
-    // }
-    // let exampleEl = document.getElementById('example')
-    // let tooltip = new bootstrap.Tooltip(exampleEl, options)
-
-</script>
+<script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
 
 </html>

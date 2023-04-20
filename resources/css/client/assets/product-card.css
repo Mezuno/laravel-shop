@@ -1,0 +1,28 @@
+.product-card-hover {
+    transition: .2s;
+}
+
+.product-card-hover:hover {
+    box-shadow: 0 0 25px #ddd;
+}
+
+.product-card {
+    border-radius: 15px;
+    box-shadow: 0 0 10px #ddd;
+    transition: all ease-out .2s;
+    background-color: #fff;
+}
+
+.product-card:hover {
+    box-shadow: 0 0 40px #ddd;
+}
+
+/*.content-in-product-card {*/
+/*    display: none;*/
+/*}*/
+
+/*.product-card:hover ~ .content-in-product-card {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
