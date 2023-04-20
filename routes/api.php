@@ -32,5 +32,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/wishlist', App\Http\API\Controllers\Wishlist\IndexController::class)->name('wish.index');
     Route::delete('/wish/{wish}/delete', App\Http\API\Controllers\Wishlist\DeleteController::class)->name('wish.delete');
     Route::post('/review', App\Http\API\Controllers\Review\StoreController::class)->name('review.store');
+    Route::post('/review/check', App\Http\API\Controllers\Review\CheckController::class)->name('review.check');
 });
 

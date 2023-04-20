@@ -45,7 +45,7 @@
 
             </div>
 
-            <carousel :items-to-show="3">
+            <carousel :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
                     <slide v-for="review in reviews" :key="review.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
 
@@ -94,9 +94,88 @@
 
                     <template #addons>
                         <navigation />
-
                     </template>
             </carousel>
+
+            <div v-else-if="loaded" class="cart-card p-4 h-100 m-4 col-6">
+                Отзывов пока нету (и слова нету нету ;с)
+            </div>
+
+
+            <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-success col-4">
+                Ваш отзыв успешно отправлен! Публикация отзыва произойдет после успешной модерции.<br>
+            </div>
+
+<!--            <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-warning">-->
+<!--                <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>-->
+<!--                <pre>{{ successReview }}</pre>-->
+<!--            </div>-->
+
+
+            <div v-if="authenticated && !userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">
+                <div class="d-flex flex-column">
+                    <div class="d-flex">
+                        <h3>Оставьте свой отзыв!</h3>
+                        <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
+                    </div>
+
+
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Заголовок" v-model="storeReviewData.title">
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="number" class="form-control" placeholder="Оценка" v-model="storeReviewData.rate">
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Достоинства" v-model="storeReviewData.advantages">
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Недостатки" v-model="storeReviewData.flaws">
+                    </div>
+                    <div class="input-group mb-2">
+                        <textarea type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary col-3" @click="storeReview()">Оставить отзыв</button>
+
+                </div>
+            </div>
+
+            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">
+                <div class="d-flex flex-column">
+                    <h3>Ваш отзыв</h3>
+                    <div>
+                        <p class="fw-bold mb-0">Заголовок</p>
+                        <p>{{ userReview.title }}</p>
+                    </div>
+<!--                    <i v-for="star in userReview.rate" class="far fa-star rate d-none text-warning"></i>-->
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Оценка</p>
+                        <p>{{ userReview.rate }}</p>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Приемущества</p>
+                        <p>{{ userReview.advantages }}</p>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Недостатки</p>
+                        <p>{{ userReview.flaws }}</p>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Текст отзыва</p>
+                        <p>{{ userReview.body }}</p>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Дата</p>
+                        <p>{{ userReview.created_at }}</p>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-bold mb-0">Статус</p>
+                        <p v-if="userReview.confirmed_at">Отзыв подтвержден {{ userReview.confirmed_at }}</p>
+                        <p v-if="!userReview.confirmed_at">Ваш отзыв еще не проверен</p>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -108,26 +187,44 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
 export default {
     name: "products.show",
+
     components: {
         Carousel,
         Slide,
-
         Navigation,
     },
+
     mounted() {
         this.getCategoriesList();
         this.getProduct(this.$router.currentRoute._value.params.id);
         this.getReviews();
         this.getRate();
+        if (this.$store.state.auth.authenticated) {
+            this.getUserReview();
+        }
     },
+
     data() {
         return {
             product: null,
             categories: [],
             loaded: false,
             reviews: [],
+            storeReviewData: {
+                user_id: this.$store.state.auth.user.id,
+                product_id: this.$router.currentRoute._value.params.id,
+                title: "",
+                rate: null,
+                body: "",
+                flaws: "",
+                advantages: "",
+            },
+            authenticated: this.$store.state.auth.authenticated,
+            successReview: {},
+            userReview: {},
         }
     },
+
     methods: {
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
@@ -142,14 +239,37 @@ export default {
         },
         pictureReplacement(uri) {
             document.getElementById("bigProductImage").src = uri;
-            console.log(document.getElementById("bigProductImage"))
+            // console.log(document.getElementById("bigProductImage"))
         },
         getReviews() {
             axios.post('/api/reviews', {product_id:this.$router.currentRoute._value.params.id})
                 .then((response) => {
                     this.reviews = response.data.data
-                    console.log(response);
-
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        storeReview() {
+            axios.post('/api/review', this.storeReviewData)
+                .then((response) => {
+                    this.successReview = response.data.data
+                    this.storeReviewData = {}
+                    this.userReview = response.data.data
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        getUserReview() {
+            axios.post('/api/review/check', {
+                user_id: this.$store.state.auth.user.id,
+                product_id: this.$router.currentRoute._value.params.id,
+            })
+                .then((response) => {
+                    if (response.data) {
+                        this.userReview = response.data[0]
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
