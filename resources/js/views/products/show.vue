@@ -45,7 +45,7 @@
 
             <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
-                    <slide v-for="review in reviews" :key="review.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+                    <slide v-for="review in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
                             <div class="cart-card p-4 w-100 h-100 card-pointer d-flex flex-column align-items-start">
                                 <div class="d-flex justify-content-between w-100">
@@ -306,6 +306,13 @@ export default {
             axios.post('/api/reviews', {product_id:this.$router.currentRoute._value.params.id})
                 .then((response) => {
                     this.reviews = response.data.data
+                    this.reviews.forEach((review, index) =>{
+                        if (review.user.id === this.$store.state.auth.user.id) {
+                            this.reviews.splice(index, 1)
+                            this.reviews.unshift(review)
+                        }
+                    })
+                    console.log(this.reviews)
                 })
                 .catch((error) => {
                     console.log(error);
