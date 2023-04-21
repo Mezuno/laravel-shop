@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapMutations} from "vuex";
 
 export default {
     name: "cart",
@@ -214,15 +214,14 @@ export default {
     methods: {
         ...mapActions({
             removeItemFromCart:"cartProducts/removeItemFromCart",
+            setCartProducts:"cartProducts/setCartProducts",
         }),
 
         storeOrder() {
             this.storeOrderData.products = this.$store.state.cartProducts.products
             this.orderProcessing = true
             window.axios.post('http://localhost:8000/api/order', this.storeOrderData).then(({data}) => {
-                this.productsInCart = []
-                this.$root.productsInCart = []
-                localStorage.removeItem('cart')
+                this.setCartProducts({})
                 this.successOrder = data.data
                 this.validationErrors = {}
             }).catch(({response})=>{

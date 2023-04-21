@@ -54,12 +54,12 @@
                         <div v-for="category in filters.categories"
                              class="form-control pb-0 d-flex align-items-baseline mb-2">
                             <p class="me-2">{{ category.title }}</p>
-                            <input v-model="categories" type="checkbox" :id="category.id" :value="category.id">
+                            <input v-model="dataToGetProducts.categories" type="checkbox" :id="category.id" :value="category.id">
                         </div>
                         <h5 class="mt-4">Теги</h5>
                         <div v-for="tag in filters.tags" class="form-control pb-0 d-flex align-items-baseline mb-2">
                             <p class="me-2">{{ tag.title }}</p>
-                            <input v-model="tags" type="checkbox" :id="tag.id" :value="tag.id">
+                            <input v-model="dataToGetProducts.tags" type="checkbox" :id="tag.id" :value="tag.id">
                         </div>
 
                         <button @click.prevent="filterProducts()" class="btn btn-my-theme">Применить</button>

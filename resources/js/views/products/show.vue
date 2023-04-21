@@ -55,11 +55,6 @@
                                     <div class="float-left" v-if="loaded">
                                         <i v-for="star in review.rate" class="fas fa-star rate text-warning"></i>
                                         <i v-for="star in 5 - review.rate" class="far fa-star rate text-warning"></i>
-<!--                                        <i class="fas fa-star rate d-none text-warning" :ref="`reviewStar${review.id}1`"></i>-->
-<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}2`"></i>-->
-<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}3`"></i>-->
-<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}4`"></i>-->
-<!--                                        <i class="far fa-star rate d-none text-warning" :ref="`reviewStar${review.id}5`"></i>-->
                                     </div>
                                 </div>
 
@@ -204,6 +199,7 @@
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import {mapActions} from "vuex";
 
 export default {
     name: "products.show",
@@ -214,19 +210,9 @@ export default {
         Navigation,
     },
 
-    mounted() {
-        this.getCategoriesList();
-        this.getProduct(this.$router.currentRoute._value.params.id);
-        this.getReviews();
-        if (this.$store.state.auth.authenticated) {
-            this.getUserReview();
-        }
-    },
-
     data() {
         return {
             product: null,
-            categories: [],
             loaded: false,
             reviews: [],
             storeReviewData: {
@@ -252,9 +238,26 @@ export default {
         productsInCart: function () {
             return this.$store.state.cartProducts.products
         },
+        wishlist: function () {
+            return this.$store.state.auth.wishlist
+        },
+        user: function () {
+            return this.$store.state.auth.user
+        },
+    },
+
+    mounted() {
+        this.getProduct(this.$router.currentRoute._value.params.id);
+        this.getReviews();
     },
 
     methods: {
+        ...mapActions({
+            removeItemFromWishlist:"auth/removeItemFromWishlist",
+            addItemToWishlist:"auth/addItemToWishlist",
+            addToCartProducts:"cartProducts/addToCartProducts",
+        }),
+
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.product = response.data.data
@@ -264,6 +267,9 @@ export default {
                     this.getCartList(this.product)
                     this.matchWishlist(this.product)
                     this.setPreviousWatched(this.product)
+                    if (this.authenticated) {
+                        this.getUserReview();
+                    }
                 }, 1000);
             });
         },
@@ -291,15 +297,11 @@ export default {
             this.previousWatched = JSON.parse(localStorage.getItem('previous-watched'))
         },
 
-        getCategoriesList() {
-            axios.get('http://localhost:8000/api/categories').then(response => {
-                this.categories = response.data.data
-            });
-        },
         pictureReplacement(uri) {
             document.getElementById("bigProductImage").src = uri;
             // console.log(document.getElementById("bigProductImage"))
         },
+
         getReviews() {
             axios.post('/api/reviews', {product_id:this.$router.currentRoute._value.params.id})
                 .then((response) => {
@@ -309,6 +311,7 @@ export default {
                     console.log(error);
                 })
         },
+
         storeReview() {
             axios.post('/api/review', this.storeReviewData)
                 .then((response) => {
@@ -320,9 +323,10 @@ export default {
                     console.log(error);
                 })
         },
+
         getUserReview() {
             axios.post('/api/review/check', {
-                user_id: this.$store.state.auth.user.id,
+                user_id: this.user.id,
                 product_id: this.$router.currentRoute._value.params.id,
             })
                 .then((response) => {
@@ -346,7 +350,7 @@ export default {
         },
 
         addToCart(product) {
-            document.getElementById('addCart'+product.id).innerText = 'Добавляем'
+            document.getElementById('addToCartButton').innerText = 'Добавляем'
 
             let newProduct = [{
                 'id': product.id,
@@ -368,27 +372,30 @@ export default {
             })
             // --------------------
 
-            document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
-            document.getElementById('addCart'+product.id).classList.remove('btn-warning')
-            document.getElementById('addCart'+product.id).classList.add('btn-success')
+            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
+            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
+            document.getElementById('addToCartButton').classList.add('btn-dark')
         },
 
         getCartList(product) {
-            this.productsInCart?.forEach((productInCart) => {
-                if (productInCart.id === product.id) {
-                    document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
-                    document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-                    document.getElementById('addToCartButton').classList.add('btn-dark')
-                }
-            })
+            if (this.productsInCart && this.productsInCart?.length > 0) {
+                this.productsInCart?.forEach((productInCart) => {
+                    if (productInCart.id === product.id) {
+                        document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
+                        document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
+                        document.getElementById('addToCartButton').classList.add('btn-dark')
+                    }
+                })
+            }
         },
 
         switchWish(product) {
             let removed = false
-            if (this.$root.wishlist.length === 0) {
+
+            if (this.wishlist.length === 0) {
                 this.storeWish(product)
             } else {
-                this.$root.wishlist.forEach((wish) => {
+                this.wishlist.forEach((wish) => {
                     if (wish.product_id === product.id) {
                         this.removeWish(wish)
                         removed = true
@@ -400,37 +407,23 @@ export default {
                     this.storeWish(product)
                 }
             }
-            this.$root.getWishlist()
         },
 
         storeWish(product) {
-            document.getElementById('addToWishlistHeart').classList.add('fas')
             document.getElementById('addToWishlistHeart').classList.remove('far')
-            // console.log(product.id)
-            axios.post('/api/wish', {
-                user_id: this.$store.state.auth.user.id,
-                product_id: this.product.id
+            document.getElementById('addToWishlistHeart').classList.add('fas')
+
+            this.addItemToWishlist({
+                'user_id': this.user.id,
+                'product_id': product.id,
+                'product': product,
             })
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    document.getElementById('addToWishlistHeart').classList.add('far')
-                    document.getElementById('addToWishlistHeart').classList.remove('fas')
-                })
         },
 
         removeWish(wish) {
-            document.getElementById('addToWishlistHeart').classList.add('far')
             document.getElementById('addToWishlistHeart').classList.remove('fas')
-            axios.delete('/api/wish/'+wish.id+'/delete')
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    document.getElementById('addToWishlistHeart').classList.add('fas')
-                    document.getElementById('addToWishlistHeart').classList.remove('far')
-                })
+            document.getElementById('addToWishlistHeart').classList.add('far')
+            this.removeItemFromWishlist(wish)
         },
 
         matchWishlist(product) {

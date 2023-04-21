@@ -113,7 +113,7 @@
                                 <router-link class="p-2 text-decoration-none flex-grow-1" :to="`/products/${product.id}`" style="color: #343a40">
                                     {{ product.title }}
                                 </router-link>
-                                <i class="fas fa-trash me-4 link-danger" :id="`removeProductFromCart${product.id}`" @click.prevent="deleteProductAsCart(product, index)" style="color: #dc3545;"></i>
+                                <i class="fas fa-trash me-4 link-danger" :id="`removeProductFromCart${product.id}`" @click.prevent="removeItemFromCart(product)" style="color: #dc3545;"></i>
                             </div>
                         </div>
                     </router-link>
@@ -194,18 +194,6 @@ export default {
             syncWishlist:"auth/syncWishlist",
             removeItemFromCart:"cartProducts/removeItemFromCart",
         }),
-
-        deleteProductAsCart(product, indexInCart) {
-            this.removeItemFromCart(product)
-
-
-            // let cart = JSON.parse(localStorage.getItem('cart'))
-            // cart.splice(indexInCart, 1)
-            // localStorage.setItem('cart', JSON.stringify(cart))
-            // this.$root.getProductsInCart()
-            // this.productsInCart = this.$root.productsInCart
-
-        },
 
         // ?????? недописано?
         saveChanges() {

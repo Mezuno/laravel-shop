@@ -19,23 +19,26 @@ export default {
     },
     actions:{
 
+        storeOrder() {
+            // maybe later...
+        },
+
         addToCartProducts({commit, state}, {newProduct, product}) {
-
             if (!state.products || Object.keys(state.products).length < 1) {
-
                 state.products = newProduct
-
             } else {
-
                 state.products.forEach(productInCart => {
                     if (productInCart.id === product.id) {
                         productInCart.qty = Number(productInCart.qty) + 1
                         newProduct = null
                     }
                 })
-
                 Array.prototype.push.apply(state.products, newProduct)
             }
+        },
+
+        setCartProducts({commit}, value) {
+            commit('SET_CART_PRODUCTS', value)
         },
 
         removeItemFromCart({commit}, product) {

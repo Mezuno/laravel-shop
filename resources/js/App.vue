@@ -214,7 +214,7 @@ export default {
         },
     },
 
-    updated() {
+    mounted() {
         if (this.authenticated) {
             this.getWishlist()
         }
