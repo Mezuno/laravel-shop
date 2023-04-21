@@ -238,12 +238,20 @@ export default {
                 flaws: "",
                 advantages: "",
             },
-            authenticated: this.$store.state.auth.authenticated,
             successReview: {},
             userReview: {},
             sameProducts: {},
             previousWatched: {}
         }
+    },
+
+    computed: {
+        authenticated: function () {
+            return this.$store.state.auth.authenticated
+        },
+        productsInCart: function () {
+            return this.$store.state.cartProducts.products
+        },
     },
 
     methods: {
@@ -338,50 +346,35 @@ export default {
         },
 
         addToCart(product) {
-
             document.getElementById('addCart'+product.id).innerText = 'Добавляем'
-            let productInCartQty
-
-            let cart = localStorage.getItem('cart')
 
             let newProduct = [{
                 'id': product.id,
                 'title': product.title,
-                'price': product.price,
+                'price': Number(product.price),
                 'image_url': product.image_url,
                 'vendor_code': product.vendor_code,
                 'qty': 1
             }]
 
-            if (!cart) {
-                localStorage.setItem('cart', JSON.stringify(newProduct))
-                productInCartQty = 1
-            } else {
-                cart = JSON.parse(cart)
+            this.addToCartProducts({newProduct, product})
 
-                cart.forEach(productInCart => {
-                    if (productInCart.id === product.id) {
-                        productInCart.qty = Number(productInCart.qty) + 1
-                        newProduct = null
-                        productInCartQty = productInCart.qty
-                    }
-                })
-                if (newProduct != null) {
-                    productInCartQty = 1
+            // КОСТЫЛЬ ----------
+            let productInCartQty;
+            this.productsInCart?.forEach((productInCart) => {
+                if (productInCart.id === product.id) {
+                    productInCartQty = productInCart.qty
                 }
-                Array.prototype.push.apply(cart, newProduct)
+            })
+            // --------------------
 
-                localStorage.setItem('cart', JSON.stringify(cart))
-                this.$root.getProductsInCart()
-            }
-
-            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
-            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-            document.getElementById('addToCartButton').classList.add('btn-dark')
+            document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
+            document.getElementById('addCart'+product.id).classList.remove('btn-warning')
+            document.getElementById('addCart'+product.id).classList.add('btn-success')
         },
 
         getCartList(product) {
-            this.$root.productsInCart?.forEach((productInCart) => {
+            this.productsInCart?.forEach((productInCart) => {
                 if (productInCart.id === product.id) {
                     document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
                     document.getElementById('addToCartButton').classList.remove('btn-outline-dark')

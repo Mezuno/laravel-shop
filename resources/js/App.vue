@@ -206,7 +206,7 @@ export default {
         totalPrice: function () {
             let total = 0
             if (this.productsInCart && this.productsInCart.length > 0) {
-                this.productsInCart?.forEach(productInCart => {
+                this.productsInCart.forEach(productInCart => {
                     total += Number(productInCart.price) * Number(productInCart.qty)
                 })
             }

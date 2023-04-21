@@ -115,13 +115,15 @@ export default {
     mounted() {
         this.getProducts()
         this.getFilterList()
-        if (this.$store.state.auth.authenticated) {
+        if (this.authenticated) {
             this.setWishlist()
         }
     },
 
     unmounted() {
-        this.syncWishlist()
+        if (this.authenticated) {
+            this.syncWishlist()
+        }
     },
 
     computed: {
@@ -131,6 +133,9 @@ export default {
         wishlist: function () {
             return this.$store.state.auth.wishlist
         },
+        authenticated: function () {
+            return this.$store.state.auth.authenticated
+        }
     },
 
     methods: {
