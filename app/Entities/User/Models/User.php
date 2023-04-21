@@ -3,6 +3,7 @@
 namespace App\Entities\User\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Entities\Wishlist\Models\Wishlist;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -84,4 +85,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }

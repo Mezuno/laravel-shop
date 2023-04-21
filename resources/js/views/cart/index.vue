@@ -100,7 +100,7 @@
                                     {{ product.qty * product.price }} ₽
                                 </div>
                                 <div class="col-1">
-                                    <div @click="deleteProductAsCart(product, index)" type="button" class="">
+                                    <div @click="removeItemFromCart(product)" type="button" class="">
                                         <i class="fas fa-trash"></i>
                                     </div>
                                 </div>
@@ -158,31 +158,37 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "cart",
 
     data() {
         return {
-            productsInCart: this.$root.productsInCart,
-
             storeOrderData: {
-                products: this.$root.productsInCart,
+                products: this.productsInCart,
                 name: '',
                 email: '',
                 address: '',
-                total_price: null
+                total_price: this.totalPrice
             },
 
             cartOpened: true,
             isOpenA: false,
+
             orderProcessing: null,
             validationErrors: {},
             successOrder: {},
-            wishlist: {}
         }
     },
 
     computed: {
+        productsInCart: function () {
+            return this.$store.state.cartProducts.products
+        },
+        wishlist: function () {
+            return this.$store.state.auth.wishlist
+        },
         totalPrice: function () {
             let total = 0
             if (this.productsInCart) {
@@ -192,24 +198,26 @@ export default {
             }
             return total
         },
-
     },
 
     mounted() {
         this.$nextTick(function () {
             this.openCartList()
         })
-        if (this.$store.state.auth.user) {
-            this.setName()
-            this.setEmail()
-            this.setAddress()
+        if (this.$store.state.auth.authenticated) {
+            this.setStoreOrderData()
         }
         this.setTotalPrice()
 
     },
 
     methods: {
+        ...mapActions({
+            removeItemFromCart:"cartProducts/removeItemFromCart",
+        }),
+
         storeOrder() {
+            this.storeOrderData.products = this.$store.state.cartProducts.products
             this.orderProcessing = true
             window.axios.post('http://localhost:8000/api/order', this.storeOrderData).then(({data}) => {
                 this.productsInCart = []
@@ -229,51 +237,15 @@ export default {
             })
         },
 
-        setName() {
+        setStoreOrderData() {
             this.storeOrderData.name = this.$store.state.auth.user.name
-        },
-        setEmail() {
             this.storeOrderData.email = this.$store.state.auth.user.email
-        },
-        setAddress() {
             this.storeOrderData.address = this.$store.state.auth.user.address
         },
         setTotalPrice() {
             this.storeOrderData.total_price = this.totalPrice
         },
 
-        openCartList() {
-            // let lengthProducts = this.productsInCart?.length
-            // let height = "1000px"
-            let lengthProducts = this.productsInCart?.length;
-            if (lengthProducts === undefined) {
-                return null
-            }
-
-            if (this.isOpened === false) {
-                // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
-                // height = this.getHeight("cart-card") + "px"
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
-                document.getElementsByClassName("cart-card")[0].style.height = "78px"
-                setTimeout(function () {
-                    for (let i = 0; i < lengthProducts; i++) {
-                        document.getElementsByClassName("productsInCartList")[i].style.display = "none"
-                    }
-                }, 200);
-
-                this.isOpened = true
-
-            } else {
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
-                // document.getElementsByClassName("cart-card")[0].style.height = "960px"
-                document.getElementsByClassName("cart-card")[0].style.height = ""
-                // console.log(lengthProducts)
-                for (let i = 0; i < lengthProducts; i++) {
-                    document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
-                }
-                this.isOpened = false
-            }
-        },
 
         decQty(product, indexInCart) {
             let cart = localStorage.getItem('cart')
@@ -314,25 +286,41 @@ export default {
             }
             this.$root.setProductsInCart(cart)
             product.qty = inputQty
-            //this.updateInfoOnPage(product, indexInCart)
         },
 
-        deleteProductAsCart(product, indexInCart) {
-            let cart = JSON.parse(localStorage.getItem('cart'))
-            cart.splice(indexInCart, 1)
-            localStorage.setItem('cart', JSON.stringify(cart))
-            this.$root.getProductsInCart()
-            this.productsInCart = this.$root.productsInCart
-        },
 
-        // adsasd() {
-        //     if (this.cartOpened){
-        //         document.getElementById("collapseCreateNews").classList.add('collapse')
-        //         document.getElementById("collapseCreateNews").classList.remove('show')
-        //     } else {
-        //         document.getElementById("collapseCreateNews").classList.add('show')
-        //     }
-        // },
+        openCartList() {
+            // let lengthProducts = this.productsInCart?.length
+            // let height = "1000px"
+            let lengthProducts = this.productsInCart?.length;
+            if (lengthProducts === undefined) {
+                return null
+            }
+
+            if (this.isOpened === false) {
+                // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
+                // height = this.getHeight("cart-card") + "px"
+                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
+                document.getElementsByClassName("cart-card")[0].style.height = "78px"
+                setTimeout(function () {
+                    for (let i = 0; i < lengthProducts; i++) {
+                        document.getElementsByClassName("productsInCartList")[i].style.display = "none"
+                    }
+                }, 200);
+
+                this.isOpened = true
+
+            } else {
+                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
+                // document.getElementsByClassName("cart-card")[0].style.height = "960px"
+                document.getElementsByClassName("cart-card")[0].style.height = ""
+                // console.log(lengthProducts)
+                for (let i = 0; i < lengthProducts; i++) {
+                    document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
+                }
+                this.isOpened = false
+            }
+        },
 
         // getHeight(id) {
         //     let idCartCard = document.getElementById(id)
@@ -354,11 +342,6 @@ export default {
         //     let margin = styles.paddingTop + styles.paddingBottom;
         //     return (margin)
         // },
-
-
-        updateInfoOnPage(product, indexInCart) {
-            //
-        },
     }
 }
 

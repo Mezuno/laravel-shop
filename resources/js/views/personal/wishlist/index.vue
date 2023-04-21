@@ -19,7 +19,7 @@
                             {{ wish.product.title }}
                         </router-link>
 
-                        <i class="far fa-heart text-red" style="color: #dc3545;" @click.prevent="removeWish(wish)"></i>
+                        <i class="far fa-heart text-red" style="color: #dc3545;" @click.prevent=""></i>
                     </div>
                 </div>
             </div>
@@ -32,35 +32,12 @@ export default {
     name: "wishlist",
     data() {
         return {
-            wishlist: [],
+            wishlist: this.$store.state.auth.wishlist,
         }
     },
-    mounted() {
-        this.getWishlist()
-    },
+
     methods: {
-        getWishlist() {
-            axios.post('/api/wishlist', {
-                user_id: this.$root.user.id
-            })
-                .then(response => {
-                    this.wishlist = response.data.data
-                    console.log(this.wishlist);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
-        removeWish(wish) {
-            axios.delete('/api/wish/' + wish.id + '/delete')
-                .then(response => {
-                    console.log(response);
-                    this.wishlist = this.wishlist.filter(w => w.id !== wish.id);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
+
     }
 }
 </script>

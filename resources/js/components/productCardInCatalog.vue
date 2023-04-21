@@ -40,6 +40,7 @@
 
 <script>
 import wishHeart from "./UI/wishHeart.vue";
+import {mapActions} from "vuex";
 
 export default {
     name: "productCardInCatalog",
@@ -54,16 +55,29 @@ export default {
             required: true,
         },
         identifier: {
-            type: String,
-            required: true
+            type: String
         },
     },
 
     data() {
         return {
-            authenticated: this.$store.state.auth.authenticated,
-            productsInCart: this.$root.productsInCart,
-            user: this.$store.state.auth.user,
+            // authenticated: this.$store.state.auth.authenticated,
+            // user: this.$store.state.auth.user,
+        }
+    },
+
+    computed: {
+        productsInCart() {
+            return this.$store.state.cartProducts.products
+        },
+        authenticated() {
+            return this.$store.state.auth.authenticated
+        },
+        user() {
+            return this.$store.state.auth.user
+        },
+        wishlist() {
+            return this.$store.state.auth.wishlist
         }
     },
 
@@ -79,49 +93,40 @@ export default {
     },
 
     methods: {
+        ...mapActions({
+            removeItemFromWishlist:"auth/removeItemFromWishlist",
+            setWishlist:"auth/setWishlist",
+            addItemToWishlist:"auth/addItemToWishlist",
+            addToCartProducts:"cartProducts/addToCartProducts",
+        }),
+
         stretchCartButton(product) {
             document.getElementById('addCart'+this.identifier+product.id).classList.remove('col-10')
             document.getElementById('addCart'+this.identifier+product.id).classList.add('col-12')
         },
 
         addToCart(product) {
-            console.log(this.identifier);
-
             document.getElementById('addCart'+this.identifier+product.id).innerText = 'Добавляем'
-            let productInCartQty
-
-            let cart = localStorage.getItem('cart')
 
             let newProduct = [{
                 'id': product.id,
                 'title': product.title,
-                'price': product.price,
+                'price': Number(product.price),
                 'image_url': product.image_url,
                 'vendor_code': product.vendor_code,
                 'qty': 1
             }]
 
-            if (!cart) {
-                localStorage.setItem('cart', JSON.stringify(newProduct))
-                productInCartQty = 1
-            } else {
-                cart = JSON.parse(cart)
+           this.addToCartProducts({newProduct, product})
 
-                cart.forEach(productInCart => {
-                    if (productInCart.id === product.id) {
-                        productInCart.qty = Number(productInCart.qty) + 1
-                        newProduct = null
-                        productInCartQty = productInCart.qty
-                    }
-                })
-                if (newProduct != null) {
-                    productInCartQty = 1
+            // КОСТЫЛЬ ----------
+            let productInCartQty;
+            this.productsInCart?.forEach((productInCart) => {
+                if (productInCart.id === product.id) {
+                    productInCartQty = productInCart.qty
                 }
-                Array.prototype.push.apply(cart, newProduct)
-
-                localStorage.setItem('cart', JSON.stringify(cart))
-                this.$root.getProductsInCart()
-            }
+            })
+            // --------------------
 
             document.getElementById('addCart'+this.identifier+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
             document.getElementById('addCart'+this.identifier+product.id).classList.remove('btn-warning')
@@ -140,10 +145,11 @@ export default {
 
         switchWish(product) {
             let removed = false
-            if (this.$root.wishlist.length === 0) {
+
+            if (this.wishlist.length === 0) {
                 this.storeWish(product)
             } else {
-                this.$root.wishlist.forEach((wish) => {
+                this.wishlist.forEach((wish) => {
                     if (wish.product_id === product.id) {
                         this.removeWish(wish)
                         removed = true
@@ -155,37 +161,23 @@ export default {
                     this.storeWish(product)
                 }
             }
-            this.$root.getWishlist()
         },
 
         storeWish(product) {
             document.getElementById('heart'+this.identifier+product.id).classList.remove('far')
             document.getElementById('heart'+this.identifier+product.id).classList.add('fas')
-            // console.log(product.id)
-            axios.post('/api/wish', {
-                user_id: this.user.id,
-                product_id: product.id
+
+            this.addItemToWishlist({
+                'user_id': this.user.id,
+                'product_id': product.id,
+                'product': product,
             })
-                .then(response => {
-                    // console.log(response);
-                })
-                .catch(error => {
-                    document.getElementById('heart'+this.identifier+product.id).classList.remove('fas')
-                    document.getElementById('heart'+this.identifier+product.id).classList.add('far')
-                })
         },
 
         removeWish(wish) {
             document.getElementById('heart'+this.identifier+wish.product.id).classList.remove('fas')
             document.getElementById('heart'+this.identifier+wish.product.id).classList.add('far')
-            axios.delete('/api/wish/'+wish.id+'/delete')
-                .then(response => {
-                    // console.log(response);
-                })
-                .catch(error => {
-                    document.getElementById('heart'+this.identifier+wish.product.id).classList.add('fas')
-                    document.getElementById('heart'+this.identifier+wish.product.id).classList.remove('far')
-                })
+            this.removeItemFromWishlist(wish)
         },
 
         matchWishlist(product) {

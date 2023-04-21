@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/orders', App\Http\API\Controllers\Order\IndexController::class)->name('order.index');
     Route::post('/wish', App\Http\API\Controllers\Wishlist\StoreController::class)->name('wish.store');
     Route::post('/wishlist', App\Http\API\Controllers\Wishlist\IndexController::class)->name('wish.index');
+    Route::post('/wishlist/sync', App\Http\API\Controllers\Wishlist\SyncController::class)->name('wish.sync');
     Route::delete('/wish/{wish}/delete', App\Http\API\Controllers\Wishlist\DeleteController::class)->name('wish.delete');
     Route::post('/review', App\Http\API\Controllers\Review\StoreController::class)->name('review.store');
     Route::post('/review/check', App\Http\API\Controllers\Review\CheckController::class)->name('review.check');

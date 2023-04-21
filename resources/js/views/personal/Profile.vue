@@ -145,6 +145,7 @@
 
 <script>
 import ModalWindow from "../../components/UI/modalWindow.vue";
+import {mapActions, mapMutations} from "vuex";
 export default {
     name: "Profile",
     components: {
@@ -152,12 +153,10 @@ export default {
     },
     data() {
         return {
-            user: this.$store.state.auth.user,
             orders: [],
-            wishlist: this.$root.wishlist,
-            productsInCart: this.$root.productsInCart,
             profileLoading: null,
             modalVisibility: false,
+
             inputShow: {
                 name: false,
                 mail: false,
@@ -167,18 +166,45 @@ export default {
         }
     },
 
+    computed: {
+        user: function () {
+            return this.$store.state.auth.user
+        },
+        productsInCart: function () {
+            return this.$store.state.cartProducts.products
+        },
+        wishlist: function () {
+            return this.$store.state.auth.wishlist
+        },
+    },
+
     mounted() {
         this.getOrders()
-        this.wishlist = this.$root.wishlist
+        this.setWishlist()
+    },
+
+    unmounted() {
+        this.syncWishlist()
     },
 
     methods: {
+        ...mapActions({
+            removeItemFromWishlist:"auth/removeItemFromWishlist",
+            setWishlist:"auth/setWishlist",
+            syncWishlist:"auth/syncWishlist",
+            removeItemFromCart:"cartProducts/removeItemFromCart",
+        }),
+
         deleteProductAsCart(product, indexInCart) {
-            let cart = JSON.parse(localStorage.getItem('cart'))
-            cart.splice(indexInCart, 1)
-            localStorage.setItem('cart', JSON.stringify(cart))
-            this.$root.getProductsInCart()
-            this.productsInCart = this.$root.productsInCart
+            this.removeItemFromCart(product)
+
+
+            // let cart = JSON.parse(localStorage.getItem('cart'))
+            // cart.splice(indexInCart, 1)
+            // localStorage.setItem('cart', JSON.stringify(cart))
+            // this.$root.getProductsInCart()
+            // this.productsInCart = this.$root.productsInCart
+
         },
 
         // ?????? недописано?
@@ -209,14 +235,7 @@ export default {
         },
 
         removeWish(wish) {
-            axios.delete('/api/wish/' + wish.id + '/delete')
-                .then(response => {
-                    this.$root.wishlist = this.wishlist.filter(w => w.id !== wish.id);
-                    this.wishlist = this.$root.wishlist
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.removeItemFromWishlist(wish)
         },
 
     }

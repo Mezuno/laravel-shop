@@ -87,24 +87,28 @@
 
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
+import {mapActions} from "vuex";
 export default {
     name: "products.index",
+
     components: {
         ProductCardInCatalog,
 
     },
+
     data() {
         return {
             loadedProducts: false,
             products: [],
             loaded: false,
             filters: [],
-            categories: [],
-            tags: [],
-            price: [],
+            dataToGetProducts: {
+                categories: [],
+                tags: [],
+                price: [],
+                page: 1,
+            },
             pagination: [],
-            wishlist: this.$root.wishlist,
-            user: this.$store.state.auth.user,
         }
     },
 
@@ -112,26 +116,38 @@ export default {
         this.getProducts()
         this.getFilterList()
         if (this.$store.state.auth.authenticated) {
-            this.getWishlist()
+            this.setWishlist()
         }
     },
 
+    unmounted() {
+        this.syncWishlist()
+    },
+
+    computed: {
+        user: function () {
+            return this.$store.state.auth.user
+        },
+        wishlist: function () {
+            return this.$store.state.auth.wishlist
+        },
+    },
+
     methods: {
+        ...mapActions({
+            syncWishlist:"auth/syncWishlist",
+            setWishlist:"auth/setWishlist",
+        }),
+
         filterProducts() {
             this.loadedProducts = false
             this.getProducts();
         },
 
-        getProducts(page = 1) {
-            axios.post('/api/products', {
-                categories: this.categories,
-                tags: this.tags,
-                prices: this.price,
-                page: page
-            }).then(response => {
+        getProducts() {
+            axios.post('/api/products', this.dataToGetProducts).then(response => {
                 this.products = response.data.data
                 this.pagination = response.data.meta
-                // console.log(this.products);
                 this.loaded = true
                 this.loadedProducts = true
             });
@@ -141,19 +157,6 @@ export default {
             axios.get('http://localhost:8000/api/products/filters').then(response => {
                 this.filters = response.data
             });
-        },
-
-        getWishlist() {
-            axios.post('/api/wishlist', {
-                user_id: this.user.id
-            })
-                .then(response => {
-                    this.wishlist = response.data.data
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
         },
     }
 }

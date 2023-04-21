@@ -32,7 +32,7 @@ export default {
 
     methods: {
         ...mapActions({
-            signIn:'auth/login'
+            signIn:'auth/login',
         }),
         async login(){
             this.processing = true

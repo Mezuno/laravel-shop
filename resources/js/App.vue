@@ -190,35 +190,34 @@ import {mapActions} from 'vuex'
 export default {
     name: 'App',
 
-    data() {
-        return {
-            productsInCart: [],
-            wishlist: [],
-            user: this.$store.state.auth.user,
-
-        }
-    },
-
     computed: {
+        user: function () {
+            return this.$store.state.auth.user
+        },
+        authenticated: function () {
+            return this.$store.state.auth.authenticated
+        },
+        productsInCart: function () {
+            return this.$store.state.cartProducts.products
+        },
+        wishlist: function () {
+            return this.$store.state.auth.wishlist
+        },
         totalPrice: function () {
             let total = 0
             if (this.productsInCart) {
-                this.productsInCart.forEach(productInCart => {
+                this.productsInCart?.forEach(productInCart => {
                     total += Number(productInCart.price) * Number(productInCart.qty)
                 })
             }
             return total
         },
-        authenticated: function () {
-            return this.$store.state.auth.authenticated
-        }
     },
 
-    mounted() {
+    updated() {
         if (this.authenticated) {
             this.getWishlist()
         }
-        this.getProductsInCart()
     },
 
     // renderTriggered({ key, target, type }) {
@@ -227,35 +226,22 @@ export default {
 
     methods: {
         ...mapActions({
-            signOut:"auth/logout"
+            signOut:"auth/logout",
+            setWishlist:"auth/setWishlist",
         }),
         async logout(){
             await axios.post('/logout').then(({data})=>{
                 this.signOut()
                 this.$router.push({name:"user.login"})
-                localStorage.removeItem('cart')
             })
         },
 
-        getProductsInCart() {
-            this.productsInCart = JSON.parse(localStorage.getItem('cart'))
+        async getWishlist() {
+            await this.setWishlist()
         },
 
         setProductsInCart(productsInCart) {
              localStorage.setItem('cart', JSON.stringify(productsInCart))
-        },
-
-        getWishlist() {
-            axios.post('/api/wishlist', {
-                user_id: this.user.id
-            })
-                .then(response => {
-                    this.wishlist = response.data.data
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
         },
     }
 }
