@@ -19,8 +19,8 @@ export default {
         ADD_ITEM_TO_CART (state, product) {
             Array.prototype.push.apply(state.products, product)
         },
-        CHANGE_ITEM_QTY (state, {indexInCart, count}) {
-            state.products[indexInCart].qty = count
+        CHANGE_ITEM_QTY (state, {indexInCart, qty}) {
+            state.products[indexInCart].qty = qty
         },
     },
     actions:{
@@ -44,8 +44,8 @@ export default {
             }
         },
 
-        changeItemQtyCartProducts({commit}, {indexInCart, count}) {
-            commit('CHANGE_ITEM_QTY', {indexInCart, count})
+        changeItemQtyCartProducts({commit}, {indexInCart, qty}) {
+            commit('CHANGE_ITEM_QTY', {indexInCart, qty})
         },
 
         setCartProducts({commit}, value) {

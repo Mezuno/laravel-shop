@@ -252,30 +252,31 @@ export default {
 
         decQty(product, indexInCart) {
             if (product.qty > 1) {
-                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) - 1
-                this.changeItemQtyCartProducts({indexInCart, inputQty})
-                product.qty = inputQty;
+                let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) - 1
+                this.changeItemQtyCartProducts({indexInCart, qty})
+                product.qty = qty;
             }
         },
 
         incQty(product, indexInCart) {
             if (product.qty < 999) {
-                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) + 1
-                this.changeItemQtyCartProducts({indexInCart, inputQty})
-                product.qty = inputQty;
+                let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) + 1
+                this.changeItemQtyCartProducts({indexInCart, qty})
+                product.qty = qty;
             }
         },
 
         changeQty(product, indexInCart) {
-            let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
+            let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
 
-            if (inputQty < 1) {
-                inputQty = 1
-            } else if (inputQty > 999) {
-                inputQty = 999
+            if (qty < 1) {
+                qty = 1
+            } else if (qty > 999) {
+                qty = 999
             }
-            this.changeItemQtyCartProducts({indexInCart, inputQty})
-            product.qty = inputQty
+
+            this.changeItemQtyCartProducts({indexInCart, qty})
+            product.qty = qty
         },
 
 
