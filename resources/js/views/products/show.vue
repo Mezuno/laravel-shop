@@ -11,8 +11,8 @@
             <div v-if="loaded" class="row mb-5" style="padding-left: 30px; padding-right: 30px;">
 
                 <div class="col-1">
-                    <img @click="pictureReplacement(product.image_url)" :src="product.image_url" alt="" class="mb-2 w-100" style="cursor: pointer; border-radius: 7px;" >
-                    <img @click="pictureReplacement(productImage.url)" v-for="productImage in product.product_images" :src="productImage.url" alt="" class="mb-2 w-100" style="cursor: pointer; border-radius: 7px;">
+                    <img @click="pictureReplacement(product.image_url, 0)" :src="product.image_url" alt="" class="mb-2 w-100 small-product-img current-small-product-img" style="cursor: pointer; border-radius: 7px;" >
+                    <img @click="pictureReplacement(productImage.url, index+1)" v-for="(productImage, index) in product.product_images" :src="productImage.url" alt="" class="mb-2 w-100 small-product-img" style="cursor: pointer; border-radius: 7px;">
                 </div>
 
                 <div class="col-4">
@@ -154,41 +154,41 @@
                 </div>
             </div>
 
-            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">
-                <div class="d-flex flex-column">
-                    <h3>Ваш отзыв</h3>
-                    <div>
-                        <p class="fw-bold mb-0">Заголовок</p>
-                        <p>{{ userReview.title }}</p>
-                    </div>
-<!--                    <i v-for="star in userReview.rate" class="far fa-star rate d-none text-warning"></i>-->
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Оценка</p>
-                        <p>{{ userReview.rate }}</p>
-                    </div>
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Приемущества</p>
-                        <p>{{ userReview.advantages }}</p>
-                    </div>
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Недостатки</p>
-                        <p>{{ userReview.flaws }}</p>
-                    </div>
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Текст отзыва</p>
-                        <p>{{ userReview.body }}</p>
-                    </div>
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Дата</p>
-                        <p>{{ userReview.created }}</p>
-                    </div>
-                    <div>
-                        <p class="fw-bold mb-2">Статус</p>
-                        <p v-if="userReview.confirmed" class="alert alert-success">Отзыв подтвержден {{ userReview.confirmed }}</p>
-                        <p v-if="!userReview.confirmed" class="alert alert-warning">Ваш отзыв еще не проверен</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">-->
+<!--                <div class="d-flex flex-column">-->
+<!--                    <h3>Ваш отзыв</h3>-->
+<!--                    <div>-->
+<!--                        <p class="fw-bold mb-0">Заголовок</p>-->
+<!--                        <p>{{ userReview.title }}</p>-->
+<!--                    </div>-->
+<!--&lt;!&ndash;                    <i v-for="star in userReview.rate" class="far fa-star rate d-none text-warning"></i>&ndash;&gt;-->
+<!--                    <div class="mb-2">-->
+<!--                        <p class="fw-bold mb-0">Оценка</p>-->
+<!--                        <p>{{ userReview.rate }}</p>-->
+<!--                    </div>-->
+<!--                    <div class="mb-2">-->
+<!--                        <p class="fw-bold mb-0">Приемущества</p>-->
+<!--                        <p>{{ userReview.advantages }}</p>-->
+<!--                    </div>-->
+<!--                    <div class="mb-2">-->
+<!--                        <p class="fw-bold mb-0">Недостатки</p>-->
+<!--                        <p>{{ userReview.flaws }}</p>-->
+<!--                    </div>-->
+<!--                    <div class="mb-2">-->
+<!--                        <p class="fw-bold mb-0">Текст отзыва</p>-->
+<!--                        <p>{{ userReview.body }}</p>-->
+<!--                    </div>-->
+<!--                    <div class="mb-2">-->
+<!--                        <p class="fw-bold mb-0">Дата</p>-->
+<!--                        <p>{{ userReview.created }}</p>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <p class="fw-bold mb-2">Статус</p>-->
+<!--                        <p v-if="userReview.confirmed" class="alert alert-success">Отзыв подтвержден {{ userReview.confirmed }}</p>-->
+<!--                        <p v-if="!userReview.confirmed" class="alert alert-warning">Ваш отзыв еще не проверен</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <h2 v-if="loaded">Похожие товары</h2>
             <carousel :snapAlign="'start'" :wrapAround="true" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
@@ -327,8 +327,12 @@ export default {
             this.previousWatched = JSON.parse(localStorage.getItem('previous-watched'))
         },
 
-        pictureReplacement(uri) {
+        pictureReplacement(uri, index) {
             document.getElementById("bigProductImage").src = uri;
+            for (let i = 0; i < this.product.product_images.length+1; i++) {
+                document.getElementsByClassName('small-product-img')[i].classList.remove('current-small-product-img')
+            }
+            document.getElementsByClassName('small-product-img')[index].classList.add('current-small-product-img')
             // console.log(document.getElementById("bigProductImage"))
         },
 

@@ -2,17 +2,28 @@
     border-radius: 15px;
 }
 
-.heart-far {
-    transition: all linear 0.15s;
-    -webkit-transition: all linear 0.15s;
-    -moz-transition: all linear 0.15s;
-    -o-transition: all linear 0.15s;
+/*.small-product-img:hover {*/
+/*    border: 2px solid #ffc107;*/
+/*}*/
+
+.current-small-product-img {
+    border: 2px solid #ffc107;
 }
 
-.heart-fas {
-    transition: all linear 0.15s;
-    -webkit-transition: all linear 0.15s;
-    -moz-transition: all linear 0.15s;
-    -o-transition: all linear 0.15s;
 
-}
+/*.heart-far {*/
+/*    transition: all linear 0.15s;*/
+/*    -webkit-transition: all linear 0.15s;*/
+/*    -moz-transition: all linear 0.15s;*/
+/*    -o-transition: all linear 0.15s;*/
+/*}*/
+
+/*.heart-fas {*/
+/*    transition: all linear 0.15s;*/
+/*    -webkit-transition: all linear 0.15s;*/
+/*    -moz-transition: all linear 0.15s;*/
+/*    -o-transition: all linear 0.15s;*/
+
+/*}*/
+
+
