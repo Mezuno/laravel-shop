@@ -15,7 +15,7 @@ class IndexController extends Controller
         $wishlist = Review::where('confirmed_at', '!=', null)
             ->where('product_id', '=', $data['product_id'])
             ->orderByDesc('id')
-            ->paginate(12, ['*'], 'page', $data['page'] ?? 1);
+            ->get();
 
         return ReviewResource::collection($wishlist);
     }

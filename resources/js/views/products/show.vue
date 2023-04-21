@@ -71,7 +71,7 @@
                                     <h6>{{ review.title }}</h6>
                                 </div>
                                 <div class="float-left">
-                                    {{ review.body }}
+                                    <p>{{ review.body.slice(0,150) }} <span class="h6" v-if="review.body.slice(0,150).length < review.body.length">Читать далее</span></p>
                                 </div>
 <!--                                <div>-->
 <!--                                    достоинства-->
@@ -93,7 +93,7 @@
                     </slide>
 
                     <template #addons>
-                        <navigation />
+                        <navigation v-if="Object.keys(reviews).length > 3"/>
                     </template>
             </carousel>
 

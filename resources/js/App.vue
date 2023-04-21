@@ -56,8 +56,8 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item d-flex align-items-center btn btn-warning me-2">
-                        <h4 class="m-0"><router-link to="/wishlist" class="cart-img text-dark m-0 p-0"><i class="fas fa-heart"></i></router-link></h4>
+                    <li class="nav-item me-2">
+                        <router-link to="/wishlist" class="cart-img text-dark m-0 d-flex align-items-center btn btn-warning "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/cart" class="cart-img btn btn-warning text-dark d-flex align-items-center"><h4 class="mb-0 me-2"><i class="fas fa-shopping-cart"></i></h4><h5 class="p-0 m-0">{{ totalPrice }}</h5><i class="fas fa-ruble-sign"></i></router-link>

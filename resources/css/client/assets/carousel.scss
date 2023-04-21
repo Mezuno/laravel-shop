@@ -35,4 +35,9 @@
 
 .carousel {
     text-align: start;
+    cursor: grab;
+}
+
+.carousel:active {
+    cursor: grabbing;
 }
