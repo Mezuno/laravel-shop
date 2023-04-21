@@ -75,7 +75,7 @@
                             <div class="col-2">
                                 <router-link :to="{name: 'products.show', params: {id: product.id}}">
                                     <img :src="product.image_url"
-                                         class="w-100 productImgInCart">
+                                         class="w-100 productImgInCart" alt="Картинка продукта">
                                 </router-link>
 
                             </div>
@@ -92,7 +92,7 @@
                                 <div class="col-3 text-nowrap">
                                     <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
                                         class="fas fa-minus text-dark"></i></div>
-                                    <input @change="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
+                                    <input @input="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
                                     <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
                                         class="fas fa-plus plus"></i></div>
                                 </div>
@@ -248,31 +248,23 @@ export default {
 
 
         decQty(product, indexInCart) {
-            let cart = localStorage.getItem('cart')
-            let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
             if (product.qty > 1) {
-                cart = JSON.parse(cart)
-                cart[indexInCart].qty = inputQty - 1
-                localStorage.setItem('cart', JSON.stringify(cart))
-                product.qty = inputQty
-                product.qty = product.qty - 1;
+                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
+                this.productsInCart[indexInCart].qty = inputQty - 1
+                product.qty = inputQty - 1;
             }
         },
 
         incQty(product, indexInCart) {
-            let cart = localStorage.getItem('cart')
-            let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
             if (product.qty < 999) {
-                cart = JSON.parse(cart)
-                cart[indexInCart].qty = inputQty + 1
-                localStorage.setItem('cart', JSON.stringify(cart))
-                product.qty = inputQty
-                product.qty = product.qty + 1;
+                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
+                this.productsInCart[indexInCart].qty = inputQty + 1
+                product.qty = inputQty + 1;
             }
         },
 
         changeQty(product, indexInCart) {
-            let cart = JSON.parse(localStorage.getItem('cart'))
+            let cart = this.productsInCart
             let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
 
             if (inputQty > 0 && inputQty < 1000) {
@@ -284,7 +276,6 @@ export default {
                 cart[indexInCart].qty = 999
                 inputQty = 999
             }
-            this.$root.setProductsInCart(cart)
             product.qty = inputQty
         },
 
