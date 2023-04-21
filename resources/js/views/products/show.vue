@@ -43,6 +43,19 @@
 
             </div>
 
+            <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
+                <h2>Отзывы</h2>
+                <span class="ms-1 h5">{{ Object.keys(reviews).length }}</span>
+            </div>
+
+            <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
+                <h3>{{ reviewsRate() }}</h3>
+                <div class="float-left text-nowrap ms-2">
+                    <i v-for="star in Math.round(Number(reviewsRate()))" class="fas fa-star rate text-warning"></i>
+                    <i v-for="star in 5 - Math.round(Number(reviewsRate()))" class="far fa-star rate text-warning"></i>
+                </div>
+            </div>
+
             <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
                     <slide v-for="review in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
@@ -50,9 +63,9 @@
                             <div class="cart-card p-4 w-100 h-100 card-pointer d-flex flex-column align-items-start">
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
-                                        <h5>{{ review.user.name }}</h5>
+                                        <h5>{{ review.user.name }} <span class="h6 text-secondary text-nowrap" v-if="review.user.id === this.$store.state.auth.user.id">(Ваш отзыв)</span></h5>
                                     </div>
-                                    <div class="float-left" v-if="loaded">
+                                    <div class="float-left text-nowrap" v-if="loaded">
                                         <i v-for="star in review.rate" class="fas fa-star rate text-warning"></i>
                                         <i v-for="star in 5 - review.rate" class="far fa-star rate text-warning"></i>
                                     </div>
@@ -66,7 +79,7 @@
                                     <h6>{{ review.title }}</h6>
                                 </div>
                                 <div class="float-left">
-                                    <p>{{ review.body.slice(0,150) }} <span class="h6" v-if="review.body.slice(0,150).length < review.body.length">Читать далее</span></p>
+                                    <p>{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... Читать далее</span></p>
                                 </div>
 <!--                                <div>-->
 <!--                                    достоинства-->
@@ -233,7 +246,7 @@ export default {
             userReview: null,
             userReviewValidationErrors: {},
             sameProducts: {},
-            previousWatched: {}
+            previousWatched: {},
         }
     },
 
@@ -255,6 +268,7 @@ export default {
     mounted() {
         this.getProduct(this.$router.currentRoute._value.params.id);
         this.getReviews();
+
     },
 
     methods: {
@@ -263,6 +277,15 @@ export default {
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
         }),
+        reviewsRate() {
+            let allRate
+            let counter = 0
+            this.reviews.forEach((review) =>{
+                counter += review.rate
+            })
+            allRate = String(counter / this.reviews.length).slice(0,3)
+            return allRate
+        },
 
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
@@ -276,6 +299,7 @@ export default {
                     if (this.authenticated) {
                         this.getUserReview();
                     }
+                    this.reviewsRate();
                 }, 1000);
             });
         },
@@ -417,7 +441,7 @@ export default {
                     if (wish.product_id === product.id) {
                         this.removeWish(wish)
                         removed = true
-                        return;
+                        return {};
                     }
                 })
 

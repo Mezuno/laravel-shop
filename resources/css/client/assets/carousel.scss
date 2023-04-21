@@ -2,6 +2,12 @@
 .carousel__next {
     top: 52%;
 }
+
+.carousel__prev,
+.carousel__next {
+    top: 52%;
+}
+
 .carousel__prev {
     color: #696969;
     left: -5px;
@@ -15,6 +21,10 @@
 .carousel__prev:hover {
     color: #000000;
     box-shadow: 0 0 40px #c9c9c9;
+}
+
+.carousel__prev:focus-visible {
+    outline: none;
 }
 
 .carousel__next {
@@ -32,6 +42,9 @@
     box-shadow: 0 0 40px #c9c9c9;
 }
 
+.carousel__next:focus-visible {
+    outline: none;
+}
 
 .carousel {
     text-align: start;
@@ -40,4 +53,12 @@
 
 .carousel:active {
     cursor: grabbing;
+}
+
+.carousel__prev--disabled {
+    display: none;
+}
+
+.carousel__next--disabled {
+    display: none;
 }
