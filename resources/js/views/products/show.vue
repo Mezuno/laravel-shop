@@ -35,7 +35,7 @@
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
-                        <h5 class="ps-3 m-0 text-danger">
+                        <h5 class="ps-3 m-0 text-danger" v-if="authenticated">
                             <i @click.prevent="switchWish(product)" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
                         </h5>
                     </div>
@@ -43,7 +43,7 @@
 
             </div>
 
-            <carousel :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
+            <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
                     <slide v-for="review in reviews" :key="review.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
 
@@ -178,15 +178,24 @@
             </div>
 
             <h2 v-if="loaded">Похожие товары</h2>
-            <carousel :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+            <carousel :snapAlign="'start'" :wrapAround="true" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
                 <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
-                    <product-card-in-catalog :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
+                    <product-card-in-catalog :identifier="'SameProduct'" :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
                 </template>
             </carousel>
 
+            <h2 v-if="loaded">Смотрели ранее</h2>
+            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
+                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+                    <product-card-in-catalog :identifier="'PreviousWatched'" :product="productWatched" class="card product-card-hover p-0 h-100" :key="productWatched.id" style="width: 15rem;"/>
+                </slide>
+                <template #addons>
+                    <navigation />
+                </template>
+            </carousel>
         </div>
     </div>
 </template>
@@ -232,7 +241,8 @@ export default {
             authenticated: this.$store.state.auth.authenticated,
             successReview: {},
             userReview: {},
-            sameProducts: {}
+            sameProducts: {},
+            previousWatched: {}
         }
     },
 
@@ -245,9 +255,34 @@ export default {
                 setTimeout(() => {
                     this.getCartList(this.product)
                     this.matchWishlist(this.product)
+                    this.setPreviousWatched(this.product)
                 }, 1000);
             });
         },
+
+        setPreviousWatched(product) {
+            let previousWatched = []
+            previousWatched = localStorage.getItem('previous-watched')
+
+            if (!previousWatched) {
+                localStorage.setItem('previous-watched', JSON.stringify([product]))
+            } else {
+                previousWatched = JSON.parse(previousWatched)
+
+                previousWatched.forEach((productInPreviousWatched, index) => {
+                    if (productInPreviousWatched.id === product.id) {
+                        previousWatched.splice(index, 1)
+                    }
+                })
+
+                previousWatched.unshift(product);
+
+                localStorage.setItem('previous-watched', JSON.stringify(previousWatched))
+            }
+
+            this.previousWatched = JSON.parse(localStorage.getItem('previous-watched'))
+        },
+
         getCategoriesList() {
             axios.get('http://localhost:8000/api/categories').then(response => {
                 this.categories = response.data.data

@@ -22,14 +22,14 @@
             </div>
 
             <div class="row px-2 align-items-center">
-                <a @click.prevent="addToCart(product)" href="" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${product.id}`">
+                <a @click.prevent="addToCart(product)" href="" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${identifier}${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
                 </a>
 
                 <h5 v-if="authenticated" class="p-0 m-0 col-2">
                     <a class="text-danger ms-3">
-                        <i @click.prevent="switchWish(product)" class="far fa-heart" :id="`heart${product.id}`" style="cursor: pointer;"></i>
+                        <i @click.prevent="switchWish(product)" class="far fa-heart" :id="`heart${identifier}${product.id}`" style="cursor: pointer;"></i>
                     </a>
                 </h5>
             </div>
@@ -52,6 +52,10 @@ export default {
         product: {
             type: Object,
             required: true,
+        },
+        identifier: {
+            type: String,
+            required: true
         },
     },
 
@@ -76,13 +80,14 @@ export default {
 
     methods: {
         stretchCartButton(product) {
-            document.getElementById('addCart'+product.id).classList.remove('col-10')
-            document.getElementById('addCart'+product.id).classList.add('col-12')
+            document.getElementById('addCart'+this.identifier+product.id).classList.remove('col-10')
+            document.getElementById('addCart'+this.identifier+product.id).classList.add('col-12')
         },
 
         addToCart(product) {
+            console.log(this.identifier);
 
-            document.getElementById('addCart'+product.id).innerText = 'Добавляем'
+            document.getElementById('addCart'+this.identifier+product.id).innerText = 'Добавляем'
             let productInCartQty
 
             let cart = localStorage.getItem('cart')
@@ -118,17 +123,17 @@ export default {
                 this.$root.getProductsInCart()
             }
 
-            document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
-            document.getElementById('addCart'+product.id).classList.remove('btn-warning')
-            document.getElementById('addCart'+product.id).classList.add('btn-success')
+            document.getElementById('addCart'+this.identifier+product.id).innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
+            document.getElementById('addCart'+this.identifier+product.id).classList.remove('btn-warning')
+            document.getElementById('addCart'+this.identifier+product.id).classList.add('btn-success')
         },
 
         getCartList(product) {
             this.productsInCart?.forEach((productInCart) => {
                 if (productInCart.id === product.id) {
-                    document.getElementById('addCart'+product.id).innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
-                    document.getElementById('addCart'+product.id).classList.remove('btn-warning')
-                    document.getElementById('addCart'+product.id).classList.add('btn-success')
+                    document.getElementById('addCart'+this.identifier+product.id).innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
+                    document.getElementById('addCart'+this.identifier+product.id).classList.remove('btn-warning')
+                    document.getElementById('addCart'+this.identifier+product.id).classList.add('btn-success')
                 }
             })
         },
@@ -154,8 +159,8 @@ export default {
         },
 
         storeWish(product) {
-            document.getElementById('heart'+product.id).classList.remove('far')
-            document.getElementById('heart'+product.id).classList.add('fas')
+            document.getElementById('heart'+this.identifier+product.id).classList.remove('far')
+            document.getElementById('heart'+this.identifier+product.id).classList.add('fas')
             // console.log(product.id)
             axios.post('/api/wish', {
                 user_id: this.user.id,
@@ -165,21 +170,21 @@ export default {
                     // console.log(response);
                 })
                 .catch(error => {
-                    document.getElementById('heart'+product.id).classList.remove('fas')
-                    document.getElementById('heart'+product.id).classList.add('far')
+                    document.getElementById('heart'+this.identifier+product.id).classList.remove('fas')
+                    document.getElementById('heart'+this.identifier+product.id).classList.add('far')
                 })
         },
 
         removeWish(wish) {
-            document.getElementById('heart'+wish.product.id).classList.remove('fas')
-            document.getElementById('heart'+wish.product.id).classList.add('far')
+            document.getElementById('heart'+this.identifier+wish.product.id).classList.remove('fas')
+            document.getElementById('heart'+this.identifier+wish.product.id).classList.add('far')
             axios.delete('/api/wish/'+wish.id+'/delete')
                 .then(response => {
                     // console.log(response);
                 })
                 .catch(error => {
-                    document.getElementById('heart'+wish.product.id).classList.add('fas')
-                    document.getElementById('heart'+wish.product.id).classList.remove('far')
+                    document.getElementById('heart'+this.identifier+wish.product.id).classList.add('fas')
+                    document.getElementById('heart'+this.identifier+wish.product.id).classList.remove('far')
                 })
         },
 
@@ -187,8 +192,8 @@ export default {
             if (this.$root.wishlist.length !== 0) {
                 for (let i = 0; i < this.$root.wishlist.length; i++) {
                     if (this.$root.wishlist[i].product_id === product.id) {
-                        document.getElementById('heart'+product.id).classList.remove('far')
-                        document.getElementById('heart'+product.id).classList.add('fas')
+                        document.getElementById('heart'+this.identifier+product.id).classList.remove('far')
+                        document.getElementById('heart'+this.identifier+product.id).classList.add('fas')
                     }
                 }
             }
