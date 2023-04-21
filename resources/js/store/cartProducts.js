@@ -37,6 +37,10 @@ export default {
             }
         },
 
+        changeItemQtyCartProducts({state}, {indexInCart, count}) {
+            state.products[indexInCart].qty = count
+        },
+
         setCartProducts({commit}, value) {
             commit('SET_CART_PRODUCTS', value)
         },

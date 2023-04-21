@@ -36,12 +36,12 @@
 <!--                </div>-->
 <!--            </div>-->
 
-            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-success col-4">
+            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-success col-6">
                 Заказ номер {{ successOrder.id }} успешно оформлен!<br>
                 Товары:
                 <ul class="mb-0">
                     <li v-for="product in successOrder.products">
-                        {{ product.title }} (Артикул: {{ product.vendor_code }}) - {{ product.price }} ₽
+                        {{ product.title }} (Артикул: {{ product.vendor_code }}) - {{ product.price }} x {{ product.qty }} = {{ product.price * product.qty }} ₽
                     </li>
                 </ul>
                 <div>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <div v-show="productsInCart != null && productsInCart.length !== 0" class="card border border-0 cart-card w-25 h-100">
+                <div v-show="productsInCart !== null && Object.keys(productsInCart).length > 0" class="card border border-0 cart-card w-25 h-100">
                     <div class="card-body px-4">
                         <h3 class="card-title mt-1 mb-3">Оформить заказ</h3>
                         <div>
@@ -209,16 +209,21 @@ export default {
         }
         this.setTotalPrice()
 
+        // WTF только при этой теме при входе в коризну добавленные с каталога товары сохраняются в vuex localstorage
+        this.setWishlist()
     },
 
     methods: {
         ...mapActions({
+            setWishlist:"auth/setWishlist",
             removeItemFromCart:"cartProducts/removeItemFromCart",
             setCartProducts:"cartProducts/setCartProducts",
+            changeItemQtyCartProducts:"cartProducts/changeItemQtyCartProducts",
         }),
 
         storeOrder() {
             this.storeOrderData.products = this.$store.state.cartProducts.products
+            console.log(this.storeOrderData.products);
             this.orderProcessing = true
             window.axios.post('http://localhost:8000/api/order', this.storeOrderData).then(({data}) => {
                 this.setCartProducts({})
@@ -248,33 +253,29 @@ export default {
 
         decQty(product, indexInCart) {
             if (product.qty > 1) {
-                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
-                this.productsInCart[indexInCart].qty = inputQty - 1
-                product.qty = inputQty - 1;
+                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) - 1
+                this.changeItemQtyCartProducts({indexInCart, inputQty})
+                product.qty = inputQty;
             }
         },
 
         incQty(product, indexInCart) {
             if (product.qty < 999) {
-                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
-                this.productsInCart[indexInCart].qty = inputQty + 1
-                product.qty = inputQty + 1;
+                let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) + 1
+                this.changeItemQtyCartProducts({indexInCart, inputQty})
+                product.qty = inputQty;
             }
         },
 
         changeQty(product, indexInCart) {
-            let cart = this.productsInCart
             let inputQty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
 
-            if (inputQty > 0 && inputQty < 1000) {
-                cart[indexInCart].qty = inputQty
-            } else if (inputQty < 1) {
-                cart[indexInCart].qty = 1
+            if (inputQty < 1) {
                 inputQty = 1
             } else if (inputQty > 999) {
-                cart[indexInCart].qty = 999
                 inputQty = 999
             }
+            this.changeItemQtyCartProducts({indexInCart, inputQty})
             product.qty = inputQty
         },
 

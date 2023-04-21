@@ -114,6 +114,11 @@
                         <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
                     </div>
 
+                    <div class="col-12" v-if="Object.keys(userReviewValidationErrors).length > 0">
+                        <div class="alert alert-danger">
+                            <div v-for="(value, key) in userReviewValidationErrors" :key="key">{{ value[0] }}</div>
+                        </div>
+                    </div>
 
                     <div class="input-group mb-2">
                         <input type="text" class="form-control" placeholder="Заголовок" v-model="storeReviewData.title">
@@ -162,12 +167,12 @@
                     </div>
                     <div class="mb-2">
                         <p class="fw-bold mb-0">Дата</p>
-                        <p>{{ userReview.created_at }}</p>
+                        <p>{{ userReview.created }}</p>
                     </div>
-                    <div class="mb-2">
-                        <p class="fw-bold mb-0">Статус</p>
-                        <p v-if="userReview.confirmed_at">Отзыв подтвержден {{ userReview.confirmed_at }}</p>
-                        <p v-if="!userReview.confirmed_at">Ваш отзыв еще не проверен</p>
+                    <div>
+                        <p class="fw-bold mb-2">Статус</p>
+                        <p v-if="userReview.confirmed" class="alert alert-success">Отзыв подтвержден {{ userReview.confirmed }}</p>
+                        <p v-if="!userReview.confirmed" class="alert alert-warning">Ваш отзыв еще не проверен</p>
                     </div>
                 </div>
             </div>
@@ -225,7 +230,8 @@ export default {
                 advantages: "",
             },
             successReview: {},
-            userReview: {},
+            userReview: null,
+            userReviewValidationErrors: {},
             sameProducts: {},
             previousWatched: {}
         }
@@ -312,7 +318,6 @@ export default {
                             this.reviews.unshift(review)
                         }
                     })
-                    console.log(this.reviews)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -325,9 +330,15 @@ export default {
                     this.successReview = response.data.data
                     this.storeReviewData = {}
                     this.userReview = response.data.data
+                    this.userReviewValidationErrors = {}
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(({response})=>{
+                    if(response.status===422){
+                        this.userReviewValidationErrors = response.data.errors
+                    } else{
+                        this.userReviewValidationErrors = {}
+                        alert(response.data.message)
+                    }
                 })
         },
 

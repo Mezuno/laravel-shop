@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->index()->constrained('users')->onDelete('cascade');
             $table->jsonb('products');
-            $table->unsignedDecimal('total_price');
+            $table->unsignedDecimal('total_price', 10, 2);
             $table->boolean('payment_status')->default(false);
             $table->string('address');
             $table->softDeletes();
