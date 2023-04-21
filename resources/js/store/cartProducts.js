@@ -16,6 +16,12 @@ export default {
         REMOVE_ITEM_FROM_CART (state, product) {
             state.products = state.products.filter(p => p.id !== product.id)
         },
+        ADD_ITEM_TO_CART (state, product) {
+            Array.prototype.push.apply(state.products, product)
+        },
+        CHANGE_ITEM_QTY (state, {indexInCart, count}) {
+            state.products[indexInCart].qty = count
+        },
     },
     actions:{
 
@@ -33,12 +39,13 @@ export default {
                         newProduct = null
                     }
                 })
-                Array.prototype.push.apply(state.products, newProduct)
+
+                commit('ADD_ITEM_TO_CART', newProduct)
             }
         },
 
-        changeItemQtyCartProducts({state}, {indexInCart, count}) {
-            state.products[indexInCart].qty = count
+        changeItemQtyCartProducts({commit}, {indexInCart, count}) {
+            commit('CHANGE_ITEM_QTY', {indexInCart, count})
         },
 
         setCartProducts({commit}, value) {

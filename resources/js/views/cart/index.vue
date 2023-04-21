@@ -186,6 +186,9 @@ export default {
         productsInCart: function () {
             return this.$store.state.cartProducts.products
         },
+        authenticated: function () {
+            return this.$store.state.auth.authenticated
+        },
         wishlist: function () {
             return this.$store.state.auth.wishlist
         },
@@ -204,18 +207,14 @@ export default {
         this.$nextTick(function () {
             this.openCartList()
         })
-        if (this.$store.state.auth.authenticated) {
+        if (this.authenticated) {
             this.setStoreOrderData()
         }
         this.setTotalPrice()
-
-        // WTF только при этой теме при входе в коризну добавленные с каталога товары сохраняются в vuex localstorage
-        this.setWishlist()
     },
 
     methods: {
         ...mapActions({
-            setWishlist:"auth/setWishlist",
             removeItemFromCart:"cartProducts/removeItemFromCart",
             setCartProducts:"cartProducts/setCartProducts",
             changeItemQtyCartProducts:"cartProducts/changeItemQtyCartProducts",
