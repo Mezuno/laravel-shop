@@ -19,10 +19,11 @@ class ProductSeeder extends Seeder
         $recordCount = 80;
 
         $productImages = [
-            'images/products/jZTsJpuBQ9JiKrrUCiIcYNsfl7XZuQHOuR4CS25w.jpg',
-            'images/products/6xueNkzOUGHjcGKQsxPeBmUss6QS0BBMSOgIAWlA.jpg',
-            'images/products/9e1dJLH9bHAdE3q2s2A84nmNkKKDqOMJauIlELSP.jpg',
-            'images/products/ZdzpoRJY6FOMo6BgzsFBIc2N3AwuJ0TAPWE4WHmw.jpg',
+            'images/products/900x1200.png',
+//            'images/products/jZTsJpuBQ9JiKrrUCiIcYNsfl7XZuQHOuR4CS25w.jpg',
+//            'images/products/6xueNkzOUGHjcGKQsxPeBmUss6QS0BBMSOgIAWlA.jpg',
+//            'images/products/9e1dJLH9bHAdE3q2s2A84nmNkKKDqOMJauIlELSP.jpg',
+//            'images/products/ZdzpoRJY6FOMo6BgzsFBIc2N3AwuJ0TAPWE4WHmw.jpg',
         ];
 
         for ($i = 0; $i < $recordCount; $i++) {

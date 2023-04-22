@@ -13,21 +13,21 @@
                         <div class="carousel-item active">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-                                    <img src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" class="d-block w-100 sliderBlackoutImg" alt="...">
+                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(red).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-                                    <img src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" class="d-block w-100 sliderBlackoutImg" alt="...">
+                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(blue).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-                                    <img src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" class="d-block w-100 sliderBlackoutImg" alt="...">
+                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(green).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
@@ -89,7 +89,7 @@
                 <slide v-for="product in products" :key="product.id" class="p-3">
                     <div class="card rounded-3">
                         <div class="card-img-top col-4 rounded-3 rounded-top">
-                            <img :src="product.image_url" alt="" class="w-100" height="200">
+                            <img :src="product.image_url" alt="" class="w-100">
                         </div>
                         <div class="card-body d-flex flex-column align-items-start justify-content-start">
                             <h4 class="">{{ product.title }}</h4>

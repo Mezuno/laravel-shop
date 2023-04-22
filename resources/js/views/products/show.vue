@@ -284,21 +284,21 @@ export default {
 
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
+                this.loaded = true
                 this.product = response.data.data
                 this.getSameProducts()
-                setTimeout(() => {
-                    this.getCartList(this.product)
-                    this.matchWishlist(this.product)
-                    this.setPreviousWatched(this.product)
-                    if (this.authenticated) {
-                        this.getUserReview();
-                    }
-                }, 1000);
-                this.loaded = true
             })
             .catch(({response}) => {
                 if (response.status === 404) {
                     this.$router.push({name:'404'})
+                }
+            })
+            .finally(() => {
+                this.getCartList(this.product)
+                this.matchWishlist(this.product)
+                this.setPreviousWatched(this.product)
+                if (this.authenticated) {
+                    this.getUserReview();
                 }
             });
         },

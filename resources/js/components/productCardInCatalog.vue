@@ -2,7 +2,7 @@
     <div class="all">
 
         <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
-            <img :src="product.image_url" class="card-img-top" height="258" alt="">
+            <img :src="product.image_url" class="card-img-top" alt="">
         </router-link>
         <div class="d-flex flex-column p-3 flex-grow-1">
             <div class="d-flex justify-content-between align-items-center">
