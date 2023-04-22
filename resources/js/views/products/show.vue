@@ -268,11 +268,15 @@ export default {
     mounted() {
         this.getProduct(this.$router.currentRoute._value.params.id);
         this.getReviews();
+    },
 
+    unmounted() {
+        this.syncWishlist()
     },
 
     methods: {
         ...mapActions({
+            syncWishlist:"auth/syncWishlist",
             removeItemFromWishlist:"auth/removeItemFromWishlist",
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
@@ -408,18 +412,14 @@ export default {
             })
             // --------------------
 
-            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCartQty + 'шт.)'
-            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-            document.getElementById('addToCartButton').classList.add('btn-dark')
+            this.switchAddToCartButtonClasses(productInCartQty)
         },
 
         getCartList(product) {
             if (this.productsInCart && this.productsInCart?.length > 0) {
                 this.productsInCart?.forEach((productInCart) => {
                     if (productInCart.id === product.id) {
-                        document.getElementById('addToCartButton').innerText = 'Добавлено! (' + productInCart.qty + 'шт.)'
-                        document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-                        document.getElementById('addToCartButton').classList.add('btn-dark')
+                        this.switchAddToCartButtonClasses(productInCart.qty)
                     }
                 })
             }
@@ -446,8 +446,7 @@ export default {
         },
 
         storeWish(product) {
-            document.getElementById('addToWishlistHeart').classList.remove('far')
-            document.getElementById('addToWishlistHeart').classList.add('fas')
+            this.switchHeartClasses()
 
             this.addItemToWishlist({
                 'user_id': this.user.id,
@@ -457,8 +456,7 @@ export default {
         },
 
         removeWish(wish) {
-            document.getElementById('addToWishlistHeart').classList.remove('fas')
-            document.getElementById('addToWishlistHeart').classList.add('far')
+            this.switchHeartClasses()
             this.removeItemFromWishlist(wish)
         },
 
@@ -466,12 +464,30 @@ export default {
             if (this.wishlist.length !== 0) {
                 for (let i = 0; i < this.wishlist.length; i++) {
                     if (this.wishlist[i].product_id === product.id) {
-                        document.getElementById('addToWishlistHeart').classList.add('fas')
-                        document.getElementById('addToWishlistHeart').classList.remove('far')
+                        this.switchHeartClasses()
                     }
                 }
             }
         },
+
+
+        // вроде костыли, заменить на refs итп при возможности
+
+        switchAddToCartButtonClasses(qty) {
+            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + qty + 'шт.)'
+            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
+            document.getElementById('addToCartButton').classList.add('btn-dark')
+        },
+
+        switchHeartClasses() {
+            if (document.getElementById('addToWishlistHeart').classList.contains('fas')) {
+                document.getElementById('addToWishlistHeart').classList.add('far')
+                document.getElementById('addToWishlistHeart').classList.remove('fas')
+            } else {
+                document.getElementById('addToWishlistHeart').classList.add('fas')
+                document.getElementById('addToWishlistHeart').classList.remove('far')
+            }
+        }
     }
 }
 </script>
