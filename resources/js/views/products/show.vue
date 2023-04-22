@@ -16,24 +16,16 @@
                                     <div v-for="(value, key) in userReviewValidationErrors" :key="key">{{ value[0] }}</div>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center">
-                                <div class="input-group mb-2 w-50">
-                                    <input type="text" class="form-control w-100" placeholder="Заголовок" v-model="storeReviewData.title">
-                                </div>
-                                <div @mouseout="outMouseOver">
-                                    <h4>
-                                    <i @mouseover="onMouseOver(1)" @click="changeReviewDataRate(1)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal0"></i>
-                                    <i @mouseover="onMouseOver(2)" @click="changeReviewDataRate(2)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal1"></i>
-                                    <i @mouseover="onMouseOver(3)" @click="changeReviewDataRate(3)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal2"></i>
-                                    <i @mouseover="onMouseOver(4)" @click="changeReviewDataRate(4)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal3"></i>
-                                    <i @mouseover="onMouseOver(5)" @click="changeReviewDataRate(5)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal4"></i>
-                                    </h4>
-                                </div>
-                            </div>
 
                             <div class="input-group mb-2">
-                                <input type="number" class="form-control" placeholder="Оценка" v-model="storeReviewData.rate">
+                                <input type="text" class="form-control w-100" placeholder="Заголовок" v-model="storeReviewData.title">
                             </div>
+                            <div @mouseout="outMouseOver">
+                                <h4>
+                                    <i v-for="i in 5" @mouseover="onMouseOver(i)" @click="changeReviewDataRate(i)" class="far fa-star text-warning cursor-pointer" :id="`rate-in-modal${i-1}`"></i>
+                                </h4>
+                            </div>
+
                             <div class="input-group mb-2">
                                 <input type="text" class="form-control" placeholder="Достоинства" v-model="storeReviewData.advantages">
                             </div>
@@ -314,26 +306,6 @@ export default {
             addToCartProducts:"cartProducts/addToCartProducts",
         }),
 
-        changeReviewDataRate(rate) {
-            for (let i = 0; i < rate; i++) {
-                document.getElementById('rate-in-modal'+i).classList.remove('far')
-                document.getElementById('rate-in-modal'+i).classList.add('fas')
-            }
-            this.storeReviewData.rate = rate
-        },
-        onMouseOver(id) {
-            for (let i = 0; i < id; i++) {
-                document.getElementById('rate-in-modal'+i).classList.remove('far')
-                document.getElementById('rate-in-modal'+i).classList.add('fas')
-            }
-        },
-        outMouseOver() {
-            for (let i = this.storeReviewData.rate; i < 5; i++) {
-                document.getElementById('rate-in-modal'+i).classList.add('far')
-                document.getElementById('rate-in-modal'+i).classList.remove('fas')
-            }
-        },
-
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.loaded = true
@@ -532,7 +504,38 @@ export default {
             this.modalVisibility = true
         },
 
+        changeReviewDataRate(rate) {
+            for (let i = 0; i < rate; i++) {
+                this.switchRateInModal(i, 'far')
+            }
+            this.storeReviewData.rate = rate
+            this.outMouseOver()
+        },
+
+        onMouseOver(id) {
+            for (let i = 0; i < id; i++) {
+                this.switchRateInModal(i, 'far')
+            }
+        },
+
+        outMouseOver() {
+            for (let i = this.storeReviewData.rate; i < 5; i++) {
+                this.switchRateInModal(i, 'fas')
+            }
+        },
+
+
         // вроде костыли, заменить на refs итп при возможности
+
+        switchRateInModal(i, state) {
+            if (state === 'far') {
+                document.getElementById('rate-in-modal'+i).classList.remove(state)
+                document.getElementById('rate-in-modal'+i).classList.add('fas')
+            } else if (state === 'fas') {
+                document.getElementById('rate-in-modal'+i).classList.remove(state)
+                document.getElementById('rate-in-modal'+i).classList.add('far')
+            }
+        },
 
         switchAddToCartButtonClasses(qty) {
             document.getElementById('addToCartButton').innerText = 'Добавлено! (' + qty + 'шт.)'
