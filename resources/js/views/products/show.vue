@@ -463,9 +463,9 @@ export default {
         },
 
         matchWishlist(product) {
-            if (this.$root.wishlist.length !== 0) {
-                for (let i = 0; i < this.$root.wishlist.length; i++) {
-                    if (this.$root.wishlist[i].product_id === product.id) {
+            if (this.wishlist.length !== 0) {
+                for (let i = 0; i < this.wishlist.length; i++) {
+                    if (this.wishlist[i].product_id === product.id) {
                         document.getElementById('addToWishlistHeart').classList.add('fas')
                         document.getElementById('addToWishlistHeart').classList.remove('far')
                     }
