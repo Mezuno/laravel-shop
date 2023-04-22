@@ -19,8 +19,8 @@
             <div class="d-flex flex-grow-1">
                 <p class="me-2">{{ product.avg_rate }}</p>
                 <p class="text-warning d-inline-block">
-                    <i v-for="n in Math.ceil(product.avg_rate)" class="fas fa-star"></i>
-                    <i v-for="n in 5 - Math.ceil(product.avg_rate)" class="far fa-star"></i>
+                    <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
+                    <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
                 </p>
                 <p class="ms-2">({{ product.reviews_count }})</p>
             </div>

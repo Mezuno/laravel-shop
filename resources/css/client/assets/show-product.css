@@ -1,6 +1,8 @@
 .show-product-img {
     border-radius: 15px;
+    padding: 2px;
 }
+
 
 /*.small-product-img:hover {*/
 /*    border: 2px solid #ffc107;*/
@@ -8,6 +10,7 @@
 
 .current-small-product-img {
     border: 2px solid #ffc107;
+    padding: 0;
 }
 
 

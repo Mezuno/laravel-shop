@@ -2,6 +2,55 @@
     <div>
         <div class="container-xxl mt-5" >
 
+            <modal-window v-if="loaded" v-model:openModal="modalVisibility" style="z-index: 1000">
+                <div class="content-in-modal">
+                    <div v-if="authenticated && !userReview && loaded" class="p-4">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex">
+                                <h3>Оставьте свой отзыв к товару «{{ product.title }}»</h3>
+                                <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
+                            </div>
+
+                            <div class="col-12" v-if="Object.keys(userReviewValidationErrors).length > 0">
+                                <div class="alert alert-danger">
+                                    <div v-for="(value, key) in userReviewValidationErrors" :key="key">{{ value[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="input-group mb-2 w-50">
+                                    <input type="text" class="form-control w-100" placeholder="Заголовок" v-model="storeReviewData.title">
+                                </div>
+                                <div @mouseout="outMouseOver">
+                                    <h4>
+                                    <i @mouseover="onMouseOver(1)" @click="changeReviewDataRate(1)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal0"></i>
+                                    <i @mouseover="onMouseOver(2)" @click="changeReviewDataRate(2)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal1"></i>
+                                    <i @mouseover="onMouseOver(3)" @click="changeReviewDataRate(3)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal2"></i>
+                                    <i @mouseover="onMouseOver(4)" @click="changeReviewDataRate(4)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal3"></i>
+                                    <i @mouseover="onMouseOver(5)" @click="changeReviewDataRate(5)" class="far fa-star text-warning cursor-pointer" id="rate-in-modal4"></i>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <div class="input-group mb-2">
+                                <input type="number" class="form-control" placeholder="Оценка" v-model="storeReviewData.rate">
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" placeholder="Достоинства" v-model="storeReviewData.advantages">
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" placeholder="Недостатки" v-model="storeReviewData.flaws">
+                            </div>
+                            <div class="input-group mb-2">
+                                <textarea type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
+                            </div>
+
+                            <button class="btn btn-primary" @click="storeReview()">Оставить отзыв</button>
+
+                        </div>
+                    </div>
+                </div>
+            </modal-window>
+
             <div v-if="!loaded" class="d-flex justify-content-center pt-5">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
@@ -43,18 +92,28 @@
 
             </div>
 
-            <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
-                <h2>Отзывы</h2>
-                <span class="ms-1 h5">{{ product.reviews_count }}</span>
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
+                        <h2>Отзывы</h2>
+                        <span class="ms-1 h5">{{ product.reviews_count }}</span>
+                    </div>
+                    <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
+                        <h3>{{ product.avg_rate }}</h3>
+                        <div class="float-left text-nowrap ms-2">
+                            <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
+                            <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModal">
+                    Оставить отзыв
+                </div>
+
             </div>
 
-            <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
-                <h3>{{ product.avg_rate }}</h3>
-                <div class="float-left text-nowrap ms-2">
-                    <i v-for="star in Math.ceil(product.avg_rate)" class="fas fa-star rate text-warning"></i>
-                    <i v-for="star in 5 - Math.ceil(product.avg_rate)" class="far fa-star rate text-warning"></i>
-                </div>
-            </div>
+
 
             <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
@@ -120,39 +179,7 @@
 <!--            </div>-->
 
 
-            <div v-if="authenticated && !userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">
-                <div class="d-flex flex-column">
-                    <div class="d-flex">
-                        <h3>Оставьте свой отзыв!</h3>
-                        <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
-                    </div>
 
-                    <div class="col-12" v-if="Object.keys(userReviewValidationErrors).length > 0">
-                        <div class="alert alert-danger">
-                            <div v-for="(value, key) in userReviewValidationErrors" :key="key">{{ value[0] }}</div>
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Заголовок" v-model="storeReviewData.title">
-                    </div>
-                    <div class="input-group mb-2">
-                        <input type="number" class="form-control" placeholder="Оценка" v-model="storeReviewData.rate">
-                    </div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Достоинства" v-model="storeReviewData.advantages">
-                    </div>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Недостатки" v-model="storeReviewData.flaws">
-                    </div>
-                    <div class="input-group mb-2">
-                        <textarea type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
-                    </div>
-
-                    <button class="btn btn-primary col-3" @click="storeReview()">Оставить отзыв</button>
-
-                </div>
-            </div>
 
 <!--            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">-->
 <!--                <div class="d-flex flex-column">-->
@@ -215,6 +242,7 @@
 
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
+import modalWindow from "../../components/UI/modalWindow.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -226,6 +254,8 @@ export default {
         Carousel,
         Slide,
         Navigation,
+        ProductCardInCatalog,
+        modalWindow,
     },
 
     data() {
@@ -237,7 +267,7 @@ export default {
                 user_id: this.$store.state.auth.user.id,
                 product_id: this.$router.currentRoute._value.params.id,
                 title: "",
-                rate: null,
+                rate: 0,
                 body: "",
                 flaws: "",
                 advantages: "",
@@ -247,6 +277,8 @@ export default {
             userReviewValidationErrors: {},
             sameProducts: {},
             previousWatched: {},
+            modalVisibility: false,
+
         }
     },
 
@@ -281,6 +313,26 @@ export default {
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
         }),
+
+        changeReviewDataRate(rate) {
+            for (let i = 0; i < rate; i++) {
+                document.getElementById('rate-in-modal'+i).classList.remove('far')
+                document.getElementById('rate-in-modal'+i).classList.add('fas')
+            }
+            this.storeReviewData.rate = rate
+        },
+        onMouseOver(id) {
+            for (let i = 0; i < id; i++) {
+                document.getElementById('rate-in-modal'+i).classList.remove('far')
+                document.getElementById('rate-in-modal'+i).classList.add('fas')
+            }
+        },
+        outMouseOver() {
+            for (let i = this.storeReviewData.rate; i < 5; i++) {
+                document.getElementById('rate-in-modal'+i).classList.add('far')
+                document.getElementById('rate-in-modal'+i).classList.remove('fas')
+            }
+        },
 
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
@@ -476,6 +528,9 @@ export default {
             }
         },
 
+        openModal() {
+            this.modalVisibility = true
+        },
 
         // вроде костыли, заменить на refs итп при возможности
 

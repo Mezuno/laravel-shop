@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-xxl mt-5">
+        <div class="container-xxl my-5 pb-5">
 
             <modal-window v-model:openModal="modalVisibility" style="z-index: 1000">
                 <div class="content-in-modal">

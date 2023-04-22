@@ -106,10 +106,10 @@
 <!--                            </a>-->
 <!--                        </li>-->
                         <li v-show="authenticated" class="nav-item">
-                            <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
+                            <router-link to="/profile" class="nav-link">Личный кабинет <i class="fas fa-user" style="color: #000"></i></router-link>
                         </li>
                         <li v-show="!authenticated" class="nav-item">
-                            <router-link to="/user/login" class="nav-link">Войти</router-link>
+                            <router-link to="/user/login" class="nav-link">Войти <i class="fas fa-user" style="color: #000"></i></router-link>
                         </li>
                         <li v-show="!authenticated" class="nav-item">
                             <router-link to="/user/registration" class="nav-link">Регистрация</router-link>

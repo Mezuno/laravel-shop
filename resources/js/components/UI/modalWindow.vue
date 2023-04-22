@@ -6,12 +6,6 @@
         </div>
     </div>
 
-
-<!--    <div class="dialog" v-show="show" @click.stop="hideDialog">-->
-<!--        <div @click.stop class="dialog-content">-->
-<!--            <slot></slot>-->
-<!--        </div>-->
-<!--    </div>-->
 </template>
 
 <script>
