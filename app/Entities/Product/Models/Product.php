@@ -3,6 +3,7 @@
 namespace App\Entities\Product\Models;
 
 use App\Entities\Category\Models\Category;
+use App\Entities\Review\Models\Review;
 use App\Entities\Tag\Models\Tag;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,5 +54,10 @@ class Product extends Model
     public function productImages()
     {
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
     }
 }

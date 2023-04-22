@@ -18,7 +18,7 @@ class ReviewSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 160;
+        $recordCount = 320;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
@@ -29,10 +29,10 @@ class ReviewSeeder extends Seeder
                 'advantages' => fake()->text(70),
                 'flaws' => fake()->text(70),
                 'body' => fake()->text(255),
-                'confirmed_at' => [fake()->dateTime, null][array_rand([fake()->dateTime, null])],
+                'confirmed_at' => [fake()->dateTime, fake()->dateTime, null][array_rand([fake()->dateTime, fake()->dateTime, null])],
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
-                'deleted_at' => [fake()->dateTime, null][array_rand([fake()->dateTime, null])],
+                'deleted_at' => [fake()->dateTime, null, null, null, null][array_rand([fake()->dateTime, null, null, null, null])],
             ];
         }
 

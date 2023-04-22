@@ -17,7 +17,7 @@ class ProductTagSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 320;
+        $recordCount = 120;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [

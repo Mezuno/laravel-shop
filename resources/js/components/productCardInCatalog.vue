@@ -15,7 +15,16 @@
             <p class="card-text">{{ product.category.title }}</p>
             <p v-for="tag in product.tags" class="alert alert-warning p-1 d-inline-block">{{ tag.title }}</p>
 
-            <div class="d-flex justify-content-between flex-grow-1 align-items-end mb-3">
+
+            <div class="d-flex flex-grow-1">
+                <p class="me-2">{{ product.avg_rate }}</p>
+                <p class="text-warning d-inline-block">
+                    <i v-for="n in Math.ceil(product.avg_rate)" class="fas fa-star"></i>
+                    <i v-for="n in 5 - Math.ceil(product.avg_rate)" class="far fa-star"></i>
+                </p>
+                <p class="ms-2">({{ product.reviews_count }})</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-end mb-3">
                 <h5 class="card-text text-secondary fw-bold w-100 m-0">{{ product.price.slice(0, -3) }}
                     <h6 class="ms-1 d-inline"><i class="fas fa-ruble-sign"></i></h6></h5>
                 <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>

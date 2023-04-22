@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 160;
+        $recordCount = 80;
 
         $productImages = [
             'images/products/jZTsJpuBQ9JiKrrUCiIcYNsfl7XZuQHOuR4CS25w.jpg',
