@@ -277,15 +277,6 @@ export default {
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
         }),
-        reviewsRate() {
-            let allRate
-            let counter = 0
-            this.reviews.forEach((review) =>{
-                counter += review.rate
-            })
-            allRate = String(counter / this.reviews.length).slice(0,3)
-            return allRate
-        },
 
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
@@ -299,7 +290,6 @@ export default {
                     if (this.authenticated) {
                         this.getUserReview();
                     }
-                    this.reviewsRate();
                 }, 1000);
             });
         },
