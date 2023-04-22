@@ -149,7 +149,8 @@ export default {
             this.getProducts();
         },
 
-        getProducts() {
+        getProducts(page = 1) {
+            this.dataToGetProducts.page = page
             axios.post('/api/products', this.dataToGetProducts).then(response => {
                 this.products = response.data.data
                 this.pagination = response.data.meta
