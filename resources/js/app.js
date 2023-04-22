@@ -8,6 +8,7 @@ import "../css/client/scss/booooootstrap-up.scss"
 import 'vue3-carousel/dist/carousel.css'
 import '../css/client/assets/carousel.scss'
 import '../css/client/assets/awesome-scrollbar.scss'
+import '../css/client/assets/hover.scss'
 
 const app = createApp(App)
 

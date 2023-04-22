@@ -24,7 +24,7 @@ class Order extends Model
     {
         return [
             self::PAYMENT_TRUE => 'Оплачен',
-            self::PAYMENT_FALSE => 'Не оплачен',
+            self::PAYMENT_FALSE => 'Ожидает оплаты',
         ];
     }
 

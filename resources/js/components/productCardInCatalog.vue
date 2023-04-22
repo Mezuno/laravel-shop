@@ -120,6 +120,7 @@ export default {
             let newProduct = [{
                 'id': product.id,
                 'title': product.title,
+                'description': product.description,
                 'price': Number(product.price),
                 'image_url': product.image_url,
                 'vendor_code': product.vendor_code,

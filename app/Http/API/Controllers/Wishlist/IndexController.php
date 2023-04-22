@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function __invoke(IndexRequest $request)
     {
         $data = $request->validated();
-        $wishlist = Wishlist::where('user_id', $data['user_id'])->with('product')->orderByDesc('id')->paginate(12, ['*'], 'page', $data['page'] ?? 1);
+        $wishlist = Wishlist::where('user_id', $data['user_id'])->with('product')->orderByDesc('created_at')->paginate(12, ['*'], 'page', $data['page'] ?? 1);
         return WishlistResource::collection($wishlist);
     }
 }

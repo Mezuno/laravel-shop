@@ -45,7 +45,7 @@
 
                 <div class="row">
 
-                    <router-link to="/profile" class="col-6 pe-3 text-decoration-none text-dark" href="#" @click.prevent="openModal">
+                    <router-link to="/profile" class="col-12 text-decoration-none text-dark" href="#" @click.prevent="openModal">
                         <div class=" cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2 class="mb-3">{{ user.name }}</h2>
@@ -56,30 +56,139 @@
                         </div>
                     </router-link>
 
-                    <router-link to="/orders" class="col-6 ps-3 text-decoration-none text-dark" href="#">
+                </div>
+
+                <div class="row mt-4">
+
+                    <router-link to="/purchases" class="col-4 pe-3 text-decoration-none text-dark" href="#">
+                        <div class=" cart-card ps-4 pt-4 pb-4 h-100">
+                            <h2 class="mb-3">Совершенные покупки</h2>
+                        </div>
+                    </router-link>
+
+                    <router-link to="/cart" class="col-4 ps-3 text-decoration-none text-dark" href="#">
+                        <div class="cart-card p-4 h-100">
+                            <div class="d-flex flex flex-wrap justify-content-between mb-2">
+                                <h2>Корзина</h2>
+                                <h4><i class="fas fa-shopping-cart"></i></h4>
+                            </div>
+
+                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>
+
+                            <div class="d-flex awesome-scrollbar" style="overflow: scroll; overflow-y: hidden">
+
+                                <div v-if="productsInCart" v-for="(product, index) in productsInCart" class="d-flex align-items-center justify-content-between">
+
+<!--                                    <div class="mb-2">-->
+<!--                                        <router-link class="p-2" :to="`/products/${product.id}`">-->
+<!--                                            <img :src="product.image_url" width="50" alt="">-->
+<!--                                        </router-link>-->
+<!--                                        <h5 class="d-inline">-->
+<!--                                            <router-link class="p-2 text-decoration-none flex-grow-1" :to="`/products/${product.id}`" style="color: #343a40">-->
+<!--                                                {{ product.title }}-->
+<!--                                            </router-link>-->
+<!--                                        </h5>-->
+<!--                                    </div>-->
+<!--                                    <i class="fas fa-trash hover-circle" :id="`removeProductFromCart${product.id}`" @click.prevent="removeItemFromCart(product)"></i>-->
+
+                                    <div class="mb-3 me-2 d-flex flex-column">
+                                        <router-link class="pe-2" :to="`/products/${product.id}`">
+                                            <img :src="product.image_url" class="rounded-2" width="150" alt="">
+                                        </router-link>
+                                        <div class="d-inline-flex flex-column">
+                                            <h5 class="d-inline-flex mb-0">
+                                                <router-link class="pt-2 text-decoration-none flex-grow-1" :to="`/products/${product.id}`" style="color: #343a40">
+                                                    {{ product.title }}
+                                                </router-link>
+                                                <i class="fas fa-trash hover-circle me-2" :id="`removeProductFromCart$${product.id}`" style="color: #dc3545" @click.prevent="removeItemFromCart(product)"></i>
+                                            </h5>
+                                            <p class="p-0 mb-0 flex-grow-1" style="font-size: 0.8rem;">
+                                                {{ product.description.slice(0,35) }}<span v-if="product.description.slice(0,30) < product.description">...</span>
+                                            </p>
+                                            <p class="d-inline mb-0">
+                                                {{ product.price }} ₽
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </router-link>
+
+                    <router-link to="/wishlist" class="col-4 ps-3 text-decoration-none text-dark" href="#">
+                        <div class="cart-card p-4 h-100">
+                            <div class="d-flex flex flex-wrap justify-content-between mb-2">
+                                <h2>Желаемое</h2>
+                                <h4><i class="fas fa-heart"></i></h4>
+                            </div>
+
+                            <p v-if="Object.keys(wishlist).length <= 0" class="d-inline">Список желаемых товров пуст</p>
+
+                            <div class="d-flex awesome-scrollbar" style="overflow: scroll; overflow-y: hidden">
+
+                                <div v-if="wishlist" v-for="(wish, index) in wishlist" class="d-flex align-items-center justify-content-between">
+                                    <div class="mb-3 me-2 d-flex flex-column">
+                                        <router-link class="pe-2" :to="`/products/${wish.product.id}`">
+                                            <img :src="wish.product.image_url" class="rounded-2" width="150" alt="">
+                                        </router-link>
+                                        <div class="d-inline-flex flex-column">
+                                            <h5 class="d-inline-flex mb-0">
+                                                <router-link class="pt-2 text-decoration-none flex-grow-1" :to="`/products/${wish.product.id}`" style="color: #343a40">
+                                                    {{ wish.product.title }}
+                                                </router-link>
+                                                <i class="fas fa-heart hover-circle me-2" :id="`removeWish${wish.product.id}`" style="color: #dc3545" @click.prevent="removeWish(wish)"></i>
+                                            </h5>
+                                            <p class="p-0 mb-0 flex-grow-1" style="font-size: 0.8rem;">
+                                                {{ wish.product.description.slice(0,35) }}<span v-if="wish.product.description.slice(0,30) < wish.product.description">...</span>
+                                            </p>
+                                            <p class="d-inline mb-0">
+                                                {{ wish.product.price }} ₽
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </router-link>
+
+                </div>
+
+                <div class="row mt-4">
+
+                    <router-link to="/orders" class="col-12 text-decoration-none text-dark" href="#">
                         <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2>Заказы</h2>
                                 <h5><i class="fas fa-truck-moving"></i></h5>
                             </div>
 
-<!--                            <i class="fas fa-truck-moving"></i>-->
-<!--                            <i class="fas fa-truck-loading"></i>-->
+                            <!--                            <i class="fas fa-truck-moving"></i>-->
+                            <!--                            <i class="fas fa-truck-loading"></i>-->
                             <div class="d-flex awesome-scrollbar" style="overflow: scroll; overflow-y: hidden">
                                 <div v-if="orders && !profileLoading" v-for="order in orders.slice(0, 3)" class="d-flex me-3">
-                                    <div class="d-flex flex-column pe-3">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-2">Номер: {{ order.id }}</div>
-                                            <div class="p-2">Сумма: {{ order.total_price }} ₽</div>
+                                    <div class="d-flex rounded-4 flex-column pe-3">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-dark fw-bold fst-italic" style="text-align: left; width: fit-content">Заказ #{{ order.id }}</div>
+<!--                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-info fw-bold fst-italic" style="text-align: left; width: fit-content">Сумма {{ order.total_price }} ₽</div>-->
+<!--                                            <div :class="`d-inline text-nowrap ms-2 p-2 alert fw-bold fst-italic ${ order.payment_status ? 'alert-success' : 'alert-warning' }`" style="text-align: left; width: fit-content">-->
+<!--                                                Статус оплаты: {{ order.payment_status_string }}-->
+<!--                                            </div>-->
                                         </div>
-                                        <div class="p-2">Товары:</div>
                                         <div class="d-flex">
-                                            <div v-for="orderProduct in order.products" class="card mb-4 mx-2">
+                                            <div v-for="orderProduct in order.products" class="card mx-2 mb-3">
                                                 <img :src="orderProduct.image_url" width="170" alt="">
                                                 <div class="p-2">
                                                     <router-link :to="`/products/${orderProduct.id}`" class="link-dark">{{ orderProduct.title }}</router-link>
                                                     <p>{{ orderProduct.price }} ₽ x {{ orderProduct.qty }}: {{ orderProduct.price * orderProduct.qty }} ₽</p>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-info fw-bold fst-italic" style="text-align: left; width: fit-content">Сумма {{ order.total_price }} ₽</div>
+                                            <div :class="`d-inline text-nowrap ms-2 p-2 alert fw-bold fst-italic ${ order.payment_status ? 'alert-success' : 'alert-warning' }`" style="text-align: left; width: fit-content">
+                                                Статус оплаты: {{ order.payment_status_string }}
                                             </div>
                                         </div>
                                     </div>
@@ -94,53 +203,6 @@
                 </div>
 
 
-                <div class="row mt-4">
-
-                    <router-link to="/purchases" class="col-4 pe-3 text-decoration-none text-dark" href="#">
-                        <div class=" cart-card ps-4 pt-4 pb-4 h-100">
-                            <h2 class="mb-3">Совершенные покупки</h2>
-                        </div>
-                    </router-link>
-
-                    <router-link to="/cart" class="col-4 ps-3 text-decoration-none text-dark" href="#">
-                        <div class="cart-card p-4 h-100">
-                            <div class="d-flex flex flex-w2ap justify-content-between">
-                                <h2>Корзина</h2>
-                                <h4><i class="fas fa-shopping-cart"></i></h4>
-                            </div>
-<!--                            <p v-if="Object.keys(productsInCart).length <= 0" class="d-inline">Корзина пока пуста</p>-->
-                            <div v-if="productsInCart" v-for="(product, index) in productsInCart" class="d-flex align-items-center">
-                                <router-link class="p-2" :to="`/products/${product.id}`">
-                                    <img :src="product.image_url" width="50" height="50" alt="">
-                                </router-link>
-                                <router-link class="p-2 text-decoration-none flex-grow-1" :to="`/products/${product.id}`" style="color: #343a40">
-                                    {{ product.title }}
-                                </router-link>
-                                <i class="fas fa-trash me-4 link-danger" :id="`removeProductFromCart${product.id}`" @click.prevent="removeItemFromCart(product)" style="color: #dc3545;"></i>
-                            </div>
-                        </div>
-                    </router-link>
-
-                    <router-link to="/wishlist" class="col-4 ps-3 text-decoration-none text-dark" href="#">
-                        <div class="cart-card p-4 h-100">
-                            <div class="d-flex flex flex-w2ap justify-content-between">
-                                <h2>Желаемое</h2>
-                                <h4><i class="fas fa-heart text-red"></i></h4>
-                            </div>
-                            <p v-if="Object.keys(wishlist).length <= 0" class="d-inline">Список желаемых товров пуст</p>
-                            <div v-if="wishlist" v-for="(wish, index) in wishlist" class="d-flex align-items-center">
-                                <router-link class="p-2" :to="`/products/${wish.product.id}`">
-                                    <img :src="wish.product.image_url" width="50" height="50" alt="">
-                                </router-link>
-                                <router-link class="p-2 text-decoration-none flex-grow-1" :to="`/products/${wish.product.id}`" style="color: #343a40">
-                                    {{ wish.product.title }}
-                                </router-link>
-                                <i class="fas fa-trash me-4 link-danger" :id="`removeWish${wish.product.id}`" style="color: #dc3545;" @click.prevent="removeWish(wish)"></i>
-                            </div>
-                        </div>
-                    </router-link>
-
-                </div>
             </div>
         </div>
     </div>
