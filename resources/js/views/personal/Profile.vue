@@ -65,18 +65,21 @@
 
 <!--                            <i class="fas fa-truck-moving"></i>-->
 <!--                            <i class="fas fa-truck-loading"></i>-->
-                            <div class="d-flex" style="overflow: scroll; overflow-y: hidden">
+                            <div class="d-flex awesome-scrollbar" style="overflow: scroll; overflow-y: hidden">
                                 <div v-if="orders && !profileLoading" v-for="order in orders.slice(0, 3)" class="d-flex me-3">
-                                    <div class="d-flex flex-column border border-secondary border-0 border-end pe-3">
+                                    <div class="d-flex flex-column pe-3">
                                         <div class="d-flex justify-content-between">
                                             <div class="p-2">Номер: {{ order.id }}</div>
                                             <div class="p-2">Сумма: {{ order.total_price }} ₽</div>
                                         </div>
                                         <div class="p-2">Товары:</div>
                                         <div class="d-flex">
-                                            <div v-for="orderProduct in order.products" class="p-2 card mb-4 mx-2">
-                                                <img :src="orderProduct.image_url" width="100" height="100" alt="">
-                                                <router-link :to="`/products/${orderProduct.id}`" class="link-dark">{{ orderProduct.title }}</router-link>
+                                            <div v-for="orderProduct in order.products" class="card mb-4 mx-2">
+                                                <img :src="orderProduct.image_url" width="170" alt="">
+                                                <div class="p-2">
+                                                    <router-link :to="`/products/${orderProduct.id}`" class="link-dark">{{ orderProduct.title }}</router-link>
+                                                    <p>{{ orderProduct.price }} ₽ x {{ orderProduct.qty }}: {{ orderProduct.price * orderProduct.qty }} ₽</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

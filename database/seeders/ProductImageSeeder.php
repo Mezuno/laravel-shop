@@ -20,19 +20,19 @@ class ProductImageSeeder extends Seeder
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
                 'product_id' => $i+1,
-                'file_path' => 'images/products/900x1200.png',
+                'file_path' => 'images/products/900x1200-(blue).png',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ];
             $data[] = [
                 'product_id' => $i+1,
-                'file_path' => 'images/products/900x1200.png',
+                'file_path' => 'images/products/900x1200-(yellow).png',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ];
             $data[] = [
                 'product_id' => $i+1,
-                'file_path' => 'images/products/900x1200.png',
+                'file_path' => 'images/products/900x1200-(red).png',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ];

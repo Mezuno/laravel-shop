@@ -18,13 +18,7 @@ class ProductSeeder extends Seeder
         $data = [];
         $recordCount = 80;
 
-        $productImages = [
-            'images/products/900x1200.png',
-//            'images/products/jZTsJpuBQ9JiKrrUCiIcYNsfl7XZuQHOuR4CS25w.jpg',
-//            'images/products/6xueNkzOUGHjcGKQsxPeBmUss6QS0BBMSOgIAWlA.jpg',
-//            'images/products/9e1dJLH9bHAdE3q2s2A84nmNkKKDqOMJauIlELSP.jpg',
-//            'images/products/ZdzpoRJY6FOMo6BgzsFBIc2N3AwuJ0TAPWE4WHmw.jpg',
-        ];
+        $colors = ['yellow', 'red', 'blue', 'green'];
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
@@ -36,7 +30,7 @@ class ProductSeeder extends Seeder
                 'vendor_code' => $i+1,
                 'is_published' => rand(0,1),
                 'category_id' => Category::get('id')->random()->id,
-                'preview_image' => $productImages[array_rand($productImages, 1)],
+                'preview_image' => 'images/products/900x1200-(' . $colors[array_rand($colors, 1)] . ').png',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ];

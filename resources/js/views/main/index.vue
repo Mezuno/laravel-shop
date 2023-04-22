@@ -50,7 +50,7 @@
                     <div class="card imgHover border-0" style="width: 19rem;">
                         <a class="hoverLink" href="">
                             <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" alt="Card image">
+                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="Card image">
                             </div>
                         </a>
                     </div>
@@ -59,7 +59,7 @@
                     <div class="card imgHover border-0" style="width: 19rem;">
                         <a class="hoverLink" href="">
                             <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" alt="Card image">
+                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="Card image">
                             </div>
                         </a>
                     </div>
@@ -68,7 +68,7 @@
                     <div class="card imgHover border-0" style="width: 19rem;">
                         <a class="hoverLink" href="">
                             <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" alt="Card image">
+                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="Card image">
                             </div>
                         </a>
                     </div>
@@ -77,7 +77,7 @@
                     <div class="card imgHover border-0" style="width: 19rem;">
                         <a class="hoverLink" href="">
                             <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-slider/for-slider.jpg" alt="Card image">
+                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="Card image">
                             </div>
                         </a>
                     </div>

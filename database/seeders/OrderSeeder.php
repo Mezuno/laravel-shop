@@ -22,7 +22,7 @@ class OrderSeeder extends Seeder
         for ($i = 0; $i < $recordCount; $i++) {
             $products = [];
             for ($j = 0; $j < 3; $j++) {
-                $product = Product::get()->random();
+                $product = Product::get()->where('is_published', '!=', null)->random();
                 $products[] = [
                     'id' => $product->id,
                     'title' => $product->title,
