@@ -90,6 +90,19 @@ const router = createRouter({
             name: 'purchases', // route level code-splitting
             component: () => import('../views/personal/purchases/index.vue')
         },
+        {
+            path: '/404',
+            meta: {
+                title: "VueShop | 404",
+            },
+            props: { errorMessage: null },
+            name: '404', // route level code-splitting
+            component: () => import('../views/404.vue')
+        },
+        {
+            path: "/:pathMatch(.*)*",
+            component: () => import('../views/404.vue')
+        }
     ]
 })
 

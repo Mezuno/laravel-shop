@@ -11,7 +11,7 @@ class ShowController extends Controller
 {
     public function __invoke(Product $product)
     {
-        if (!$product->published_at) {
+        if (!$product->is_published) {
             return new Response('Товар не существует или не опубликован', 404);
         }
         return new ProductResource($product);

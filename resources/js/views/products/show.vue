@@ -285,7 +285,6 @@ export default {
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.product = response.data.data
-                this.loaded = true
                 this.getSameProducts()
                 setTimeout(() => {
                     this.getCartList(this.product)
@@ -295,6 +294,12 @@ export default {
                         this.getUserReview();
                     }
                 }, 1000);
+                this.loaded = true
+            })
+            .catch(({response}) => {
+                if (response.status === 404) {
+                    this.$router.push({name:'404'})
+                }
             });
         },
 
