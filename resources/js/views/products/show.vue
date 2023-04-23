@@ -72,12 +72,12 @@
                     <h5 class="card-text text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
                         class="ms-2 d-inline text-dark">₽</h5></h5>
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product)" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
+                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                         <h5 class="ps-3 m-0 text-danger" v-if="authenticated">
-                            <i @click.prevent="switchWish(product)" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
+                            <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
                         </h5>
                     </div>
                 </div>
@@ -239,9 +239,13 @@ import modalWindow from "../../components/UI/modalWindow.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
+import cartMixin from "@/mixins/cartMixin.vue";
+import wishMixin from "@/mixins/wishMixin.vue";
 
 export default {
     name: "products.show",
+
+    mixins: [cartMixin, wishMixin],
 
     components: {
         Carousel,
@@ -269,7 +273,6 @@ export default {
             userReview: null,
             userReviewValidationErrors: {},
             sameProducts: {},
-            previousWatched: {},
             modalVisibility: false,
 
         }
@@ -288,6 +291,9 @@ export default {
         user: function () {
             return this.$store.state.auth.user
         },
+        previousWatched: function () {
+            return this.$store.state.previousWatched.products
+        },
     },
 
     mounted() {
@@ -296,7 +302,9 @@ export default {
     },
 
     unmounted() {
-        this.syncWishlist()
+        if (this.authenticated) {
+            this.syncWishlist()
+        }
     },
 
     methods: {
@@ -305,6 +313,7 @@ export default {
             removeItemFromWishlist:"auth/removeItemFromWishlist",
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
+            addItemToPreviousWatched:"previousWatched/addItemToPreviousWatched",
         }),
 
         getProduct(id) {
@@ -319,36 +328,13 @@ export default {
                 }
             })
             .finally(() => {
-                this.getCartList(this.product)
-                this.matchWishlist(this.product)
-                this.setPreviousWatched(this.product)
+                this.matchCartList(this.product, 'addToCartButton')
+                this.addItemToPreviousWatched(this.product)
                 if (this.authenticated) {
+                    this.matchWishlist(this.product, 'addToWishlistHeart')
                     this.getUserReview();
                 }
             });
-        },
-
-        setPreviousWatched(product) {
-            let previousWatched = []
-            previousWatched = localStorage.getItem('previous-watched')
-
-            if (!previousWatched) {
-                localStorage.setItem('previous-watched', JSON.stringify([product]))
-            } else {
-                previousWatched = JSON.parse(previousWatched)
-
-                previousWatched.forEach((productInPreviousWatched, index) => {
-                    if (productInPreviousWatched.id === product.id) {
-                        previousWatched.splice(index, 1)
-                    }
-                })
-
-                previousWatched.unshift(product);
-
-                localStorage.setItem('previous-watched', JSON.stringify(previousWatched))
-            }
-
-            this.previousWatched = JSON.parse(localStorage.getItem('previous-watched'))
         },
 
         pictureReplacement(uri, index) {
@@ -419,87 +405,6 @@ export default {
             });
         },
 
-        addToCart(product) {
-            document.getElementById('addToCartButton').innerText = 'Добавляем'
-
-            let newProduct = [{
-                'id': product.id,
-                'title': product.title,
-                'description': product.description,
-                'price': Number(product.price),
-                'image_url': product.image_url,
-                'vendor_code': product.vendor_code,
-                'qty': 1
-            }]
-
-            this.addToCartProducts({newProduct, product})
-
-            // КОСТЫЛЬ ----------
-            let productInCartQty;
-            this.productsInCart?.forEach((productInCart) => {
-                if (productInCart.id === product.id) {
-                    productInCartQty = productInCart.qty
-                }
-            })
-            // --------------------
-
-            this.switchAddToCartButtonClasses(productInCartQty)
-        },
-
-        getCartList(product) {
-            if (this.productsInCart && this.productsInCart?.length > 0) {
-                this.productsInCart?.forEach((productInCart) => {
-                    if (productInCart.id === product.id) {
-                        this.switchAddToCartButtonClasses(productInCart.qty)
-                    }
-                })
-            }
-        },
-
-        switchWish(product) {
-            let removed = false
-
-            if (this.wishlist.length === 0) {
-                this.storeWish(product)
-            } else {
-                this.wishlist.forEach((wish) => {
-                    if (wish.product_id === product.id) {
-                        this.removeWish(wish)
-                        removed = true
-                        return {};
-                    }
-                })
-
-                if (!removed) {
-                    this.storeWish(product)
-                }
-            }
-        },
-
-        storeWish(product) {
-            this.switchHeartClasses()
-
-            this.addItemToWishlist({
-                'user_id': this.user.id,
-                'product_id': product.id,
-                'product': product,
-            })
-        },
-
-        removeWish(wish) {
-            this.switchHeartClasses()
-            this.removeItemFromWishlist(wish)
-        },
-
-        matchWishlist(product) {
-            if (this.wishlist.length !== 0) {
-                for (let i = 0; i < this.wishlist.length; i++) {
-                    if (this.wishlist[i].product_id === product.id) {
-                        this.switchHeartClasses()
-                    }
-                }
-            }
-        },
 
         openModal() {
             this.modalVisibility = true
@@ -528,28 +433,12 @@ export default {
 
         // вроде костыли, заменить на refs итп при возможности
 
-        switchAddToCartButtonClasses(qty) {
-            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + qty + 'шт.)'
-            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-            document.getElementById('addToCartButton').classList.add('btn-dark')
-        },
-
         switchRateInModal(i, state) {
             document.getElementById('rate-in-modal'+i).classList.remove(state)
             if (state === 'far') {
                 document.getElementById('rate-in-modal'+i).classList.add('fas')
             } else if (state === 'fas') {
                 document.getElementById('rate-in-modal'+i).classList.add('far')
-            }
-        },
-
-        switchHeartClasses() {
-            if (document.getElementById('addToWishlistHeart').classList.contains('fas')) {
-                document.getElementById('addToWishlistHeart').classList.add('far')
-                document.getElementById('addToWishlistHeart').classList.remove('fas')
-            } else {
-                document.getElementById('addToWishlistHeart').classList.add('fas')
-                document.getElementById('addToWishlistHeart').classList.remove('far')
             }
         },
     }
