@@ -2,7 +2,7 @@
 export default {
     namespaced: true,
     state:{
-        products:{},
+        products:[],
     },
     getters:{
         products(state){
@@ -17,7 +17,7 @@ export default {
             state.products = state.products.filter(p => p.id !== product.id)
         },
         ADD_ITEM_TO_CART (state, product) {
-            Array.prototype.push.apply(state.products, product)
+            state.products.unshift(product)
         },
         CHANGE_ITEM_QTY (state, {index, qty}) {
             state.products[index].qty = qty
@@ -41,7 +41,9 @@ export default {
                     }
                 })
 
-                commit('ADD_ITEM_TO_CART', newProduct)
+                if (newProduct) {
+                    commit('ADD_ITEM_TO_CART', newProduct)
+                }
             }
         },
 

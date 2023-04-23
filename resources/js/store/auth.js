@@ -6,7 +6,7 @@ export default {
     state:{
         authenticated:false,
         user:{},
-        wishlist:{},
+        wishlist:[],
     },
     getters:{
         authenticated(state) {
@@ -30,7 +30,7 @@ export default {
             state.wishlist = value
         },
         ADD_ITEM_TO_WISHLIST (state, wish) {
-            state.wishlist.push(wish)
+            state.wishlist.unshift(wish)
         },
         REMOVE_ITEM_FROM_WISHLIST (state, wish) {
             state.wishlist = state.wishlist.filter(w => w.id !== wish.id)
@@ -77,6 +77,11 @@ export default {
         },
 
         addItemToWishlist({commit, state}, wish) {
+
+            if (!state.authenticated) {
+                router.push('/user/login')
+            }
+
             commit('ADD_ITEM_TO_WISHLIST', wish)
         },
 

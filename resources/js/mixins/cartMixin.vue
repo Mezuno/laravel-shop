@@ -12,7 +12,7 @@ export default {
         addToCart(product, buttonId) {
             document.getElementById(buttonId).innerText = 'Добавляем'
 
-            let newProduct = [{
+            let newProduct = {
                 'id': product.id,
                 'title': product.title,
                 'description': product.description,
@@ -20,7 +20,7 @@ export default {
                 'image_url': product.image_url,
                 'vendor_code': product.vendor_code,
                 'qty': 1
-            }]
+            }
 
             this.addToCartProducts({newProduct, product})
 

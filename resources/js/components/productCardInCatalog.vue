@@ -30,7 +30,9 @@
             </div>
 
             <div class="row px-2 align-items-center">
-                <button @click.prevent="addToCart(product, `addCart${identifier}${product.id}`)" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${identifier}${product.id}`">
+                <button @click.prevent="addToCart(product, `addCart${identifier}${product.id}`)"
+                        class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;"
+                        :id="`addCart${identifier}${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
                 </button>

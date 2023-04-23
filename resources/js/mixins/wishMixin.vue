@@ -6,7 +6,7 @@ export default {
         switchWish(product, buttonId) {
             let removed = false
 
-            if (this.wishlist.length === 0) {
+            if (Object.keys(this.wishlist).length === 0) {
                 this.storeWish(product, buttonId)
             } else {
                 this.wishlist.forEach((wish) => {

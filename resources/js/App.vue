@@ -179,8 +179,8 @@
 
         <router-view></router-view>
 
-        <footer>
-        </footer>
+        <div class="footer">
+        </div>
     </div>
 </template>
 
@@ -205,7 +205,7 @@ export default {
         },
         totalPrice: function () {
             let total = 0
-            if (this.productsInCart && this.productsInCart.length > 0) {
+            if (this.productsInCart && Object.keys(this.productsInCart).length > 0) {
                 this.productsInCart.forEach(productInCart => {
                     total += Number(productInCart.price) * Number(productInCart.qty)
                 })

@@ -87,22 +87,7 @@
             <h2 class="mt-4">Популярные товары</h2>
             <carousel v-show="!loading" :items-to-show="5" class="mb-4 row">
                 <slide v-for="product in products" :key="product.id" class="p-3">
-                    <div class="card rounded-3">
-                        <div class="card-img-top col-4 rounded-3 rounded-top">
-                            <img :src="product.image_url" alt="" class="w-100">
-                        </div>
-                        <div class="card-body d-flex flex-column align-items-start justify-content-start">
-                            <h4 class="">{{ product.title }}</h4>
-                            <p>
-                                {{ product.description.slice(0,40) }}<span v-if="product.description.slice(0,40).length < product.description.length">...</span>
-                            </p>
-                            <h5 class="text-secondary">{{ product.price }} ₽</h5>
-                            <div class="d-flex justify-content-between w-100">
-                                <button class="btn btn-warning"><i class="fas fa-shopping-cart"></i></button>
-                                <router-link :to="`/products/${product.id}`" class="ms-2 btn btn-primary">К товару</router-link>
-                            </div>
-                        </div>
-                    </div>
+                    <product-card :identifier="'Main'" :product="product" class="" :key="product.id"/>
                 </slide>
 
 
@@ -115,6 +100,8 @@
 </template>
 
 <script>
+import ProductCard from "@/components/products/ProductCard.vue";
+
 var myCarousel = document.querySelector('#myCarousel')
 var carousel = new bootstrap.Carousel(myCarousel)
 
@@ -124,6 +111,7 @@ export default {
     name: "Index",
 
     components: {
+        ProductCard,
         Carousel,
         Slide,
         Navigation,

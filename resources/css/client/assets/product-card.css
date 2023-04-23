@@ -4,6 +4,7 @@
 }
 
 .image-in-product-card {
+    position: relative;
     z-index: -100;
     border-radius: 10px;
 }
@@ -23,11 +24,6 @@
     z-index: -200;
 }
 
-.product-card:hover .absolute-background {
-    /*box-shadow: 0 0 40px #ddd;*/
-    /*background-color: rgba(255, 255, 255, 1);*/
-}
-
 .heart-in-product {
     position: absolute;
     top: 10px;
@@ -43,6 +39,7 @@
 }
 
 .content-in-product-card-emerging {
+    position: relative;
     display: none;
 
 }

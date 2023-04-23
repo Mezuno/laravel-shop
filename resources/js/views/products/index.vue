@@ -45,26 +45,36 @@
                 </div>
             </div>
 
-            <div v-if="loaded" class="d-flex col w-100">
 
-                <div class="d-flex flex-column flex-grow-1 col-2 me-4" style="max-width: 200px;">
-                    <form class="" v-if="filters">
-                        <h3 class="mb-3">Фильтры</h3>
+
+            <div class="d-flex flex-column flex-grow-1 col-2 me-4 mb-4" style="max-width: 200px;">
+                <h3 class="mb-3">Фильтры</h3>
+                <form v-if="filters" class="d-flex" id="filterForm">
+                    <div class="d-flex flex-column">
                         <h5>Категории</h5>
-                        <div v-for="category in filters.categories"
-                             class="form-control pb-0 d-flex align-items-baseline mb-2">
-                            <p class="me-2">{{ category.title }}</p>
-                            <input v-model="dataToGetProducts.categories" type="checkbox" :id="category.id" :value="category.id">
+                        <div class="d-flex" style="margin: 0 -7px;">
+                            <div v-for="category in filters.categories"
+                                 class="form-control pb-0 d-flex align-items-baseline mx-2">
+                                <p class="me-2 mb-2 text-nowrap">{{ category.title }}</p>
+                                <input v-model="dataToGetProducts.categories" type="checkbox" :id="category.id" :value="category.id">
+                            </div>
                         </div>
-                        <h5 class="mt-4">Теги</h5>
-                        <div v-for="tag in filters.tags" class="form-control pb-0 d-flex align-items-baseline mb-2">
-                            <p class="me-2">{{ tag.title }}</p>
-                            <input v-model="dataToGetProducts.tags" type="checkbox" :id="tag.id" :value="tag.id">
+                    </div>
+                    <div class="d-flex flex-column ms-4">
+                        <h5>Теги</h5>
+                        <div class="d-flex" style="margin: 0 -7px;">
+                            <div v-for="tag in filters.tags" class="form-control pb-0 d-flex align-items-baseline mb-2 mx-2">
+                                <p class="me-2 mb-2 text-nowrap">{{ tag.title }}</p>
+                                <input v-model="dataToGetProducts.tags" type="checkbox" :id="tag.id" :value="tag.id">
+                            </div>
                         </div>
+                    </div>
 
-                        <button @click.prevent="filterProducts()" class="btn btn-my-theme">Применить</button>
-                    </form>
-                </div>
+                    <button form="filterForm" @click.prevent="filterProducts()" class="btn btn-outline-dark ms-3 h-100 align-self-center">Применить</button>
+                </form>
+            </div>
+
+            <div v-if="loaded" class="d-flex col w-100">
 
                 <div v-if="!loadedProducts" class="d-flex justify-content-center col-10">
                     <div class="spinner-border" role="status">
@@ -72,10 +82,8 @@
                     </div>
                 </div>
 
-
-
                 <div v-if="loadedProducts" class="row">
-                    <product-card-in-catalog v-for="product in products" :product="product" class="card col-4 me-4 mb-4 product-card-hover p-0" :key="product.id" style="width: 15rem;"/>
+                    <product-card v-for="product in products" :identifier="'Catalog'" :product="product" class="col-3 mb-4 px-3" :key="product.id"/>
                 </div>
 
             </div>
@@ -86,14 +94,13 @@
 </template>
 
 <script>
-import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
+import ProductCard from "../../components/products/ProductCard.vue";
 import {mapActions} from "vuex";
 export default {
     name: "products.index",
 
     components: {
-        ProductCardInCatalog,
-
+        ProductCard,
     },
 
     data() {
