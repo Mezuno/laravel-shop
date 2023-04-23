@@ -159,9 +159,12 @@
 
 <script>
 import {mapActions, mapMutations} from "vuex";
+import cartMixin from "@/mixins/cartMixin.vue";
 
 export default {
     name: "cart",
+
+    mixins: [cartMixin],
 
     data() {
         return {
@@ -245,40 +248,10 @@ export default {
             this.storeOrderData.email = this.$store.state.auth.user.email
             this.storeOrderData.address = this.$store.state.auth.user.address
         },
+
         setTotalPrice() {
             this.storeOrderData.total_price = this.totalPrice
         },
-
-
-        decQty(product, indexInCart) {
-            if (product.qty > 1) {
-                let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) - 1
-                this.changeItemQtyCartProducts({indexInCart, qty})
-                product.qty = qty;
-            }
-        },
-
-        incQty(product, indexInCart) {
-            if (product.qty < 999) {
-                let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value) + 1
-                this.changeItemQtyCartProducts({indexInCart, qty})
-                product.qty = qty;
-            }
-        },
-
-        changeQty(product, indexInCart) {
-            let qty = Number(document.getElementsByClassName("input-qty")[indexInCart].value)
-
-            if (qty < 1) {
-                qty = 1
-            } else if (qty > 999) {
-                qty = 999
-            }
-
-            this.changeItemQtyCartProducts({indexInCart, qty})
-            product.qty = qty
-        },
-
 
         openCartList() {
             // let lengthProducts = this.productsInCart?.length

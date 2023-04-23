@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-xxl mt-5" >
+        <div class="container-xxl mt-5">
 
             <modal-window v-if="loaded" v-model:openModal="modalVisibility" style="z-index: 1000">
                 <div class="content-in-modal">
@@ -72,12 +72,12 @@
                     <h5 class="card-text text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
                         class="ms-2 d-inline text-dark">₽</h5></h5>
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product)" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
+                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                         <h5 class="ps-3 m-0 text-danger" v-if="authenticated">
-                            <i @click.prevent="switchWish(product)" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
+                            <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
                         </h5>
                     </div>
                 </div>
@@ -85,7 +85,6 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
-
                 <div>
                     <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
                         <h2>Отзывы</h2>
@@ -102,10 +101,7 @@
                 <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModal">
                     Оставить отзыв
                 </div>
-
             </div>
-
-
 
             <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
@@ -133,22 +129,6 @@
                                     <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... </span></p>
                                     <span class="text-nowrap h6">Читать далее</span>
                                 </div>
-<!--                                <div>-->
-<!--                                    достоинства-->
-<!--                                    <div v-if="review.advantages">-->
-<!--                                        {{ review.advantages }}-->
-<!--                                    </div>-->
-<!--                                    <div v-else>-->
-<!--                                        достоинства не указаны-->
-<!--                                    </div>-->
-<!--                                    недостатки-->
-<!--                                    <div v-if="review.flaws">-->
-<!--                                        {{ review.flaws }}-->
-<!--                                    </div>-->
-<!--                                    <div v-else>-->
-<!--                                        недостатки не указаны-->
-<!--                                    </div>-->
-<!--                                </div>-->
                             </div>
                     </slide>
 
@@ -161,58 +141,13 @@
                 Отзывов пока нету (и слова нету нету ;с)
             </div>
 
-
             <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-success col-4">
                 Ваш отзыв успешно отправлен! Публикация отзыва произойдет после успешной модерции.<br>
             </div>
 
-<!--            <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-warning">-->
-<!--                <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>-->
-<!--                <pre>{{ successReview }}</pre>-->
-<!--            </div>-->
-
-
-
-
-<!--            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">-->
-<!--                <div class="d-flex flex-column">-->
-<!--                    <h3>Ваш отзыв</h3>-->
-<!--                    <div>-->
-<!--                        <p class="fw-bold mb-0">Заголовок</p>-->
-<!--                        <p>{{ userReview.title }}</p>-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <i v-for="star in userReview.rate" class="far fa-star rate d-none text-warning"></i>&ndash;&gt;-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Оценка</p>-->
-<!--                        <p>{{ userReview.rate }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Приемущества</p>-->
-<!--                        <p>{{ userReview.advantages }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Недостатки</p>-->
-<!--                        <p>{{ userReview.flaws }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Текст отзыва</p>-->
-<!--                        <p>{{ userReview.body }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Дата</p>-->
-<!--                        <p>{{ userReview.created }}</p>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <p class="fw-bold mb-2">Статус</p>-->
-<!--                        <p v-if="userReview.confirmed" class="alert alert-success">Отзыв подтвержден {{ userReview.confirmed }}</p>-->
-<!--                        <p v-if="!userReview.confirmed" class="alert alert-warning">Ваш отзыв еще не проверен</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <h2 v-if="loaded">Похожие товары</h2>
-            <carousel :snapAlign="'start'" :wrapAround="true" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
-                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+            <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
+            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(sameProducts).length > 0">
+                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-top: 40px;">
                     <product-card-in-catalog :identifier="'SameProduct'" :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
                 </slide>
                 <template #addons>
@@ -220,9 +155,9 @@
                 </template>
             </carousel>
 
-            <h2 v-if="loaded">Смотрели ранее</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
-                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+            <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
+            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(previousWatched).length > 0">
+                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-top: 40px;">
                     <product-card-in-catalog :identifier="'PreviousWatched'" :product="productWatched" class="card product-card-hover p-0 h-100" :key="productWatched.id" style="width: 15rem;"/>
                 </slide>
                 <template #addons>
@@ -239,9 +174,13 @@ import modalWindow from "../../components/UI/modalWindow.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
+import cartMixin from "@/mixins/cartMixin.vue";
+import wishMixin from "@/mixins/wishMixin.vue";
 
 export default {
     name: "products.show",
+
+    mixins: [cartMixin, wishMixin],
 
     components: {
         Carousel,
@@ -269,7 +208,6 @@ export default {
             userReview: null,
             userReviewValidationErrors: {},
             sameProducts: {},
-            previousWatched: {},
             modalVisibility: false,
 
         }
@@ -288,6 +226,9 @@ export default {
         user: function () {
             return this.$store.state.auth.user
         },
+        previousWatched: function () {
+            return this.$store.state.previousWatched.products
+        },
     },
 
     mounted() {
@@ -296,7 +237,9 @@ export default {
     },
 
     unmounted() {
-        this.syncWishlist()
+        if (this.authenticated) {
+            this.syncWishlist()
+        }
     },
 
     methods: {
@@ -305,6 +248,7 @@ export default {
             removeItemFromWishlist:"auth/removeItemFromWishlist",
             addItemToWishlist:"auth/addItemToWishlist",
             addToCartProducts:"cartProducts/addToCartProducts",
+            addItemToPreviousWatched:"previousWatched/addItemToPreviousWatched",
         }),
 
         getProduct(id) {
@@ -319,36 +263,13 @@ export default {
                 }
             })
             .finally(() => {
-                this.getCartList(this.product)
-                this.matchWishlist(this.product)
-                this.setPreviousWatched(this.product)
+                this.matchCartList(this.product, 'addToCartButton')
+                this.addItemToPreviousWatched(this.product)
                 if (this.authenticated) {
+                    this.matchWishlist(this.product, 'addToWishlistHeart')
                     this.getUserReview();
                 }
             });
-        },
-
-        setPreviousWatched(product) {
-            let previousWatched = []
-            previousWatched = localStorage.getItem('previous-watched')
-
-            if (!previousWatched) {
-                localStorage.setItem('previous-watched', JSON.stringify([product]))
-            } else {
-                previousWatched = JSON.parse(previousWatched)
-
-                previousWatched.forEach((productInPreviousWatched, index) => {
-                    if (productInPreviousWatched.id === product.id) {
-                        previousWatched.splice(index, 1)
-                    }
-                })
-
-                previousWatched.unshift(product);
-
-                localStorage.setItem('previous-watched', JSON.stringify(previousWatched))
-            }
-
-            this.previousWatched = JSON.parse(localStorage.getItem('previous-watched'))
         },
 
         pictureReplacement(uri, index) {
@@ -419,87 +340,6 @@ export default {
             });
         },
 
-        addToCart(product) {
-            document.getElementById('addToCartButton').innerText = 'Добавляем'
-
-            let newProduct = [{
-                'id': product.id,
-                'title': product.title,
-                'description': product.description,
-                'price': Number(product.price),
-                'image_url': product.image_url,
-                'vendor_code': product.vendor_code,
-                'qty': 1
-            }]
-
-            this.addToCartProducts({newProduct, product})
-
-            // КОСТЫЛЬ ----------
-            let productInCartQty;
-            this.productsInCart?.forEach((productInCart) => {
-                if (productInCart.id === product.id) {
-                    productInCartQty = productInCart.qty
-                }
-            })
-            // --------------------
-
-            this.switchAddToCartButtonClasses(productInCartQty)
-        },
-
-        getCartList(product) {
-            if (this.productsInCart && this.productsInCart?.length > 0) {
-                this.productsInCart?.forEach((productInCart) => {
-                    if (productInCart.id === product.id) {
-                        this.switchAddToCartButtonClasses(productInCart.qty)
-                    }
-                })
-            }
-        },
-
-        switchWish(product) {
-            let removed = false
-
-            if (this.wishlist.length === 0) {
-                this.storeWish(product)
-            } else {
-                this.wishlist.forEach((wish) => {
-                    if (wish.product_id === product.id) {
-                        this.removeWish(wish)
-                        removed = true
-                        return {};
-                    }
-                })
-
-                if (!removed) {
-                    this.storeWish(product)
-                }
-            }
-        },
-
-        storeWish(product) {
-            this.switchHeartClasses()
-
-            this.addItemToWishlist({
-                'user_id': this.user.id,
-                'product_id': product.id,
-                'product': product,
-            })
-        },
-
-        removeWish(wish) {
-            this.switchHeartClasses()
-            this.removeItemFromWishlist(wish)
-        },
-
-        matchWishlist(product) {
-            if (this.wishlist.length !== 0) {
-                for (let i = 0; i < this.wishlist.length; i++) {
-                    if (this.wishlist[i].product_id === product.id) {
-                        this.switchHeartClasses()
-                    }
-                }
-            }
-        },
 
         openModal() {
             this.modalVisibility = true
@@ -529,30 +369,13 @@ export default {
         // вроде костыли, заменить на refs итп при возможности
 
         switchRateInModal(i, state) {
+            document.getElementById('rate-in-modal'+i).classList.remove(state)
             if (state === 'far') {
-                document.getElementById('rate-in-modal'+i).classList.remove(state)
                 document.getElementById('rate-in-modal'+i).classList.add('fas')
             } else if (state === 'fas') {
-                document.getElementById('rate-in-modal'+i).classList.remove(state)
                 document.getElementById('rate-in-modal'+i).classList.add('far')
             }
         },
-
-        switchAddToCartButtonClasses(qty) {
-            document.getElementById('addToCartButton').innerText = 'Добавлено! (' + qty + 'шт.)'
-            document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
-            document.getElementById('addToCartButton').classList.add('btn-dark')
-        },
-
-        switchHeartClasses() {
-            if (document.getElementById('addToWishlistHeart').classList.contains('fas')) {
-                document.getElementById('addToWishlistHeart').classList.add('far')
-                document.getElementById('addToWishlistHeart').classList.remove('fas')
-            } else {
-                document.getElementById('addToWishlistHeart').classList.add('fas')
-                document.getElementById('addToWishlistHeart').classList.remove('far')
-            }
-        }
     }
 }
 </script>

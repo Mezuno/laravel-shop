@@ -19,8 +19,8 @@ export default {
         ADD_ITEM_TO_CART (state, product) {
             Array.prototype.push.apply(state.products, product)
         },
-        CHANGE_ITEM_QTY (state, {indexInCart, qty}) {
-            state.products[indexInCart].qty = qty
+        CHANGE_ITEM_QTY (state, {index, qty}) {
+            state.products[index].qty = qty
         },
     },
     actions:{
@@ -31,11 +31,12 @@ export default {
 
         addToCartProducts({commit, state}, {newProduct, product}) {
             if (!state.products || Object.keys(state.products).length < 1) {
-                state.products = newProduct
+                commit('ADD_ITEM_TO_CART', newProduct)
             } else {
-                state.products.forEach(productInCart => {
+                state.products.forEach((productInCart, index) => {
                     if (productInCart.id === product.id) {
-                        productInCart.qty = Number(productInCart.qty) + 1
+                        let qty = Number(productInCart.qty) + 1
+                        commit('CHANGE_ITEM_QTY', {index, qty})
                         newProduct = null
                     }
                 })
@@ -44,8 +45,8 @@ export default {
             }
         },
 
-        changeItemQtyCartProducts({commit}, {indexInCart, qty}) {
-            commit('CHANGE_ITEM_QTY', {indexInCart, qty})
+        changeItemQtyCartProducts({commit}, {index, qty}) {
+            commit('CHANGE_ITEM_QTY', {index, qty})
         },
 
         setCartProducts({commit}, value) {

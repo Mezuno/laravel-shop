@@ -1,10 +1,9 @@
-@import url('../css/client/assets/cart.css');
-@import url('client/assets/product-card.css');
-@import url('../css/client/assets/home-page.css');
-@import url('../css/client/assets/cart-card.css');
-@import url('../css/client/assets/show-product.css');
-@import url('client/assets/content-in-modal.css');
-
+@import url('./client/assets/cart.css');
+@import url('./client/assets/product-card.css');
+@import url('./client/assets/home-page.css');
+@import url('./client/assets/cart-card.css');
+@import url('./client/assets/show-product.css');
+@import url('./client/assets/content-in-modal.css');
 
 .body-scroll {
     overflow-y: scroll;

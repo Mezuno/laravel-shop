@@ -16,19 +16,23 @@ import 'bootstrap'
 
 import router from "@/router";
 import axios from 'axios';
+import store from '@/store'
 window.axios = axios;
 
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-// window.axios.interceptors.response.use({}, error =>  {
-//
-//     if (error.response.status === 401 || error.response.status === 419) {
-//         this.$store.logout()
-//         console.log('maybe token устарел')
-//         router.push({name: 'user.login'})
-//     }
-// })
+window.axios.interceptors.response.use(function (response) {
+    return response
+}, function (error) {
+    console.log(error.response.data)
+    if (error.response.status === 401 || error.response.status === 419) {
+        console.log(store);
+        store.dispatch('auth/logout')
+        router.push('/user/login')
+    }
+    return Promise.reject(error)
+})
 
 
 /**
