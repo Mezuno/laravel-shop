@@ -13,11 +13,17 @@
 
             <div class="content-in-product-card d-flex flex-column w-100">
                 <div :id="`contentVisible${product.id}`">
-                    <h4 class="mt-2">{{ product.price.slice(0, -3) }} ₽</h4>
-
+                    <h5 class="mt-2 mb-0">{{ product.price.slice(0, -3) }} ₽</h5>
                     <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
                         {{ product.title }}
                     </router-link>
+                    <div class="d-flex flex-grow-1">
+                        <p class="text-warning d-inline-block">
+                            <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
+                            <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
+                        </p>
+                        <p class="ms-2">({{ product.reviews_count }})</p>
+                    </div>
                 </div>
 
                 <div class="content-in-product-card-emerging flex-column" :id="`contentInvisible${product.id}`">
@@ -30,22 +36,13 @@
                         </h6>
                     </div>
 
-                    <div class="d-flex flex-grow-1">
-                        <p class="me-2">{{ product.avg_rate }}</p>
-                        <p class="text-warning d-inline-block">
-                            <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
-                            <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
-                        </p>
-                        <p class="ms-2">({{ product.reviews_count }})</p>
-                    </div>
-
                     <div class="d-flex justify-content-between align-items-end mb-3">
                         <p class="card-text text-secondary w-100 m-0">Артикул: {{ product.vendor_code }}</p>
                     </div>
 
                     <div @click.prevent="addToCart(product, `addCart${identifier}${product.id}`)"
                          class="m-0 btn btn-warning text-white border-0 col-12"
-                         style="white-space: nowrap;" :id="`addCart${identifier}${product.id}`">
+                         style="white-space: nowrap; width: fit-content" :id="`addCart${identifier}${product.id}`">
                         В корзину <i class="fas fa-shopping-cart"></i>
                     </div>
                 </div>

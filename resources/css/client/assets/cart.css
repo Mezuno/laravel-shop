@@ -14,3 +14,16 @@
     position: absolute;
     right: -3px;
 }
+
+.notification-circle {
+    position: absolute;
+    background-color: #dc4835;
+    color: whitesmoke;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    padding: 10px;
+    font-size: 0.8rem;
+    right: -5px;
+    top: -5px;
+}

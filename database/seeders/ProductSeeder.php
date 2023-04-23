@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Entities\Category\Models\Category;
 use App\Entities\Product\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -24,7 +25,11 @@ class ProductSeeder extends Seeder
             $data[] = [
                 'title' => fake()->word(),
                 'description' => fake()->text(70),
-                'content' => json_encode(fake()->text(200)),
+                'content' => json_encode([
+                    Str::title(fake()->word) => fake()->sentence(rand(2,20)),
+                    Str::title(fake()->word) => fake()->sentence(rand(2,20)),
+                    Str::title(fake()->word) => fake()->sentence(rand(2,20)),
+                ]),
                 'price' => rand(1,100)*10,
                 'count' => rand(0, 100),
                 'vendor_code' => $i+1,

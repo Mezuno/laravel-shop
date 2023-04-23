@@ -18,7 +18,7 @@ class ReviewSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 320;
+        $recordCount = 1280;
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [

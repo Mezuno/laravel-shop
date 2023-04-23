@@ -77,11 +77,6 @@ export default {
         },
 
         addItemToWishlist({commit, state}, wish) {
-
-            if (!state.authenticated) {
-                router.push('/user/login')
-            }
-
             commit('ADD_ITEM_TO_WISHLIST', wish)
         },
 

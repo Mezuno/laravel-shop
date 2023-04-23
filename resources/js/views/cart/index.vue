@@ -125,7 +125,7 @@
                         </div>
 <!--                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">-->
 <!--                        <label class="btn btn-outline-secondary" for="btn-check-2-outlined">Запомнить данные?</label><br>-->
-                        <div class="form-check ">
+                        <div class="form-check">
                             <input class="form-check-input shadow-none border-dark" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
                             <label class="form-check-label shadow-none " for="flexCheckDefault">
                                 Запомнить данные?
@@ -144,7 +144,16 @@
 <!--                        </button>-->
 
                         <div class="mt-2">
-                            <h6 class="text-dark text-nowrap">Итого: {{ totalPrice }} ₽</h6>
+                            <div class="text-dark text-nowrap">
+                                <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                                    <p class="mb-2 text-secondary">Товары, {{ totalCount }}шт</p>
+                                    <p class="mb-2 text-secondary">{{ totalPrice }} ₽</p>
+                                </div>
+                                <h4 class="d-flex justify-content-between">
+                                    <span>Итого: </span>
+                                    <span>{{ totalPrice }} ₽</span>
+                                </h4>
+                            </div>
                             <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-dark w-100">
                                 {{ orderProcessing ? 'Оформляем' : 'Оформить' }}
                             </div>
@@ -200,6 +209,15 @@ export default {
             if (this.productsInCart && this.productsInCart.length > 0) {
                 this.productsInCart.forEach(productInCart => {
                     total += Number(productInCart.price) * Number(productInCart.qty)
+                })
+            }
+            return total
+        },
+        totalCount: function () {
+            let total = 0
+            if (this.productsInCart && this.productsInCart.length > 0) {
+                this.productsInCart.forEach(productInCart => {
+                    total += Number(productInCart.qty)
                 })
             }
             return total

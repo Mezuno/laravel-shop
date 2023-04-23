@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('description', 2000)->nullable();
-            $table->text('content')->nullable();
+            $table->jsonb('content')->nullable();
             $table->string('preview_image')->nullable();
 
             $table->integer('vendor_code')->unique();

@@ -52,8 +52,8 @@
             <div v-if="loaded" class="row mb-5" style="padding-left: 30px; padding-right: 30px;">
 
                 <div class="col-1">
-                    <img @click="pictureReplacement(product.image_url, 0)" :src="product.image_url" alt="" class="mb-2 w-100 small-product-img current-small-product-img" style="cursor: pointer; border-radius: 7px;" >
-                    <img @click="pictureReplacement(productImage.url, index+1)" v-for="(productImage, index) in product.product_images" :src="productImage.url" alt="" class="mb-2 w-100 small-product-img" style="cursor: pointer; border-radius: 7px;">
+                    <img @mouseover="pictureReplacement(product.image_url, 0)" :src="product.image_url" alt="" class="mb-2 w-100 small-product-img current-small-product-img" style="cursor: pointer; border-radius: 7px;" >
+                    <img @mouseover="pictureReplacement(productImage.url, index+1)" v-for="(productImage, index) in product.product_images" :src="productImage.url" alt="" class="mb-2 w-100 small-product-img" style="cursor: pointer; border-radius: 7px;">
                 </div>
 
                 <div class="col-4">
@@ -65,20 +65,37 @@
                         <h3>{{ product.title }}</h3>
                     </div>
                     <p class="flex-grow-1">{{ product.description }}</p>
+                    <div class="float-left text-nowrap">
+                        <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
+                        <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
+                        <a class="link-secondary ms-2 cursor-pointer text-decoration-none" style="border-bottom: dashed 1px; font-size: 0.9rem;">
+                            <div class="d-inline">{{ product.reviews_count }} Отзыва</div>
+                        </a>
+                        <p class="text-secondary mt-2">Артикул: <span class="text-dark">{{ product.vendor_code }}</span></p>
+
+                        <div class="text-wrap" style="font-size: 0.9rem;">
+                            <p v-for="(prop, index) in product.content">{{ index + ': '}} <span class="text-secondary">{{ prop }}</span></p>
+                        </div>
+
+                    </div>
                 </div>
 
                 <div class="card border border-0 cart-card col-3 h-100 p-4">
 
-                    <h5 class="card-text text-dark fw-bold">{{ product.price.slice(0, -3) }}<h5
-                        class="ms-2 d-inline text-dark">₽</h5></h5>
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-text text-dark fw-bold">
+                            {{ product.price.slice(0, -3) }}<span class="ms-2 d-inline text-dark">₽</span>
+                        </h3>
+                        <h4 class="ps-3 m-0 text-danger">
+                            <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
+                        </h4>
+                    </div>
+
                     <div class="d-flex justify-content-between align-items-center">
                         <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
-                        <h5 class="ps-3 m-0 text-danger" v-if="authenticated">
-                            <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
-                        </h5>
                     </div>
                 </div>
 
@@ -209,7 +226,6 @@ export default {
             userReviewValidationErrors: {},
             sameProducts: {},
             modalVisibility: false,
-
         }
     },
 
@@ -255,6 +271,7 @@ export default {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
                 this.loaded = true
                 this.product = response.data.data
+                this.product.content = JSON.parse(this.product.content)
                 this.getSameProducts()
             })
             .catch(({response}) => {
