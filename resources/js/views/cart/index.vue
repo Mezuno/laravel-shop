@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col-1">
                                     <div @click="removeItemFromCart(product)" type="button" class="">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="far fa-trash-alt hover-circle"></i>
                                     </div>
                                 </div>
                             </div>

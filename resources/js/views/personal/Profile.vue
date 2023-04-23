@@ -100,7 +100,7 @@
                                                 <router-link class="pt-2 text-decoration-none flex-grow-1" :to="`/products/${product.id}`" style="color: #343a40">
                                                     {{ product.title }}
                                                 </router-link>
-                                                <i class="fas fa-trash hover-circle me-2" :id="`removeProductFromCart$${product.id}`" style="color: #dc3545" @click.prevent="removeItemFromCart(product)"></i>
+                                                <i class="far fa-trash-alt hover-circle me-2" :id="`removeProductFromCart$${product.id}`" style="color: #dc3545" @click.prevent="removeItemFromCart(product)"></i>
                                             </h5>
                                             <p class="p-0 mb-0 flex-grow-1" style="font-size: 0.8rem;">
                                                 {{ product.description.slice(0,35) }}<span v-if="product.description.slice(0,30) < product.description">...</span>
