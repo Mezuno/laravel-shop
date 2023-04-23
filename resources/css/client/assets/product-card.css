@@ -1,21 +1,100 @@
-.product-card-hover {
-    transition: .2s;
-}
-
-.product-card-hover:hover {
-    box-shadow: 0 0 25px #ddd;
-}
-
 .product-card {
-    border-radius: 15px;
-    box-shadow: 0 0 10px #ddd;
-    transition: all ease-out .2s;
-    background-color: #fff;
+    position: relative;
+    margin-bottom: 60px;
 }
 
-.product-card:hover {
-    box-shadow: 0 0 40px #ddd;
+.image-in-product-card {
+    z-index: -100;
+    border-radius: 10px;
 }
+
+.absolute-background {
+    border-radius: 15px;
+    box-shadow: 0 0 0 #ddd;
+    transition: all ease-out .1s;
+    background-color: #fff;
+    opacity: 0;
+    padding: 15px;
+    position: absolute;
+    top: -15px;
+    bottom:-15px;
+    left: -15px;
+    right: -15px;
+    z-index: -200;
+}
+
+.product-card:hover .absolute-background {
+    /*box-shadow: 0 0 40px #ddd;*/
+    /*background-color: rgba(255, 255, 255, 1);*/
+}
+
+.heart-in-product {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    display: none;
+    z-index: 600;
+    transition: all ease-in .1s;
+}
+
+.content-in-product-card {
+    position: absolute;
+    z-index: 600;
+}
+
+.content-in-product-card-emerging {
+    display: none;
+
+}
+
+.product-card:hover .heart-in-product {
+    display: flex;
+}
+
+.heart-in-product:hover {
+    color: #dc3545;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.product-card-hover {*/
+/*    transition: .2s;*/
+/*}*/
+
+/*.product-card-hover:hover {*/
+/*    box-shadow: 0 0 25px #ddd;*/
+/*}*/
+
+/*.product-card {*/
+/*    border-radius: 15px;*/
+/*    box-shadow: 0 0 10px #ddd;*/
+/*    transition: all ease-out .2s;*/
+/*    background-color: #fff;*/
+/*}*/
+
+/*.product-card:hover {*/
+/*    box-shadow: 0 0 40px #ddd;*/
+/*}*/
+
+
+
+
+
 
 /*.content-in-product-card {*/
 /*    display: none;*/

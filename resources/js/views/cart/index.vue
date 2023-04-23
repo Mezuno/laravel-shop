@@ -313,26 +313,6 @@ export default {
             }
         },
 
-        // getHeight(id) {
-        //     let idCartCard = document.getElementById(id)
-        //     let styles = window.getComputedStyle(idCartCard, null)
-        //     let height = styles.height;
-        //     return (height)
-        // },
-        //
-        // getMargin(id) {
-        //     let idCartCard = document.getElementById(id)
-        //     let styles = window.getComputedStyle(idCartCard, null)
-        //     let margin = styles.marginTop + styles.marginBottom;
-        //     return (margin)
-        // },
-        //
-        // getPadding(id) {
-        //     let idCartCard = document.getElementById(id)
-        //     let styles = window.getComputedStyle(idCartCard, null)
-        //     let margin = styles.paddingTop + styles.paddingBottom;
-        //     return (margin)
-        // },
     }
 }
 
