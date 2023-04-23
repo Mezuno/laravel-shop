@@ -528,20 +528,19 @@ export default {
 
         // вроде костыли, заменить на refs итп при возможности
 
-        switchRateInModal(i, state) {
-            if (state === 'far') {
-                document.getElementById('rate-in-modal'+i).classList.remove(state)
-                document.getElementById('rate-in-modal'+i).classList.add('fas')
-            } else if (state === 'fas') {
-                document.getElementById('rate-in-modal'+i).classList.remove(state)
-                document.getElementById('rate-in-modal'+i).classList.add('far')
-            }
-        },
-
         switchAddToCartButtonClasses(qty) {
             document.getElementById('addToCartButton').innerText = 'Добавлено! (' + qty + 'шт.)'
             document.getElementById('addToCartButton').classList.remove('btn-outline-dark')
             document.getElementById('addToCartButton').classList.add('btn-dark')
+        },
+
+        switchRateInModal(i, state) {
+            document.getElementById('rate-in-modal'+i).classList.remove(state)
+            if (state === 'far') {
+                document.getElementById('rate-in-modal'+i).classList.add('fas')
+            } else if (state === 'fas') {
+                document.getElementById('rate-in-modal'+i).classList.add('far')
+            }
         },
 
         switchHeartClasses() {
@@ -552,7 +551,7 @@ export default {
                 document.getElementById('addToWishlistHeart').classList.add('fas')
                 document.getElementById('addToWishlistHeart').classList.remove('far')
             }
-        }
+        },
     }
 }
 </script>
