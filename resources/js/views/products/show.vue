@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-xxl mt-5" >
+        <div class="container-xxl mt-5">
 
             <modal-window v-if="loaded" v-model:openModal="modalVisibility" style="z-index: 1000">
                 <div class="content-in-modal">
@@ -85,7 +85,6 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
-
                 <div>
                     <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
                         <h2>Отзывы</h2>
@@ -102,10 +101,7 @@
                 <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModal">
                     Оставить отзыв
                 </div>
-
             </div>
-
-
 
             <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
@@ -133,22 +129,6 @@
                                     <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... </span></p>
                                     <span class="text-nowrap h6">Читать далее</span>
                                 </div>
-<!--                                <div>-->
-<!--                                    достоинства-->
-<!--                                    <div v-if="review.advantages">-->
-<!--                                        {{ review.advantages }}-->
-<!--                                    </div>-->
-<!--                                    <div v-else>-->
-<!--                                        достоинства не указаны-->
-<!--                                    </div>-->
-<!--                                    недостатки-->
-<!--                                    <div v-if="review.flaws">-->
-<!--                                        {{ review.flaws }}-->
-<!--                                    </div>-->
-<!--                                    <div v-else>-->
-<!--                                        недостатки не указаны-->
-<!--                                    </div>-->
-<!--                                </div>-->
                             </div>
                     </slide>
 
@@ -161,58 +141,13 @@
                 Отзывов пока нету (и слова нету нету ;с)
             </div>
 
-
             <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-success col-4">
                 Ваш отзыв успешно отправлен! Публикация отзыва произойдет после успешной модерции.<br>
             </div>
 
-<!--            <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-warning">-->
-<!--                <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>-->
-<!--                <pre>{{ successReview }}</pre>-->
-<!--            </div>-->
-
-
-
-
-<!--            <div v-if="authenticated && userReview && loaded" class="cart-card p-4 h-100 m-4 col-6">-->
-<!--                <div class="d-flex flex-column">-->
-<!--                    <h3>Ваш отзыв</h3>-->
-<!--                    <div>-->
-<!--                        <p class="fw-bold mb-0">Заголовок</p>-->
-<!--                        <p>{{ userReview.title }}</p>-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <i v-for="star in userReview.rate" class="far fa-star rate d-none text-warning"></i>&ndash;&gt;-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Оценка</p>-->
-<!--                        <p>{{ userReview.rate }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Приемущества</p>-->
-<!--                        <p>{{ userReview.advantages }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Недостатки</p>-->
-<!--                        <p>{{ userReview.flaws }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Текст отзыва</p>-->
-<!--                        <p>{{ userReview.body }}</p>-->
-<!--                    </div>-->
-<!--                    <div class="mb-2">-->
-<!--                        <p class="fw-bold mb-0">Дата</p>-->
-<!--                        <p>{{ userReview.created }}</p>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <p class="fw-bold mb-2">Статус</p>-->
-<!--                        <p v-if="userReview.confirmed" class="alert alert-success">Отзыв подтвержден {{ userReview.confirmed }}</p>-->
-<!--                        <p v-if="!userReview.confirmed" class="alert alert-warning">Ваш отзыв еще не проверен</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <h2 v-if="loaded">Похожие товары</h2>
-            <carousel :snapAlign="'start'" :wrapAround="true" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
-                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+            <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
+            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(sameProducts).length > 0">
+                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-top: 40px;">
                     <product-card-in-catalog :identifier="'SameProduct'" :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
                 </slide>
                 <template #addons>
@@ -220,9 +155,9 @@
                 </template>
             </carousel>
 
-            <h2 v-if="loaded">Смотрели ранее</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
-                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-left: 30px; padding-right: 30px; padding-top: 40px;">
+            <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
+            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(previousWatched).length > 0">
+                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-top: 40px;">
                     <product-card-in-catalog :identifier="'PreviousWatched'" :product="productWatched" class="card product-card-hover p-0 h-100" :key="productWatched.id" style="width: 15rem;"/>
                 </slide>
                 <template #addons>

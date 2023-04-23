@@ -30,10 +30,10 @@
             </div>
 
             <div class="row px-2 align-items-center">
-                <a @click.prevent="addToCart(product, 'addCart'+identifier+product.id)" href="" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${identifier}${product.id}`">
+                <button @click.prevent="addToCart(product, `addCart${identifier}${product.id}`)" class="m-0 btn btn-warning text-white border-0 col-10" style="white-space: nowrap;" :id="`addCart${identifier}${product.id}`">
                     В корзину
                     <i class="fas fa-shopping-cart"></i>
-                </a>
+                </button>
 
                 <h5 v-if="authenticated" class="p-0 m-0 col-2">
                     <a class="text-danger ms-3">

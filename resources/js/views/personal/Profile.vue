@@ -137,7 +137,7 @@
                                                 <router-link class="pt-2 text-decoration-none flex-grow-1" :to="`/products/${wish.product.id}`" style="color: #343a40">
                                                     {{ wish.product.title }}
                                                 </router-link>
-                                                <i class="fas fa-heart hover-circle me-2" :id="`removeWish${wish.product.id}`" style="color: #dc3545" @click.prevent="removeWish(wish)"></i>
+                                                <i class="fas fa-heart hover-circle me-2" :id="`removeWish${wish.product.id}`" style="color: #dc3545" @click.prevent="removeWish(wish, `removeWish${wish.product.id}`)"></i>
                                             </h5>
                                             <p class="p-0 mb-0 flex-grow-1" style="font-size: 0.8rem;">
                                                 {{ wish.product.description.slice(0,35) }}<span v-if="wish.product.description.slice(0,30) < wish.product.description">...</span>
