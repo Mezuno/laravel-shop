@@ -59,8 +59,15 @@
                     <li class="nav-item me-2">
                         <router-link to="/wishlist" class="cart-img text-dark m-0 d-flex align-items-center btn btn-warning "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link to="/cart" class="cart-img btn btn-warning text-dark d-flex align-items-center"><h4 class="mb-0 me-2"><i class="fas fa-shopping-cart"></i></h4><h5 class="p-0 m-0">{{ totalPrice }}</h5><i class="fas fa-ruble-sign"></i></router-link>
+                    <li class="nav-item" style="position: relative;">
+                        <div class="d-flex justify-content-center align-items-center notification-circle">{{ totalCount }}</div>
+                        <router-link to="/cart" class="cart-img btn btn-warning text-dark d-flex align-items-center">
+                            <h4 class="mb-0 me-2">
+                                <i class="fas fa-shopping-cart"></i>
+                            </h4>
+<!--                            <h5 class="p-0 m-0">{{ totalPrice }}</h5>-->
+<!--                            <i class="fas fa-ruble-sign"></i>-->
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -166,6 +173,15 @@ export default {
             if (this.productsInCart && Object.keys(this.productsInCart).length > 0) {
                 this.productsInCart.forEach(productInCart => {
                     total += Number(productInCart.price) * Number(productInCart.qty)
+                })
+            }
+            return total
+        },
+        totalCount: function () {
+            let total = 0
+            if (this.productsInCart && Object.keys(this.productsInCart).length > 0) {
+                this.productsInCart.forEach(productInCart => {
+                    total += Number(productInCart.qty)
                 })
             }
             return total

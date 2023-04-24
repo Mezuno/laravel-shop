@@ -1,17 +1,18 @@
 <template>
     <div class="container d-flex justify-content-center flex-column align-items-center mt-5 w-25">
         <h2 class="mb-4">Регистрация</h2>
-        <form action="">
+        <form action="" class="col-8">
             <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
                 <div class="alert alert-danger">
                     <div v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</div>
                 </div>
             </div>
-            <input v-model="user.name" type="text" placeholder="Имя" class="mb-2 form-control">
-            <input v-model="user.email" type="email" placeholder="E-mail" class="mb-2 form-control">
-            <input v-model="user.password" type="password" placeholder="Пароль" class="mb-2 form-control">
-            <input v-model="user.password_confirmation" type="password" placeholder="Подтвердите пароль" class="mb-2 form-control">
-            <button class="btn btn-dark" @click.prevent="register()">{{ !processing ? 'Зарегестрироваться' : 'Загрузка' }}</button>
+            <input v-model="user.name" type="text" placeholder="Имя" class="mb-2 form-control form-control-lg">
+            <input v-model="user.email" type="email" placeholder="E-mail" class="mb-2 form-control form-control-lg">
+            <input v-model="user.password" type="password" placeholder="Пароль" class="mb-2 form-control form-control-lg">
+            <input v-model="user.password_confirmation" type="password" placeholder="Подтвердите пароль" class="mb-2 form-control form-control-lg">
+            <p>Есть аккаунт? <router-link to="/user/login">Войти</router-link></p>
+            <button class="btn btn-dark btn-lg w-100" @click.prevent="register()">{{ !processing ? 'Зарегестрироваться' : 'Загрузка' }}</button>
         </form>
         <p>{{ response }}</p>
     </div>

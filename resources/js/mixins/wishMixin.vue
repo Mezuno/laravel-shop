@@ -1,4 +1,7 @@
 <script>
+
+import router from "@/router";
+
 export default {
     name: "wishMixin",
 
@@ -24,6 +27,10 @@ export default {
         },
 
         storeWish(product, buttonId) {
+            if (!this.$store.state.auth.authenticated) {
+                router.push('/user/login')
+            }
+
             this.switchHeartClasses(buttonId)
 
             this.addItemToWishlist({

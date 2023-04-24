@@ -1,15 +1,16 @@
 <template>
     <div class="container d-flex justify-content-center flex-column align-items-center mt-5 w-25">
         <h2 class="mb-4">Вход</h2>
-        <form action="">
+        <form action="" class="col-8">
             <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
                 <div class="alert alert-danger">
                     <div v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</div>
                 </div>
             </div>
-            <input v-model="loginData.email" type="email" placeholder="E-mail" class="mb-2 form-control">
-            <input v-model="loginData.password" type="password" placeholder="Пароль" class="mb-2 form-control">
-            <button class="btn btn-dark" @click.prevent="login()">{{ !processing ? 'Войти' : 'Загрузка' }}</button>
+            <input v-model="loginData.email" type="email" placeholder="E-mail" class="mb-2 form-control form-control-lg p-2 px-3">
+            <input v-model="loginData.password" type="password" placeholder="Пароль" class="mb-2 form-control form-control-lg p-2 px-3">
+            <p>Не зарегистрированы? <router-link to="/user/registration">Регистрация</router-link></p>
+            <button class="btn btn-dark btn-lg w-100" @click.prevent="login()">{{ !processing ? 'Войти' : 'Загрузка' }}</button>
         </form>
     </div>
 </template>
