@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden; min-height: 100vh">
+    <div style=" min-height: 100vh">
         <nav class="navbar navbar-expand p-0">
             <div class="d-flex justify-content-center w-100">
                 <ul class="navbar-nav">
@@ -130,57 +130,15 @@
             </div>
             <div>
 <!--                <router-link to="/cart" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></router-link>-->
-                <div class="cart pt-3" style="z-index: 100">
-                    <div class="w-25">
 
-                    </div>
-                    <aside class="border border-left" id="cart">
-                        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
-                             style="width: 380px;">
-                            <div style="overflow-y: scroll; height: 516px;">
-                                <div v-for="productInCart in productsInCart" class="list-group list-group-flush border-bottom scrollarea">
-                                    <div href="#" class="list-group-item list-group-item-action py-3 lh-tight"
-                                       aria-current="true">
-                                        <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: productInCart.id}}">
-                                                <strong class="mb-1 text-dark">{{ productInCart.title }}</strong>
-                                            </router-link>
-                                            <small class="text-secondary fw-bold">{{ productInCart.price }} руб</small>
-                                        </div>
-                                        <div class="col-10 mb-1 small d-flex justify-content-between">
-                                            <router-link :to="{name: 'products.show', params: {id: productInCart.id}}">
-                                                <img :src="productInCart.image_url" width="50" alt="Отсутствует фото товара">
-                                            </router-link>
-                                            <p class="d-inline-block text-secondary fw-bold">x{{ productInCart.qty }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-bottom d-flex w-100 align-items-center justify-content-between">
-                                <!--                    <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none">-->
-                                <!--                        <svg class="bi " width="30" height="24">-->
-                                <!--                            <use xlink:href="#bootstrap"></use>-->
-                                <!--                        </svg>-->
-                                <!--                        <span class="fs-5 fw-semibold ">Корзина</span>-->
-                                <!--                    </a>-->
-                                <span class="fs-5 fw-semibold d-flex align-items-center flex-shrink-0 p-3">Всего:</span>
-                                <small class="text-secondary fw-bold p-3">{{ totalPrice }} руб</small>
-                                <router-link to="/cart" class="btn btn-primary">Заказать</router-link>
-                            </div>
-                        </div>
-                        <!--      <div>-->
-                        <!--        <ul>-->
-                        <!--        </ul>-->
-                        <!--      </div>-->
-                    </aside>
-                </div>
             </div>
         </nav>
 
-        <router-view></router-view>
+        <router-view class="content-on-page mb-5"/>
 
-        <div class="footer">
-        </div>
+        <footer class="static-footer d-flex justify-content-center align-items-center flex-column">
+            <div class="mb-5">powered by ke</div>
+        </footer>
     </div>
 </template>
 

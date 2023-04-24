@@ -12,7 +12,7 @@
 .absolute-background {
     border-radius: 15px;
     box-shadow: 0 0 0 #ddd;
-    transition: all ease-out .1s;
+    /*transition: all ease-out .1s;*/
     background-color: #fff;
     opacity: 0;
     padding: 15px;
@@ -30,7 +30,7 @@
     right: 14px;
     display: none;
     z-index: 600;
-    transition: all ease-in .1s;
+    /*transition: all ease-in .1s;*/
 }
 
 .content-in-product-card {

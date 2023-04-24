@@ -84,17 +84,23 @@
                 </div>
             </div>
 
-            <h2 class="mt-4">Популярные товары</h2>
-            <carousel v-show="!loading" :items-to-show="5" class="mb-4 row">
-                <slide v-for="product in products" :key="product.id" class="p-3">
-                    <product-card :identifier="'Main'" :product="product" class="" :key="product.id"/>
-                </slide>
+            <h2 class="mt-4 mb-4">Популярные товары</h2>
+<!--            <carousel v-show="!loading" :items-to-show="5" class="mb-4 row">-->
+<!--                <slide v-for="product in products" :key="product.id" class="p-3">-->
+<!--                    <product-card :identifier="'Main'" :product="product" class="" :key="product.id"/>-->
+<!--                </slide>-->
 
 
-                <template #addons>
-                    <navigation />
-                </template>
-            </carousel>
+<!--                <template #addons>-->
+<!--                    <navigation />-->
+<!--                </template>-->
+<!--            </carousel>-->
+
+            <div v-show="!loading"  class="row">
+                <product-card v-for="product in products" :key="product.id" :identifier="'Main'" :product="product" class="col-3 mb-5 px-3"/>
+            </div>
+
+
         </div>
     </div>
 </template>
