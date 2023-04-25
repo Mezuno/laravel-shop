@@ -69,7 +69,12 @@
                         <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
                         <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
                         <a class="link-secondary ms-2 cursor-pointer text-decoration-none" style="border-bottom: dashed 1px; font-size: 0.9rem;">
-                            <div class="d-inline">{{ product.reviews_count }} Отзыва</div>
+                            <div class="d-inline">{{ product.reviews_count }}
+                                <span class="1ke" v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )">Отзывов</span>
+                                <span class="2ke" v-else-if="product.reviews_count.toString().slice(-1) === '1'">Отзыв</span>
+                                <span class="3ke" v-else-if="product.reviews_count.toString().slice(-1) === '2' || '3' || '4' ">Отзыва</span>
+                                <span class="4ke" v-else>Отзывов</span>
+                            </div>
                         </a>
                         <p class="text-secondary mt-2">Артикул: <span class="text-dark">{{ product.vendor_code }}</span></p>
 
@@ -155,7 +160,7 @@
             </carousel>
 
             <div v-else-if="loaded" class="cart-card p-4 h-100 m-4 col-6">
-                Отзывов пока нету (и слова нету нету ;с)
+                Отзывов пока нету
             </div>
 
             <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-success col-4">

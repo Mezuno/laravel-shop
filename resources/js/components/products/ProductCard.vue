@@ -30,7 +30,7 @@
 
                     <p class="card-text">{{ product.category.title }}</p>
 
-                    <div class="mb-3">
+                    <div v-if="product.tags.length !== 0" class="mb-3">
                         <h6 v-for="(tag, index) in product.tags" class="d-inline" style="width: fit-content">
                             {{ tag.title }}<span v-if="index < product.tags.length-1">/</span>
                         </h6>

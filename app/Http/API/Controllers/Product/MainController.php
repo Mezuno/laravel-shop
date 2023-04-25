@@ -9,6 +9,7 @@ use App\Traits\AdminFilterHelperTrait;
 class MainController
 {
     use AdminFilterHelperTrait;
+
     public function __invoke()
     {
         $products = Product::where('is_published', 1)->orderByDesc('id')->get();
@@ -19,7 +20,7 @@ class MainController
             }
         }
 
-        $products = $this->paginate($products);
+        $products = $this->paginate($products, 12);
 
         return ProductResource::collection($products);
     }
