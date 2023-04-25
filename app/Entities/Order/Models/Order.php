@@ -20,6 +20,9 @@ class Order extends Model
     const PAYMENT_TRUE = 1;
     const PAYMENT_FALSE = 0;
 
+    const STATUS_PROCESSED = 0;
+    const STATUS_DELIVERED = 1;
+
     static function getPaymentStatusString()
     {
         return [
@@ -31,6 +34,19 @@ class Order extends Model
     public function getPaymentStatusStringAttribute()
     {
         return self::getPaymentStatusString()[$this->payment_status];
+    }
+
+    static function getOrderStatusString()
+    {
+        return [
+            self::STATUS_DELIVERED => 'Доставлен',
+            self::STATUS_PROCESSED => 'Оформлен',
+        ];
+    }
+
+    public function getOrderStatusStringAttribute()
+    {
+        return self::getPaymentStatusString()[$this->status];
     }
 
     public function user()

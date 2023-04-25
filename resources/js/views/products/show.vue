@@ -90,14 +90,20 @@
                                     {{ key + ': '}}
                                     <span class="text-secondary">{{ prop }}</span>
                                 </div>
-                                <span @click="showProperties=true" v-show="index === 1 && !showProperties" class="h6 more cursor-pointer">
-                                    Ещё
-                                </span>
+                                <p v-if="index === 1 && !showProperties" style="border-bottom: dashed 1px; font-size: 0.9rem;" class="d-inline">
+                                    <span @click="showProperties=true" class="h6 more cursor-pointer">
+                                        Развернуть характеристики
+                                    </span>
+                                </p>
+
+
 
                             </div>
-                            <span @click="showProperties=false" v-show="showProperties" class="h6 more cursor-pointer">
+                            <p v-if="showProperties" style="border-bottom: dashed 1px; font-size: 0.9rem;" class="d-inline">
+                                <span @click="showProperties=false" class="h6 more cursor-pointer">
                                     Скрыть
                                 </span>
+                            </p>
                         </div>
 
 

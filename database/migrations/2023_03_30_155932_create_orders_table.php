@@ -17,6 +17,7 @@ return new class extends Migration
             $table->jsonb('products');
             $table->unsignedDecimal('total_price', 10, 2);
             $table->boolean('payment_status')->default(false);
+            $table->tinyInteger('status')->default(0);
             $table->string('address');
             $table->softDeletes();
             $table->timestamps();

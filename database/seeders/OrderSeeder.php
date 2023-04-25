@@ -39,6 +39,7 @@ class OrderSeeder extends Seeder
 
                 'total_price' => rand(1,100)*100,
                 'payment_status' => rand(0,1),
+                'status' => rand(0,1),
                 'address' => fake()->address(),
                 'deleted_at' => [fake()->dateTime, null][array_rand([fake()->dateTime, null])],
                 'updated_at' => now()->add('day', 30),

@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'image_url' => $this->imageUrl,
             'product_images' => ProductImageResource::collection($this->productImages),
             'vendor_code' => $this->vendor_code,
+            'company' => $this->company,
             'price' => $this->price,
             'count' => $this->count,
             'avg_rate' => sprintf("%.1f", $this->review()->avg('rate')),
