@@ -64,6 +64,11 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3>{{ product.title }}</h3>
                     </div>
+                    <div v-if="product.tags.length !== 0" class="mb-3">
+                        <h6 v-for="(tag, index) in product.tags" class="d-inline" style="width: fit-content">
+                            {{ tag.title }}<span v-if="index < product.tags.length-1">/</span>
+                        </h6>
+                    </div>
                     <p class="flex-grow-1">{{ product.description }}</p>
                     <div class="float-left text-nowrap">
                         <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
@@ -151,7 +156,7 @@
                 </div>
             </div>
 
-            <carousel :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
+            <carousel :breakpoints="breakpoints" :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
                     <slide v-for="review in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
@@ -194,9 +199,9 @@
             </div>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+            <carousel :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
                 <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding: 40px;">
-                    <product-card-alternative :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
+                    <alternative-product-card :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
@@ -204,9 +209,9 @@
             </carousel>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
+            <carousel :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
                 <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding: 40px;">
-                    <product-card-alternative :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
+                    <alternative-product-card :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
@@ -220,7 +225,7 @@
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 import modalWindow from "../../components/UI/modalWindow.vue";
-import ProductCardAlternative from "../../components/products/AlternativeProductCard.vue";
+import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -238,7 +243,7 @@ export default {
         Navigation,
         ProductCardInCatalog,
         modalWindow,
-        ProductCardAlternative,
+        AlternativeProductCard,
     },
 
     data() {
@@ -261,7 +266,17 @@ export default {
             sameProducts: {},
             modalVisibility: false,
             showProperties: false,
-
+            breakpoints: {
+                0: {
+                    itemsToShow: 1,
+                },
+                600: {
+                    itemsToShow: 2,
+                },
+                1024: {
+                    itemsToShow: 3,
+                },
+            },
         }
     },
 
@@ -285,7 +300,14 @@ export default {
 
     mounted() {
         this.getProduct(this.$router.currentRoute._value.params.id);
-        this.getReviews();
+    },
+
+    watch:{
+        $route (from, to) {
+            this.loaded = false
+            window.scrollTo(0, this.top);
+            this.getProduct(from.params.id)
+        }
     },
 
     unmounted() {
@@ -308,6 +330,7 @@ export default {
                 this.loaded = true
                 this.product = response.data.data
                 this.product.content = JSON.parse(this.product.content)
+                this.getReviews();
                 this.getSameProducts()
             })
             .catch(({response}) => {
@@ -331,7 +354,6 @@ export default {
                 document.getElementsByClassName('small-product-img')[i].classList.remove('current-small-product-img')
             }
             document.getElementsByClassName('small-product-img')[index].classList.add('current-small-product-img')
-            // console.log(document.getElementById("bigProductImage"))
         },
 
         getReviews() {
@@ -385,12 +407,21 @@ export default {
         },
 
         getSameProducts() {
+            let tags = []
+            this.product.tags.forEach((tag) => {
+                tags.push(tag.id)
+            })
             axios.post('/api/products', {
                 categories: this.product.category,
-                // tags: this.product.tags,
+                tags: tags,
                 page: 1
             }).then(response => {
                 this.sameProducts = response.data.data
+                this.sameProducts.forEach((product, index) =>{
+                    if (product.id === this.product.id) {
+                        this.sameProducts.splice(index, 1)
+                    }
+                })
             });
         },
 
