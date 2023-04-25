@@ -33,7 +33,7 @@
                                 <input type="text" class="form-control" placeholder="Недостатки" v-model="storeReviewData.flaws">
                             </div>
                             <div class="input-group mb-2">
-                                <textarea type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
+                                <textarea style="max-height: 10rem; min-height: 5rem" maxlength="300" type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
                             </div>
 
                             <button class="btn btn-primary" @click="storeReview()">Оставить отзыв</button>
@@ -70,17 +70,31 @@
                         <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
                         <a class="link-secondary ms-2 cursor-pointer text-decoration-none" style="border-bottom: dashed 1px; font-size: 0.9rem;">
                             <div class="d-inline">{{ product.reviews_count }}
-                                <span class="1ke" v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )">Отзывов</span>
-                                <span class="2ke" v-else-if="product.reviews_count.toString().slice(-1) === '1'">Отзыв</span>
-                                <span class="3ke" v-else-if="product.reviews_count.toString().slice(-1) === '2' || '3' || '4' ">Отзыва</span>
-                                <span class="4ke" v-else>Отзывов</span>
+                                <span v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )">Отзывов</span>
+                                <span v-else-if="product.reviews_count.toString().slice(-1) === '1'">Отзыв</span>
+                                <span v-else-if="(product.reviews_count.toString().slice(-1) === '2') || (product.reviews_count.toString().slice(-1) === '3') || (product.reviews_count.toString().slice(-1) === '4') ">Отзыва</span>
+                                <span v-else>Отзывов</span>
                             </div>
                         </a>
                         <p class="text-secondary mt-2">Артикул: <span class="text-dark">{{ product.vendor_code }}</span></p>
 
                         <div class="text-wrap" style="font-size: 0.9rem;">
-                            <p v-for="(prop, index) in product.content">{{ index + ': '}} <span class="text-secondary">{{ prop }}</span></p>
+                            <div v-for="(prop, key, index) in product.content">
+                                <div v-show="index < 2 || showProperties" class="gradient-parent mb-3">
+                                    <div v-show="index === 1 && !showProperties" class="gradient w-100 h-100"></div>
+                                    {{ key + ': '}}
+                                    <span class="text-secondary">{{ prop }}</span>
+                                </div>
+                                <span @click="showProperties=true" v-show="index === 1 && !showProperties" class="h6 more cursor-pointer">
+                                    Ещё
+                                </span>
+
+                            </div>
+                            <span @click="showProperties=false" v-show="showProperties" class="h6 more cursor-pointer">
+                                    Скрыть
+                                </span>
                         </div>
+
 
                     </div>
                 </div>
@@ -105,6 +119,18 @@
                 </div>
 
             </div>
+
+<!--            <div style="margin-left: 25px">-->
+<!--                <h2>О товаре</h2>-->
+<!--                <div class="d-flex justify-content-between">-->
+<!--                    <div class="text-wrap" style="font-size: 0.9rem;">-->
+<!--                        <p v-for="(prop, index) in product.content">{{ index + ': '}} <span class="text-secondary">{{ prop }}</span></p>-->
+<!--                    </div>-->
+<!--                    <p class="flex-grow-1">{{ product.description }}</p>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
 
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -168,9 +194,9 @@
             </div>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(sameProducts).length > 0">
-                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding-top: 40px;">
-                    <product-card-in-catalog :identifier="'SameProduct'" :product="sameProduct" class="card product-card-hover p-0 h-100" :key="sameProduct.id" style="width: 15rem;"/>
+            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+                <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding: 40px;">
+                    <product-card-alternative :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
@@ -178,14 +204,15 @@
             </carousel>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
-            <carousel :snapAlign="'start'" :items-to-show="4.8" v-if="loaded && Object.keys(previousWatched).length > 0">
-                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding-top: 40px;">
-                    <product-card-in-catalog :identifier="'PreviousWatched'" :product="productWatched" class="card product-card-hover p-0 h-100" :key="productWatched.id" style="width: 15rem;"/>
+            <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
+                <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding: 40px;">
+                    <product-card-alternative :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
                 </template>
             </carousel>
+
         </div>
     </div>
 </template>
@@ -193,6 +220,7 @@
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 import modalWindow from "../../components/UI/modalWindow.vue";
+import ProductCardAlternative from "../../components/products/AlternativeProductCard.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -210,6 +238,7 @@ export default {
         Navigation,
         ProductCardInCatalog,
         modalWindow,
+        ProductCardAlternative,
     },
 
     data() {
@@ -231,6 +260,8 @@ export default {
             userReviewValidationErrors: {},
             sameProducts: {},
             modalVisibility: false,
+            showProperties: false,
+
         }
     },
 
@@ -326,6 +357,7 @@ export default {
                     this.storeReviewData = {}
                     this.userReview = response.data.data
                     this.userReviewValidationErrors = {}
+                    this.modalVisibility = false
                 })
                 .catch(({response})=>{
                     if(response.status===422){

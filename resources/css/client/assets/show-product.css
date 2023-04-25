@@ -3,30 +3,23 @@
     padding: 2px;
 }
 
-
-/*.small-product-img:hover {*/
-/*    border: 2px solid #ffc107;*/
-/*}*/
-
 .current-small-product-img {
     border: 2px solid #ffc107;
     padding: 0;
 }
 
+.gradient-parent {
+    position: relative;
+}
 
-/*.heart-far {*/
-/*    transition: all linear 0.15s;*/
-/*    -webkit-transition: all linear 0.15s;*/
-/*    -moz-transition: all linear 0.15s;*/
-/*    -o-transition: all linear 0.15s;*/
-/*}*/
+.gradient {
+    position: absolute;
+    /*background-color: #e70001;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    background: linear-gradient(to top, #f8f9fa, rgba(248, 249, 250, 0));
+}
 
-/*.heart-fas {*/
-/*    transition: all linear 0.15s;*/
-/*    -webkit-transition: all linear 0.15s;*/
-/*    -moz-transition: all linear 0.15s;*/
-/*    -o-transition: all linear 0.15s;*/
+.more {
 
-/*}*/
-
-
+}
