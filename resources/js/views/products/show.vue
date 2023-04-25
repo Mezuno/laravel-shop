@@ -196,7 +196,7 @@
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
             <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
                 <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding: 40px;">
-                    <product-card-alternative :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
+                    <alternative-product-card :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
@@ -206,7 +206,7 @@
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
             <carousel :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
                 <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding: 40px;">
-                    <product-card-alternative :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
+                    <alternative-product-card :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
                 </slide>
                 <template #addons>
                     <navigation />
@@ -220,7 +220,7 @@
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 import modalWindow from "../../components/UI/modalWindow.vue";
-import ProductCardAlternative from "../../components/products/AlternativeProductCard.vue";
+import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -238,7 +238,7 @@ export default {
         Navigation,
         ProductCardInCatalog,
         modalWindow,
-        ProductCardAlternative,
+        AlternativeProductCard,
     },
 
     data() {

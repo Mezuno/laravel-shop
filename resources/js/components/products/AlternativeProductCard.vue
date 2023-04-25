@@ -37,7 +37,7 @@
 import getElementPropertiesMixin from "@/mixins/getElementPropertiesMixin.vue";
 
 export default {
-    name: "ProductCardAlternative",
+    name: "AlternativeProductCard",
 
     props: {
         product: {
@@ -69,7 +69,6 @@ export default {
         hideProductCardContent(identifier, id) {
             document.getElementById('absoluteBackground'+identifier+id).style = ('')
             document.getElementById('image'+identifier+id).style.zIndex = ('200')
-            document.getElementById('contentInvisible'+identifier+id).style.display = ('none')
         },
     }
 }
