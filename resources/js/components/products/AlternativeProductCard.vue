@@ -1,36 +1,37 @@
 <template>
-    <div @mouseout="hideProductCardContent(identifier, product.id)" @mouseover="emergingProductCardContent(identifier, product.id)" class="product-card">
+    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none cursor-pointer">
 
-        <div class="absolute-background" :id="`absoluteBackground${identifier}${product.id}`">
-            <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">
-        </div>
-        <div>
-            <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none cursor-pointer">
+        <div @mouseout="hideProductCardContent(identifier, product.id)" @mouseover="emergingProductCardContent(identifier, product.id)" class="product-card">
+
+            <div class="absolute-background" :id="`absoluteBackground${identifier}${product.id}`">
+<!--                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">-->
+            </div>
+            <div>
                 <img class="w-100 image-in-product-card" :src="product.image_url" alt="" :id="`image${identifier}${product.id}`">
-            </router-link>
-        </div>
+            </div>
 
-        <div class="content-in-product-card d-flex flex-column w-100">
-            <div :id="`contentVisible${identifier}${product.id}`">
+            <div class="content-in-product-card d-flex flex-column w-100">
+                <div :id="`contentVisible${identifier}${product.id}`">
 
-                <h5 class="mb-0 mt-2">{{ product.price.slice(0, -3) }} ₽</h5>
-                <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
-                    {{ product.title }}
-                </router-link>
+                    <h5 class="mb-0 mt-2">{{ product.price.slice(0, -3) }} ₽</h5>
+                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
+                        {{ product.title }}
+                    </router-link>
 
-                <div class="d-flex flex-grow-1">
-                    <p class="text-warning d-inline-block mb-0">
-                        <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
-                        <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
-                    </p>
-                    <p class="ms-2 mb-0">({{ product.reviews_count }})</p>
+                    <div class="d-flex flex-grow-1">
+                        <p class="text-warning d-inline-block mb-0">
+                            <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
+                            <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
+                        </p>
+                        <p class="ms-2 mb-0">({{ product.reviews_count }})</p>
+                    </div>
+
                 </div>
-
             </div>
 
         </div>
 
-    </div>
+    </router-link>
 </template>
 
 <script>

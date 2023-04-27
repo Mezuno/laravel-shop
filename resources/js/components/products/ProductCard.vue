@@ -3,7 +3,7 @@
         <div @mouseout="hideProductCardContent(product.id)" @mouseover="emergingProductCardContent(product.id)" class="product-card">
 
             <div class="absolute-background" :id="`absoluteBackground${product.id}`">
-                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">
+<!--                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">-->
             </div>
             <div>
                 <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none cursor-pointer">

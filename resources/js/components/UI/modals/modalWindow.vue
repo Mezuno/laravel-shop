@@ -11,15 +11,28 @@
 <script>
 export default {
     name: "modal-window",
+
     props: {
         openModal: {
             type: Boolean,
             default: false
-        }
+        },
+        writeReview: {
+            type: Boolean,
+            default: false
+        },
+        currentReview: {
+            type: Boolean,
+            default: false
+        },
     },
     methods: {
         hideModal() {
+            console.log('ke')
             this.$emit('update:openModal', false)
+            // console.log(this.$emit('update:writeReview', false))
+            // console.log(this.$emit('update:currentReview', false))
+
             // document.getElementsByClassName('body-scroll')[0].style.overflow = "scroll"
         }
     }
@@ -28,15 +41,5 @@ export default {
 
 <style scoped>
 
-.modal-window {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(0,0,0, 0.4);
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 </style>

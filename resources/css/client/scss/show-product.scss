@@ -4,7 +4,7 @@
 }
 
 .current-small-product-img {
-    border: 2px solid #ffc107;
+    border: 2px solid $warning;
     padding: 0;
 }
 
@@ -17,9 +17,10 @@
     /*background-color: #e70001;*/
     /*height: 100%;*/
     /*width: 100%;*/
-    background: linear-gradient(to top, #f8f9fa, rgba(248, 249, 250, 0));
+    background: linear-gradient(to top, $light, rgba(248, 249, 250, 0));
 }
 
-.more {
-
+.more:hover {
+    color: $warning;
+    border-bottom: dashed 1px $warning;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div style=" min-height: 100vh">
+    <div>
         <nav class="navbar navbar-expand p-0">
             <div class="d-flex justify-content-center w-100">
                 <ul class="navbar-nav">
@@ -52,7 +52,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <button @click="modalVisibility.callMeLater = true" class="nav-link btn btn-warning text-dark">Перезвоните мне</button>
+                        <button @click="openModal" class="nav-link btn btn-warning text-dark">Перезвоните мне</button>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -141,19 +141,25 @@
             </div>
         </nav>
 
-        <modal-window v-model:openModal="modalVisibility.callMeLater" style="z-index: 1000">
-            <div class="content-in-modal">
-                <div @click="modalVisibility.callMeLater = false" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">
-                    <i class="fas fa-times"></i>
-                </div>
-                <h3>Проконсультируйте меня</h3>
-                <p>Наш оператор перезвонит Вам в течение 5 минут</p>
-                <form action="">
-                    <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">
-                    <button @click.prevent class="btn btn-dark w-100">Свяжитесь со мной</button>
-                </form>
-            </div>
-        </modal-window>
+<!--        <modal-window v-model:openModal="modalVisibility.callMeLater">-->
+<!--            <div class="content-in-modal">-->
+<!--                <div @click="modalVisibility.callMeLater = false" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">-->
+<!--                    <i class="fas fa-times"></i>-->
+<!--                </div>-->
+<!--                <h3>Проконсультируйте меня</h3>-->
+<!--                <p>Наш оператор перезвонит Вам в течение 5 минут</p>-->
+<!--                <form action="">-->
+<!--                    <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">-->
+<!--                    <button @click.prevent class="btn btn-dark w-100">Свяжитесь со мной</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </modal-window>-->
+
+        <modal-call-me-later
+            class="modal-window"
+            v-model:callMeLater="modalVisibility.callMeLater"
+
+        />
 
         <router-view class="content-on-page mb-5"/>
 
@@ -166,8 +172,16 @@
 <script>
 
 import {mapActions} from 'vuex'
+import ModalWindow from "./components/UI/modals/modalWindow.vue";
+import ModalCallMeLater from "./components/UI/modals/ModalCallMeLater.vue";
+
 export default {
     name: 'App',
+
+    components: {
+        ModalCallMeLater,
+        ModalWindow
+    },
 
     data() {
         return {
@@ -225,6 +239,15 @@ export default {
             signOut:"auth/logout",
             setWishlist:"auth/setWishlist",
         }),
+
+        openModal() {
+            this.modalVisibility.callMeLater = true
+        },
+
+        hideModal() {
+            this.modalVisibility.callMeLater = false
+        },
+
         async logout(){
             await axios.post('/logout').then(({data})=>{
                 this.signOut()

@@ -15,7 +15,7 @@ import productCardInCatalog from "./components/productCardInCatalog.vue";
 app.component('product-card-in-catalog', productCardInCatalog)
 import wishHeart from "./components/UI/wishHeart.vue";
 app.component('wish-heart', wishHeart)
-import modalWindow from "./components/UI/modalWindow.vue";
+import modalWindow from "./components/UI/modals/modalWindow.vue";
 app.component('modal-window', modalWindow)
 
 

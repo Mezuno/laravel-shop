@@ -1,22 +1,18 @@
 .carousel__prev,
 .carousel__next {
-    top: 52%;
-}
-
-.carousel__prev,
-.carousel__next {
-    top: 52%;
-}
-
-.carousel__prev {
+    top: 50%;
+    transform: translate(-50%,-50%);
     color: #696969;
-    left: -5px;
     background-color: #ffffff;
     opacity: 1;
     box-shadow: 0 0 20px #c9c9c9;
     border-radius: 50%;
     padding: 10px;
     transition: all linear 0.1s;
+}
+
+.carousel__prev {
+    left: 20px;
 }
 .carousel__prev:hover {
     color: #000000;
@@ -28,15 +24,9 @@
 }
 
 .carousel__next {
-    color: #696969;
-    right: -5px;
-    background-color: #ffffff;
-    opacity: 1;
-    box-shadow: 0 0 20px #c9c9c9;
-    border-radius: 50%;
-    padding: 10px;
-    transition: all linear 0.1s;
+    right: -30px;
 }
+
 .carousel__next:hover {
     color: #000000;
     box-shadow: 0 0 40px #c9c9c9;
@@ -48,12 +38,12 @@
 
 .carousel {
     text-align: start;
-    cursor: grab;
+    //cursor: grab;
 }
 
-.carousel:active {
-    cursor: grabbing;
-}
+//.carousel:active {
+//    cursor: grabbing;
+//}
 
 .carousel__prev--disabled {
     display: none;

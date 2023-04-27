@@ -209,12 +209,11 @@
 </template>
 
 <script>
-import ModalWindow from "../../components/UI/modalWindow.vue";
+import ModalWindow from "../../components/UI/modals/modalWindow.vue";
 import {mapActions, mapMutations} from "vuex";
 
 export default {
     name: "Profile",
-
 
     components: {
         ModalWindow

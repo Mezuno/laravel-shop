@@ -2,46 +2,24 @@
     <div>
         <div class="container-xxl mt-5">
 
-            <modal-window v-if="loaded" v-model:openModal="modalVisibility" style="z-index: 1000">
-                <div class="content-in-modal">
-                    <div v-if="authenticated && !userReview && loaded" class="p-4">
-                        <div class="d-flex flex-column">
-                            <div class="d-flex">
-                                <h3>Оставьте свой отзыв к товару «{{ product.title }}»</h3>
-                                <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
-                            </div>
+            <modal-write-review
+                class="modal-window"
+                v-if="loaded"
+                v-model:writeReview="modalVisibility.writeReview"
+                v-model:userReview="userReview"
+                v-model:product="product"
+                v-model:reviews="reviews"
+                v-model:storeReviewData="storeReviewData"
+                v-model:userReviewValidationErrors="userReviewValidationErrors"
+            />
 
-                            <div class="col-12" v-if="Object.keys(userReviewValidationErrors).length > 0">
-                                <div class="alert alert-danger">
-                                    <div v-for="(value, key) in userReviewValidationErrors" :key="key">{{ value[0] }}</div>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control w-100" placeholder="Заголовок" v-model="storeReviewData.title">
-                            </div>
-                            <div @mouseout="outMouseOver">
-                                <h4>
-                                    <i v-for="i in 5" @mouseover="onMouseOver(i)" @click="changeReviewDataRate(i)" class="far fa-star text-warning cursor-pointer" :id="`rate-in-modal${i-1}`"></i>
-                                </h4>
-                            </div>
-
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control" placeholder="Достоинства" v-model="storeReviewData.advantages">
-                            </div>
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control" placeholder="Недостатки" v-model="storeReviewData.flaws">
-                            </div>
-                            <div class="input-group mb-2">
-                                <textarea style="max-height: 10rem; min-height: 5rem" maxlength="300" type="text" class="form-control" placeholder="Текст отзыва" v-model="storeReviewData.body"></textarea>
-                            </div>
-
-                            <button class="btn btn-primary" @click="storeReview()">Оставить отзыв</button>
-
-                        </div>
-                    </div>
-                </div>
-            </modal-window>
+            <modal-read-reviews
+                class="modal-window"
+                v-if="loaded"
+                v-model:readReview="modalVisibility.readReview"
+                v-model:currentOpenReview="currentOpenReview"
+                v-model:reviews="reviews"
+            />
 
             <div v-if="!loaded" class="d-flex justify-content-center pt-5">
                 <div class="spinner-border" role="status">
@@ -74,8 +52,9 @@
                     <div class="float-left text-nowrap">
                         <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
                         <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
-                        <a class="link-secondary ms-2 cursor-pointer text-decoration-none" style="border-bottom: dashed 1px; font-size: 0.9rem;">
-                            <div class="d-inline">{{ product.reviews_count }}
+                        <a @click="openModalReadReviews(reviews[currentOpenReview.indexInReviews], currentOpenReview.indexInReviews)" class="link-secondary ms-2 cursor-pointer text-decoration-none more" style="border-bottom: dashed 1px; font-size: 0.9rem;">
+                            <div class="d-inline">
+                                {{ product.reviews_count }}
                                 <span v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )">Отзывов</span>
                                 <span v-else-if="product.reviews_count.toString().slice(-1) === '1'">Отзыв</span>
                                 <span v-else-if="(product.reviews_count.toString().slice(-1) === '2') || (product.reviews_count.toString().slice(-1) === '3') || (product.reviews_count.toString().slice(-1) === '4') ">Отзыва</span>
@@ -86,27 +65,27 @@
 
                         <div class="text-wrap" style="font-size: 0.9rem;">
                             <div v-for="(prop, key, index) in product.content">
-                                <div v-show="index < 2 || showProperties" class="gradient-parent mb-3">
-                                    <div v-show="index === 1 && !showProperties" class="gradient w-100 h-100"></div>
+
+                                <div v-show="index < 3 || showProperties" class="gradient-parent mb-3">
+                                    <div v-show="index === 2 && !showProperties" class="gradient w-100 h-100"></div>
                                     {{ key + ': '}}
                                     <span class="text-secondary">{{ prop }}</span>
                                 </div>
-                                <p v-if="index === 1 && !showProperties" style="border-bottom: dashed 1px; font-size: 0.9rem;" class="d-inline">
+                                <p v-if="index === 2 && !showProperties" style="border-bottom: dashed 1px; font-size: 0.9rem;" class="d-inline">
                                     <span @click="showProperties=true" class="h6 more cursor-pointer">
                                         Развернуть характеристики
                                     </span>
                                 </p>
 
-
-
                             </div>
+
                             <p v-if="showProperties" style="border-bottom: dashed 1px; font-size: 0.9rem;" class="d-inline">
                                 <span @click="showProperties=false" class="h6 more cursor-pointer">
                                     Скрыть
                                 </span>
                             </p>
-                        </div>
 
+                        </div>
 
                     </div>
                 </div>
@@ -132,17 +111,6 @@
 
             </div>
 
-<!--            <div style="margin-left: 25px">-->
-<!--                <h2>О товаре</h2>-->
-<!--                <div class="d-flex justify-content-between">-->
-<!--                    <div class="text-wrap" style="font-size: 0.9rem;">-->
-<!--                        <p v-for="(prop, index) in product.content">{{ index + ': '}} <span class="text-secondary">{{ prop }}</span></p>-->
-<!--                    </div>-->
-<!--                    <p class="flex-grow-1">{{ product.description }}</p>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
 
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -158,16 +126,16 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModal">
+                <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModalWriteReviews">
                     Оставить отзыв
                 </div>
             </div>
 
             <carousel :breakpoints="breakpoints" :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
-                    <slide v-for="review in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
+                    <slide v-for="(review, index) in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
-                            <div class="cart-card p-4 w-100 h-100 card-pointer d-flex flex-column align-items-start">
+                            <div class="cart-card p-4 w-100 h-100 d-flex flex-column align-items-start">
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
                                         <h5>{{ review.user.name }} <span class="h6 text-secondary text-nowrap" v-if="review.user.id === this.$store.state.auth.user.id">(Ваш отзыв)</span></h5>
@@ -182,13 +150,16 @@
                                     <span class="text-secondary">{{ review.created }}</span>
                                 </div>
 
-                                <div class="float-left">
-                                    <h6>{{ review.title }}</h6>
+                                <div @click="openModalReadReviews(review, index)" class="cursor-pointer">
+                                    <div class="float-left">
+                                        <h6>{{ review.title }}</h6>
+                                    </div>
+                                    <div class="float-left">
+                                        <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... </span></p>
+                                        <span class="text-nowrap h6">Читать далее</span>
+                                    </div>
                                 </div>
-                                <div class="float-left">
-                                    <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... </span></p>
-                                    <span class="text-nowrap h6">Читать далее</span>
-                                </div>
+
                             </div>
                     </slide>
 
@@ -231,8 +202,10 @@
 
 <script>
 import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
-import modalWindow from "../../components/UI/modalWindow.vue";
+import ModalWindow from "../../components/UI/modals/modalWindow.vue";
 import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
+import ModalReadReviews from "../../components/UI/modals/ModalReadReviews.vue";
+import ModalWriteReview from "../../components/UI/modals/ModalWriteReview.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -249,8 +222,10 @@ export default {
         Slide,
         Navigation,
         ProductCardInCatalog,
-        modalWindow,
+        ModalWindow,
         AlternativeProductCard,
+        ModalReadReviews,
+        ModalWriteReview,
     },
 
     data() {
@@ -267,12 +242,21 @@ export default {
                 flaws: "",
                 advantages: "",
             },
+            showProperties: false,
             successReview: {},
+
             userReview: null,
             userReviewValidationErrors: {},
             sameProducts: {},
-            modalVisibility: false,
-            showProperties: false,
+            modalVisibility: {
+                readReview: false,
+                writeReview: false,
+            },
+            currentOpenReview: {
+                indexInReviews: 0,
+                review: {},
+            },
+
             breakpoints: {
                 0: {
                     itemsToShow: 1,
@@ -331,6 +315,29 @@ export default {
             addToCartProducts:"cartProducts/addToCartProducts",
             addItemToPreviousWatched:"previousWatched/addItemToPreviousWatched",
         }),
+
+
+        openModalReadReviews(review, index) {
+            this.currentOpenReview.review = review
+            this.currentOpenReview.indexInReviews = index
+            this.modalVisibility.readReview = true
+        },
+        openModalWriteReviews() {
+            this.modalVisibility.writeReview = true
+        },
+        hideModal() {
+            this.modalVisibility.visibility = false
+            this.modalVisibility.writeReview = false
+            this.modalVisibility.readReview = false
+        },
+        nextReview(index) {
+            this.currentOpenReview.review = this.reviews[index+1]
+            this.currentOpenReview.indexInReviews += 1
+        },
+        prevReview(index) {
+            this.currentOpenReview.review = this.reviews[index-1]
+            this.currentOpenReview.indexInReviews -= 1
+        },
 
         getProduct(id) {
             axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
@@ -430,11 +437,6 @@ export default {
                     }
                 })
             });
-        },
-
-
-        openModal() {
-            this.modalVisibility = true
         },
 
         changeReviewDataRate(rate) {
