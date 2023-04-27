@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('preview_image')->nullable();
 
             $table->integer('vendor_code')->unique();
-            $table->string('company')->nullable();
+            $table->string('company_id')->nullable();
 
             $table->decimal('price');
             $table->integer('count');

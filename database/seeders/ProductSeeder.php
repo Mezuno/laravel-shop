@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Entities\Category\Models\Category;
+use App\Entities\Company\Models\Company;
 use App\Entities\Product\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -17,11 +18,9 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $data = [];
-        $recordCount = 80;
+        $recordCount = 160;
 
         $colors = ['yellow', 'red', 'blue', 'green'];
-
-        $companies = ['Apple', 'Microsoft', 'Amazon', 'Samsung', 'Xiaomi'];
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
@@ -37,7 +36,7 @@ class ProductSeeder extends Seeder
                 'price' => rand(1,100)*10,
                 'count' => rand(0, 100),
                 'vendor_code' => $i+1,
-                'company' => $companies[array_rand($companies, 1)],
+                'company_id' => Company::get('id')->random()->id,
                 'is_published' => rand(0,1),
                 'category_id' => Category::get('id')->random()->id,
                 'preview_image' => 'images/products/900x1200-(' . $colors[array_rand($colors, 1)] . ').png',

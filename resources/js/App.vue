@@ -52,7 +52,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <router-link to="#" class="nav-link btn btn-warning text-dark">Перезвоните мне</router-link>
+                        <button @click="modalVisibility.callMeLater = true" class="nav-link btn btn-warning text-dark">Перезвоните мне</button>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -141,6 +141,20 @@
             </div>
         </nav>
 
+        <modal-window v-model:openModal="modalVisibility.callMeLater" style="z-index: 1000">
+            <div class="content-in-modal">
+                <div @click="modalVisibility.callMeLater = false" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">
+                    <i class="fas fa-times"></i>
+                </div>
+                <h3>Проконсультируйте меня</h3>
+                <p>Наш оператор перезвонит Вам в течение 5 минут</p>
+                <form action="">
+                    <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">
+                    <button @click.prevent class="btn btn-dark w-100">Свяжитесь со мной</button>
+                </form>
+            </div>
+        </modal-window>
+
         <router-view class="content-on-page mb-5"/>
 
         <footer class="static-footer d-flex justify-content-center align-items-center flex-column">
@@ -154,6 +168,14 @@
 import {mapActions} from 'vuex'
 export default {
     name: 'App',
+
+    data() {
+        return {
+            modalVisibility: {
+                callMeLater: false,
+            }
+        }
+    },
 
     computed: {
         user: function () {

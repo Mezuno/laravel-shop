@@ -3,6 +3,7 @@
 namespace App\Entities\Product\Models;
 
 use App\Entities\Category\Models\Category;
+use App\Entities\Company\Models\Company;
 use App\Entities\Review\Models\Review;
 use App\Entities\Tag\Models\Tag;
 use App\Models\Traits\Filterable;
@@ -44,6 +45,11 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
     public function tags()

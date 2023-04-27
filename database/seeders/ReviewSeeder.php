@@ -20,12 +20,14 @@ class ReviewSeeder extends Seeder
         $data = [];
         $recordCount = 1280;
 
+        $rates = [rand(1,2), rand(3,5), rand(3,5), rand(4,5)];
+
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
                 'user_id' => User::get('id')->random()->id,
                 'product_id' => Product::get('id')->random()->id,
                 'title' => fake()->text(70),
-                'rate' => rand(1, 5),
+                'rate' => $rates[array_rand($rates, 1)],
                 'advantages' => fake()->text(70),
                 'flaws' => fake()->text(70),
                 'body' => fake()->text(255),

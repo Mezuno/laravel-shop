@@ -4,4 +4,14 @@
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0 0 40px #606060;
+    position: relative;
+}
+.close-modal-button {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    width: 25px;
+    height: 25px;
+    background-color: #eee;
+    border-radius: 50%;
 }
