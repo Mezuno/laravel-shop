@@ -25,22 +25,27 @@
             </div>
 
             <div class="d-flex">
-                <div class="card border border-0 cart-card w-75 me-5 overflow-hidden" id="cart-card">
-                    <div class="card-body ps-4" id="cart-card2">
-                        <div class="d-flex flex-wrap justify-content-between" id="cartTitle">
-                            <h3 class="card-title mt-1 ">
-                                Корзина
-<!--                                <div v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</div>-->
-                            </h3>
-                            <div v-if="productsInCart" v-show="productsInCart.length > 6" @click="openCartList()" class="btn openCartList">
-                                <i class="fas fa-chevron-up h4 openCartListIcon"></i>
+                <div class="border border-0 cart-card w-75 h-100 me-5 overflow-hidden" id="cart-card">
+                    <div class="p-4" id="cart-card2">
+                        <div class="cartList" id="cartList">
+                            <div class="d-flex flex-wrap justify-content-between" id="cartTitle">
+
+                                <h3 class="card-title mt-1 ">
+                                    Корзина
+                                    <span v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</span>
+                                </h3>
+
+                                <div v-show="productsInCart && productsInCart.length > 2" @click="openCartList()" class="btn openCartList">
+                                    <h4><i class="fas fa-chevron-up openCartListIcon"></i></h4>
+                                </div>
+
                             </div>
-                        </div>
 
 
 
-                        <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4 productsInCartList" id="productsInCartList">
-                            <product-in-cart class="row mt-4 productsInCartList" :product="product" :index="index" :id="`productInCartList${index}`" />
+                            <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4 productsInCartList" :id="`productInCartList${product.id}`">
+                                <product-in-cart class="row mt-4 productsInCartList" :product="product" :index="index" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,11 +98,12 @@
 import {mapActions, mapMutations} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import ProductInCart from "../../components/products/ProductInCart.vue";
+import getElementPropertiesMixin from "../../mixins/getElementPropertiesMixin.vue";
 
 export default {
     name: "cart",
     components: {ProductInCart},
-    mixins: [cartMixin],
+    mixins: [cartMixin,getElementPropertiesMixin],
 
     data() {
         return {
@@ -109,8 +115,11 @@ export default {
                 total_price: this.totalPrice
             },
 
-            cartOpened: true,
-            isOpenA: false,
+            cart: {
+                isOpened: true,
+                height: 0,
+                titleHeight: 0,
+            },
 
             orderProcessing: null,
             validationErrors: {},
@@ -149,9 +158,6 @@ export default {
     },
 
     mounted() {
-        this.$nextTick(function () {
-            this.openCartList()
-        })
         if (this.authenticated) {
             this.setStoreOrderData()
         }
@@ -195,38 +201,36 @@ export default {
             this.storeOrderData.total_price = this.totalPrice
         },
 
-        // openCartList() {
-        //     // let lengthProducts = this.productsInCart?.length
-        //     // let height = "1000px"
-        //     let lengthProducts = this.productsInCart?.length;
-        //     if (lengthProducts === undefined) {
-        //         return null
-        //     }
-        //
-        //     if (this.isOpened === false) {
-        //         // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
-        //         // height = this.getHeight("cart-card") + "px"
-        //         document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
-        //         document.getElementsByClassName("cart-card")[0].style.height = "78px"
-        //         setTimeout(function () {
-        //             for (let i = 0; i < lengthProducts; i++) {
-        //                 document.getElementsByClassName("productsInCartList")[i].style.display = "none"
-        //             }
-        //         }, 200);
-        //
-        //         this.isOpened = true
-        //
-        //     } else {
-        //         document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
-        //         // document.getElementsByClassName("cart-card")[0].style.height = "960px"
-        //         document.getElementsByClassName("cart-card")[0].style.height = ""
-        //         // console.log(lengthProducts)
-        //         for (let i = 0; i < lengthProducts; i++) {
-        //             document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
-        //         }
-        //         this.isOpened = false
-        //     }
-        // },
+        openCartList() {
+            this.cart.titleHeight = parseFloat(this.getHeight('cartTitle'))
+            // let lengthProducts = this.productsInCart?.length
+            // let height = "1000px"
+            let qtyProducts = this.productsInCart?.length;
+            if (qtyProducts === undefined) {
+                return null
+            }
+
+            if (this.cart.isOpened === false) {
+                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
+
+                this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
+                this.cart.height = Math.round(this.cart.height * 100) / 100;
+
+                document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
+
+                this.cart.isOpened = true
+                console.log(this.cart.height)
+
+            } else {
+                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
+                document.getElementById('cartList').style.height = (String(this.cart.titleHeight) + 'px')
+
+                this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
+                this.cart.height = Math.round(this.cart.height * 100) / 100;
+                console.log(this.cart.height)
+                this.cart.isOpened = false
+            }
+        },
 
     }
 }

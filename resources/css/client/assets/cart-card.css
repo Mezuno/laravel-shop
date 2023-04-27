@@ -3,7 +3,12 @@
     box-shadow: 0 0 10px #ddd;
     transition: all ease-out .2s;
     background-color: #fff;
+    min-height: 0;
 
+}
+
+.cartList {
+    transition: all linear 0.2s;
 }
 
 .cart-card:hover {
@@ -26,6 +31,8 @@
     align-items: center;
     justify-content: center;
     transition: transform ease-out .2s;
+    outline: none;
+    border: none;
 }
 
 
