@@ -1,40 +1,7 @@
 <template>
-<!--        <div v-for="productInCart in productsInCart">-->
-<!--            {{ productInCart.title }}-->
-<!--        </div>-->
+
     <div>
         <div class="container-xxl mt-5 mb-5">
-
-<!--            <p>-->
-<!--                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
-<!--                    Link with href-->
-<!--                </a>-->
-<!--                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
-<!--                    Button with data-target-->
-<!--                </button>-->
-<!--            </p>-->
-<!--            <div class="collapse" id="collapseExample">-->
-<!--                <div class="card card-body">-->
-
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="card-header d-flex align-items-center justify-content-between">-->
-<!--                <p class="h4 mb-0">Добавить новость</p>-->
-<!--                <button class="btn rounded-circle shadow-none" data-bs-toggle="collapse" href="#collapseCreateNews" @click="adsasd">-->
-<!--                    <i class="fas fa-chevron-up"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="collapse" id="collapseCreateNews">-->
-<!--                <div class="card-body d-flex flex-column">-->
-<!--                    <form class="d-flex flex-column" method="post" enctype="multipart/form-data">-->
-
-<!--                        <div class="alert alert-danger w-100">-->
-<!--                            <ul>аааааа</ul>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div v-if="Object.keys(successOrder).length > 0" class="alert alert-success col-6">
                 Заказ номер {{ successOrder.id }} успешно оформлен!<br>
@@ -70,42 +37,10 @@
                             </div>
                         </div>
 
-                        <div v-show="productsInCart" v-for="(product, index) in productsInCart" class="row mt-4 productsInCartList"
-                             id="productsInCartList">
-                            <div class="col-2">
-                                <router-link :to="{name: 'products.show', params: {id: product.id}}">
-                                    <img :src="product.image_url"
-                                         class="w-100 productImgInCart" alt="Картинка продукта">
-                                </router-link>
 
-                            </div>
-                            <div class="col-10 row ">
-                                <div class="col-3">
-                                    <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: product.id}}">
-                                        <p class="card-text h5 text-dark">{{ index + 1 }}. {{ product.title }}</p>
-                                    </router-link>
-                                    <p class="text-secondary h6">Инфо о товаре</p>
-                                </div>
-                                <div class="col-3">
 
-                                </div>
-                                <div class="col-3 text-nowrap">
-                                    <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
-                                        class="fas fa-minus text-dark"></i></div>
-                                    <input @input="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
-                                    <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
-                                        class="fas fa-plus plus"></i></div>
-                                </div>
-                                <div class="col-2 text-nowrap">
-                                    {{ product.qty * product.price }} ₽
-                                </div>
-                                <div class="col-1">
-                                    <div @click="removeItemFromCart(product)" type="button" class="">
-                                        <i class="far fa-trash-alt hover-circle"></i>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4 productsInCartList" id="productsInCartList">
+                            <product-in-cart class="row mt-4 productsInCartList" :product="product" :index="index" :id="`productInCartList${index}`" />
                         </div>
                     </div>
                 </div>
@@ -123,25 +58,13 @@
                             <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="storeOrderData.email" placeholder="Электронная почта" style="height: 45px;">
                             <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="storeOrderData.address" placeholder="Адресс доставки" style="height: 45px;">
                         </div>
-<!--                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">-->
-<!--                        <label class="btn btn-outline-secondary" for="btn-check-2-outlined">Запомнить данные?</label><br>-->
+
                         <div class="form-check">
                             <input class="form-check-input shadow-none border-dark" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
                             <label class="form-check-label shadow-none " for="flexCheckDefault">
                                 Запомнить данные?
                             </label>
                         </div>
-<!--                        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Подсказка</em> <u>с</u> <b>HTML</b>">-->
-<!--                            Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом-->
-<!--                        </button>-->
-
-
-<!--                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" checked autocomplete="off">-->
-<!--                        <label class="btn btn-outline-dark" for="btn-check-2-outlined">Запомнить данные?</label><br>-->
-
-<!--                        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Подсказка</em> <u>с</u> <b>HTML</b>">-->
-<!--                            Всплывающая подсказка с HTML-->
-<!--                        </button>-->
 
                         <div class="mt-2">
                             <div class="text-dark text-nowrap">
@@ -169,10 +92,11 @@
 <script>
 import {mapActions, mapMutations} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
+import ProductInCart from "../../components/products/ProductInCart.vue";
 
 export default {
     name: "cart",
-
+    components: {ProductInCart},
     mixins: [cartMixin],
 
     data() {
@@ -271,38 +195,38 @@ export default {
             this.storeOrderData.total_price = this.totalPrice
         },
 
-        openCartList() {
-            // let lengthProducts = this.productsInCart?.length
-            // let height = "1000px"
-            let lengthProducts = this.productsInCart?.length;
-            if (lengthProducts === undefined) {
-                return null
-            }
-
-            if (this.isOpened === false) {
-                // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
-                // height = this.getHeight("cart-card") + "px"
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
-                document.getElementsByClassName("cart-card")[0].style.height = "78px"
-                setTimeout(function () {
-                    for (let i = 0; i < lengthProducts; i++) {
-                        document.getElementsByClassName("productsInCartList")[i].style.display = "none"
-                    }
-                }, 200);
-
-                this.isOpened = true
-
-            } else {
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
-                // document.getElementsByClassName("cart-card")[0].style.height = "960px"
-                document.getElementsByClassName("cart-card")[0].style.height = ""
-                // console.log(lengthProducts)
-                for (let i = 0; i < lengthProducts; i++) {
-                    document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
-                }
-                this.isOpened = false
-            }
-        },
+        // openCartList() {
+        //     // let lengthProducts = this.productsInCart?.length
+        //     // let height = "1000px"
+        //     let lengthProducts = this.productsInCart?.length;
+        //     if (lengthProducts === undefined) {
+        //         return null
+        //     }
+        //
+        //     if (this.isOpened === false) {
+        //         // height = this.getPadding("cart-card2") + this.getHeight("cartTitle") + (this.getMargin("productsInCartList") + this.getHeight("productsInCartList")) * lengthProducts + "px"
+        //         // height = this.getHeight("cart-card") + "px"
+        //         document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
+        //         document.getElementsByClassName("cart-card")[0].style.height = "78px"
+        //         setTimeout(function () {
+        //             for (let i = 0; i < lengthProducts; i++) {
+        //                 document.getElementsByClassName("productsInCartList")[i].style.display = "none"
+        //             }
+        //         }, 200);
+        //
+        //         this.isOpened = true
+        //
+        //     } else {
+        //         document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
+        //         // document.getElementsByClassName("cart-card")[0].style.height = "960px"
+        //         document.getElementsByClassName("cart-card")[0].style.height = ""
+        //         // console.log(lengthProducts)
+        //         for (let i = 0; i < lengthProducts; i++) {
+        //             document.getElementsByClassName("productsInCartList")[i].style.display = "flex"
+        //         }
+        //         this.isOpened = false
+        //     }
+        // },
 
     }
 }

@@ -40,10 +40,13 @@
 
                 <div class="col-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3>{{ product.title }}</h3>
+                        <h3>{{ product.title }} - {{ product.company.title }}</h3>
+
                     </div>
-                    <div class="mb-2 fw-semibold">{{ product.company.title }}</div>
+                    <div class="mb-2 fw-semibold h5">{{ product.category.title }}</div>
+
                     <div v-if="product.tags.length !== 0" class="mb-3">
+
                         <h6 v-for="(tag, index) in product.tags" class="d-inline" style="width: fit-content">
                             {{ tag.title }}<span v-if="index < product.tags.length-1">/</span>
                         </h6>

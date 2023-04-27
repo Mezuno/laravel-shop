@@ -4,6 +4,7 @@ import modalWindow from "./UI/modals/modalWindow.vue";
 import ModalCallMeLater from "./UI/modals/ModalCallMeLater.vue";
 import ModalReadReviews from "./UI/modals/ModalReadReviews.vue";
 import ModalWriteReview from "./UI/modals/ModalWriteReview.vue";
+import ProductInCart from "./products/ProductInCart.vue";
 
 export default {
     components: {
@@ -13,6 +14,7 @@ export default {
         ModalCallMeLater,
         ModalReadReviews,
         ModalWriteReview,
+        ProductInCart
     }
 
 }
