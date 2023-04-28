@@ -134,7 +134,7 @@
                 </div>
             </div>
 
-            <carousel :breakpoints="breakpoints" :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
+            <carousel :breakpoints="breakpointsReviews" :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
 
                     <slide v-for="(review, index) in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
@@ -180,7 +180,7 @@
             </div>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
-            <carousel :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+            <carousel :breakpoints="breakpointsProducts" :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
                 <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding: 40px;">
                     <alternative-product-card :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
                 </slide>
@@ -190,7 +190,7 @@
             </carousel>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
-            <carousel :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
+            <carousel :breakpoints="breakpointsProducts" :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
                 <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding: 40px;">
                     <alternative-product-card :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
                 </slide>
@@ -260,15 +260,26 @@ export default {
                 review: {},
             },
 
-            breakpoints: {
+            breakpointsReviews: {
                 0: {
                     itemsToShow: 1,
                 },
-                600: {
+                800: {
                     itemsToShow: 2,
                 },
-                1024: {
+                1300: {
                     itemsToShow: 3,
+                },
+            },
+            breakpointsProducts: {
+                0: {
+                    itemsToShow: 2,
+                },
+                800: {
+                    itemsToShow: 3,
+                },
+                1300: {
+                    itemsToShow: 4,
                 },
             },
         }

@@ -44,7 +44,7 @@
 
 
                             <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4 productsInCartList" :id="`productInCartList${product.id}`">
-                                <product-in-cart class="row mt-4 productsInCartList" :product="product" :index="index" />
+                                <product-in-cart class="row mt-4 productInCartList" :product="product" :index="index" />
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <div class="form-check">
                             <input class="form-check-input shadow-none border-dark" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
                             <label class="form-check-label shadow-none " for="flexCheckDefault">
-                                Запомнить данные?
+                                Запомнить адресс?
                             </label>
                         </div>
 
@@ -162,6 +162,7 @@ export default {
             this.setStoreOrderData()
         }
         this.setTotalPrice()
+        setTimeout(() => {document.getElementById('cartList').style.height = this.getHeight('cartList')}, 1000)
     },
 
     methods: {
@@ -202,9 +203,8 @@ export default {
         },
 
         openCartList() {
-            this.cart.titleHeight = parseFloat(this.getHeight('cartTitle'))
-            // let lengthProducts = this.productsInCart?.length
-            // let height = "1000px"
+            this.cart.titleHeight = Math.round(parseFloat(this.getHeight('cartTitle'))* 100) / 100;
+            console.log(this.cart.titleHeight)
             let qtyProducts = this.productsInCart?.length;
             if (qtyProducts === undefined) {
                 return null

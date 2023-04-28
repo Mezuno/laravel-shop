@@ -106,6 +106,13 @@
                         <!--            </li>-->
                     </ul>
 
+                    <div class="search w-100 h-100 d-flex justify-content-center">
+                        <form class="search-form " action="">
+                            <input class="search-input"  placeholder="поиск">
+                            <i class="fa fa-search search-icon cursor-pointer"></i>
+                        </form>
+                    </div>
+
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 <!--                        <li class="nav-item">-->
 <!--                            <a href="" class="nav-link">-->
@@ -113,47 +120,25 @@
 <!--                            </a>-->
 <!--                        </li>-->
                         <li v-show="authenticated" class="nav-item">
-                            <router-link to="/profile" class="nav-link">Личный кабинет <i class="fas fa-user" style="color: #000"></i></router-link>
+                            <router-link to="/profile" class="nav-link text-nowrap">Личный кабинет <i class="fas fa-user" style="color: #000"></i></router-link>
                         </li>
                         <li v-show="!authenticated" class="nav-item">
-                            <router-link to="/user/login" class="nav-link">Войти <i class="fas fa-user" style="color: #000"></i></router-link>
+                            <router-link to="/user/login" class="nav-link text-nowrap">Войти <i class="fas fa-user" style="color: #000"></i></router-link>
                         </li>
                         <li v-show="!authenticated" class="nav-item">
-                            <router-link to="/user/registration" class="nav-link">Регистрация</router-link>
+                            <router-link to="/user/registration" class="nav-link text-nowrap">Регистрация</router-link>
                         </li>
                         <li v-show="authenticated" class="nav-item">
-                            <a href="#" @click.prevent="logout()" class="nav-link">Выйти</a>
+                            <a href="#" @click.prevent="logout()" class="nav-link text-nowrap">Выйти</a>
                         </li>
                     </ul>
 
-                    <!--          Поиск (добавить позже)   -->
-
-<!--                              <form class="d-flex">-->
-<!--                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                                <button class="btn btn-outline-success" type="submit">Search</button>-->
-<!--                              </form>-->
 
                 </div>
             </div>
-            <div>
-<!--                <router-link to="/cart" class="cart-img text-white px-4 pb-2"><i class="fas fa-shopping-cart"></i></router-link>-->
 
-            </div>
         </nav>
 
-<!--        <modal-window v-model:openModal="modalVisibility.callMeLater">-->
-<!--            <div class="content-in-modal">-->
-<!--                <div @click="modalVisibility.callMeLater = false" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">-->
-<!--                    <i class="fas fa-times"></i>-->
-<!--                </div>-->
-<!--                <h3>Проконсультируйте меня</h3>-->
-<!--                <p>Наш оператор перезвонит Вам в течение 5 минут</p>-->
-<!--                <form action="">-->
-<!--                    <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">-->
-<!--                    <button @click.prevent class="btn btn-dark w-100">Свяжитесь со мной</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </modal-window>-->
 
         <modal-call-me-later
             class="modal-window"
@@ -187,6 +172,7 @@ export default {
         return {
             modalVisibility: {
                 callMeLater: false,
+                searchIcon: '<i class="fas fa-search"></i>'
             }
         }
     },

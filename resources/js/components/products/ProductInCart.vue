@@ -2,8 +2,7 @@
     <div>
         <div class="col-2">
             <router-link :to="{name: 'products.show', params: {id: product.id}}">
-                <img :src="product.image_url"
-                     class="w-100 productImgInCart" alt="Картинка продукта">
+                <img :src="product.image_url" class="w-100 productImgInCart" alt="Картинка продукта">
             </router-link>
 
         </div>

@@ -1,91 +1,57 @@
-.hoverDiv {
+.banners {
+    /*padding: 12px;*/
+}
+
+.banner {
+    overflow: hidden;
+    border-radius: 20px;
+    width: 300px;
+    height: 180px;
     position: relative;
-    border-radius: 15px;
-    /*background-color: #000;*/
-}
-
-.hoverDiv .imgHover {
-    /*-moz-transition: all 0.4s;*/
-    /*-webkit-transition: all 0.4s;*/
+    padding: 0;
+    margin: 0;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
     transition: all ease-out 0.4s;
 }
 
-.hoverDiv:hover .imgHover {
-    /*-moz-transform: scale(1.05);*/
-    /*-webkit-transform: scale(1.05);*/
-    transform: scale(1.05);
-}
-
-.imgHover {
-    transition: all ease-out 0.4s;
-    position:relative;
-    z-index:1;
-}
-
-.imgHover:hover {
-    /*box-shadow: 0 0 15px #ccc;*/
-}
-
-.cropped-img {
-    object-fit: cover; /* Do not scale the image */
-    object-position: center; /* Center the image within the element */
+.banner-background {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 100;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     width: 100%;
-    max-height: 270px;
+    height: 100%;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all ease-out 0.4s;
 }
+
+.banner-image {
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all ease-out 0.4s;
+}
+
+.banner:hover .banner-image {
+    transform: translate(-50%,-50%) scale(1.05);
+    opacity: 0.8;
+}
+.banner:hover {
+    background-color: rgb(0, 0, 0);
+}
+
+
 
 .carousel-inner{
     border-radius: 15px;
 }
 
-
-
-.hoverLink {
-    border-radius: 15px;
-    background: #000;
-    overflow: hidden;
-    opacity: 1;
-}
-.hoverLink{
-    display: inline-block;
-}
-.hoverLink .blackoutImg{
-    background: #000;  /* У блока, оборачивающего картинку при наведении будет просвечивать черный фон */
-    overflow: hidden;  /* Ограничиваем видиую область */
-}
-.hoverLink .blackoutDiv .blackoutImg{
-    opacity: 1;
-    transition: all ease-out 0.4s;  /* Плавное изменение прозрачности и увеличения */
-    display: block; /* Убираем полосу под картинкий */
-}
-.hoverLink:hover .blackoutDiv .blackoutImg{
-    opacity: 0.9; /* Высветляем картинку, но она становится темнее, так как под ней черный фон */
-    /*transform: scale(1.04); !* Увеличение картинки *!*/
-}
-.hoverLink + .hoverLink .blackoutImg{
-    background: #000; /* Если необходимо высветление картинки при наведении, оборачивающий div должен иметь белый фон */
-}
-
-
-/*.sliderLink {*/
-/*    background: #000;*/
-/*    overflow: hidden;*/
-/*    opacity: 1;*/
-/*}*/
-/*.sliderLink {*/
-/*    !*display: inline-block;*!*/
-/*}*/
-/*.sliderLink .sliderBlackoutImg {*/
-/*    background: #000;  !* У блока, оборачивающего картинку при наведении будет просвечивать черный фон *!*/
-/*    overflow: hidden;  !* Ограничиваем видиую область *!*/
-/*}*/
-/*.sliderLink .sliderBlackoutDiv .blackoutImg {*/
-/*    opacity: 1;*/
-/*    transition: all ease-out 0.4s;  !* Плавное изменение прозрачности и увеличения *!*/
-/*    display: block; !* Убираем полосу под картинкий *!*/
-/*}*/
-/*.sliderLink:hover .sliderBlackoutDiv .sliderBlackoutImg {*/
-/*    opacity: 0.9; !* Высветляем картинку, но она становится темнее, так как под ней черный фон *!*/
-/*}*/
-/*.sliderLink + .sliderLink .sliderBlackoutImg {*/
-/*    background: #000; !* Если необходимо высветление картинки при наведении, оборачивающий div должен иметь белый фон *!*/
-/*}*/

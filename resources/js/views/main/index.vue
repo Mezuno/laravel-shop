@@ -44,62 +44,111 @@
 
             </div>
 
-            <div class="d-flex flex-wrap justify-content-between">
+            <div class="d-flex flex-wrap justify-content-between mb-5 banners">
 
-                <div class="hoverDiv overflow-hidden mb-3">
-                    <div class="card imgHover border-0" style="width: 19rem;">
-                        <a class="hoverLink" href="">
-                            <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="Card image">
-                            </div>
-                        </a>
-                    </div>
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
-                <div class="hoverDiv overflow-hidden mb-3">
-                    <div class="card imgHover border-0" style="width: 19rem;">
-                        <a class="hoverLink" href="">
-                            <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="Card image">
-                            </div>
-                        </a>
-                    </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
-                <div class="hoverDiv overflow-hidden mb-3">
-                    <div class="card imgHover border-0" style="width: 19rem;">
-                        <a class="hoverLink" href="">
-                            <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="Card image">
-                            </div>
-                        </a>
-                    </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
-                <div class="hoverDiv overflow-hidden mb-3">
-                    <div class="card imgHover border-0" style="width: 19rem;">
-                        <a class="hoverLink" href="">
-                            <div class="blackoutDiv">
-                                <img class="cropped-img blackoutImg" width="286" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="Card image">
-                            </div>
-                        </a>
-                    </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
+
+
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between mb-5 banners">
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
+                </div>
+
+
             </div>
 
             <h2 class="mt-4 mb-4">Популярные товары</h2>
-<!--            <carousel v-show="!loading" :items-to-show="5" class="mb-4 row">-->
-<!--                <slide v-for="product in products" :key="product.id" class="p-3">-->
-<!--                    <product-card :identifier="'Main'" :product="product" class="" :key="product.id"/>-->
-<!--                </slide>-->
-
-
-<!--                <template #addons>-->
-<!--                    <navigation />-->
-<!--                </template>-->
-<!--            </carousel>-->
 
             <div v-show="!loading"  class="row">
                 <product-card v-for="product in products" :key="product.id" :identifier="'Main'" :product="product" class="col-3 mb-5 px-3"/>
             </div>
 
+            <div class="d-flex flex-wrap justify-content-between mb-5 banners">
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
+                </div>
+
+
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between mb-5 banners">
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
+                </div>
+
+                <div class="banner col-4 cursor-pointer">
+                    <div class="banner-background"></div>
+                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
+                </div>
+
+
+            </div>
 
         </div>
     </div>
