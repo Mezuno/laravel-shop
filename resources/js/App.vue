@@ -82,6 +82,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item">
@@ -107,10 +108,48 @@
                     </ul>
 
                     <div class="search w-100 h-100 d-flex justify-content-center">
-                        <form class="search-form " action="">
-                            <input class="search-input"  placeholder="поиск">
+                        <div class="search-form">
+                            <input id="search-input" class="search-input" placeholder="поиск">
                             <i class="fa fa-search search-icon cursor-pointer"></i>
-                        </form>
+                            <div class="search-list">
+
+                                <span
+                                v-show="search.searchLast.text.length !== 0"
+                                class="search-delete-history cursor-pointer"
+                                @click="deleteAllHistory"
+                                >Очистить историю поиска</span>
+
+                                <div class="last-search">
+                                    <div
+                                        v-for="(search, index) in search.searchLast.text"
+                                        v-show="this.search.searchLast.text.length !== 0"
+                                    >
+                                        <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">
+                                            <span  class="search-list-item-text">
+                                            <i class="fas fa-history"></i> {{ search }}
+                                            </span>
+                                            <i @click="deleteHistoryOne(index)" class="fas fa-times search-delete-history-one"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="popular-search">
+                                    <div
+                                        v-for="(search, index) in search.searchPopular.text"
+                                        v-if="search.searchPopular.text.length !== 0"
+                                    >
+                                        <div v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">
+                                            <span class="search-list-item-text">
+                                            <i class="fa fa-search"></i> {{ search }}
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -132,7 +171,6 @@
                             <a href="#" @click.prevent="logout()" class="nav-link text-nowrap">Выйти</a>
                         </li>
                     </ul>
-
 
                 </div>
             </div>
@@ -172,7 +210,14 @@ export default {
         return {
             modalVisibility: {
                 callMeLater: false,
-                searchIcon: '<i class="fas fa-search"></i>'
+            },
+            search: {
+                searchLast: {
+                    text: ['keee', 'kee', 'kekeke', 'delat ke', 'ilia ke']
+                },
+                searchPopular: {
+                    text: ['keee', 'kee', 'kekeke', 'delat ke', 'ilia ke', 'keee', 'kee', 'kekeke', 'delat ke', 'ilia ke']
+                }
             }
         }
     },
@@ -226,12 +271,65 @@ export default {
             setWishlist:"auth/setWishlist",
         }),
 
+        // bodyClick(event) {
+        //
+        //     if (event.target === document.getElementsByClassName('search-input')[0]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history')[0]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[0]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[1]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[2]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[3]) {return}
+        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[4]) {return}
+        //     // if (document.getElementsByClassName('search-delete-history-one')[0] === undefined) {return}
+        //
+        //     document.getElementsByClassName('search-list')[0].style.display = ''
+        //     document.getElementsByClassName('search-form')[0].style.borderBottomLeftRadius = ''
+        //     document.getElementsByClassName('search-form')[0].style.borderBottomRightRadius = ''
+        //
+        //
+        //     console.log(event.target)
+        //     console.log(document.getElementsByClassName('search-delete-history-one')[0])
+        //     console.log(document.getElementsByClassName('search-delete-history')[0])
+        //     console.log(document.getElementsByClassName('search-input')[0])
+        //
+        //
+        // },
+
+        applyCSS() {
+            let nodeId = "search-input-style";
+            let style = document.getElementById(nodeId);
+            if (!style) {
+                style = document.createElement("style");
+                style.id = nodeId;
+                style.type = "text/css";
+                this.$el.appendChild(style);
+            }
+            style.innerHTML = `#search-input:focus ~ .search-list{display: block;}
+            .search-form:has(.search-input:focus) {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}`;
+        },
+
+
+        deleteAllHistory() {
+            document.getElementById('search-input').focus()
+            this.search.searchLast.text.splice(0, this.search.searchLast.text.length)
+        },
+
+        deleteHistoryOne(index) {
+            document.getElementById('search-input').focus()
+            this.search.searchLast.text.splice(index, 1)
+        },
+
         openModal() {
             this.modalVisibility.callMeLater = true
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
+
         },
 
         hideModal() {
             this.modalVisibility.callMeLater = false
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
         },
 
         async logout(){

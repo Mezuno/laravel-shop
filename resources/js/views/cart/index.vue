@@ -212,12 +212,7 @@ export default {
 
             if (this.cart.isOpened === false) {
                 document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
-
-                this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
-                this.cart.height = Math.round(this.cart.height * 100) / 100;
-
-                document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
-
+                this.setCartHeight()
                 this.cart.isOpened = true
                 console.log(this.cart.height)
 
@@ -230,6 +225,18 @@ export default {
                 console.log(this.cart.height)
                 this.cart.isOpened = false
             }
+        },
+
+        setCartHeight() {
+            let qtyProducts = this.productsInCart?.length;
+            this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
+            this.cart.height = Math.round(this.cart.height * 100) / 100;
+            document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
+        },
+
+        removeProductFromCart (product) {
+            this.removeItemFromCart(product)
+            this.setCartHeight()
         },
 
     }

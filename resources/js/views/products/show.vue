@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="authenticated && !userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModalWriteReviews">
+                <div v-if="!userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModalWriteReviews">
                     Оставить отзыв
                 </div>
             </div>
@@ -138,7 +138,7 @@
 
                     <slide v-for="(review, index) in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
-                            <div class="cart-card p-4 w-100 h-100 d-flex flex-column align-items-start">
+                            <div @click="openModalReadReviews(review, index)" class="cart-card p-4 w-100 h-100 d-flex flex-column align-items-start cursor-pointer">
                                 <div class="d-flex justify-content-between w-100">
                                     <div>
                                         <h5>{{ review.user.name }} <span class="h6 text-secondary text-nowrap" v-if="review.user.id === this.$store.state.auth.user.id">(Ваш отзыв)</span></h5>
@@ -153,7 +153,7 @@
                                     <span class="text-secondary">{{ review.created }}</span>
                                 </div>
 
-                                <div @click="openModalReadReviews(review, index)" class="cursor-pointer">
+                                <div class="">
                                     <div class="float-left">
                                         <h6>{{ review.title }}</h6>
                                     </div>
@@ -204,7 +204,6 @@
 </template>
 
 <script>
-import ProductCardInCatalog from "../../components/productCardInCatalog.vue";
 import ModalWindow from "../../components/UI/modals/modalWindow.vue";
 import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
 import ModalReadReviews from "../../components/UI/modals/ModalReadReviews.vue";
@@ -224,7 +223,6 @@ export default {
         Carousel,
         Slide,
         Navigation,
-        ProductCardInCatalog,
         ModalWindow,
         AlternativeProductCard,
         ModalReadReviews,
@@ -301,10 +299,12 @@ export default {
         previousWatched: function () {
             return this.$store.state.previousWatched.products
         },
+
     },
 
     mounted() {
         this.getProduct(this.$router.currentRoute._value.params.id);
+
     },
 
     watch:{
@@ -312,6 +312,7 @@ export default {
             this.loaded = false
             window.scrollTo(0, this.top);
             this.getProduct(from.params.id)
+            this.getUserReview()
         }
     },
 
@@ -335,14 +336,20 @@ export default {
             this.currentOpenReview.review = review
             this.currentOpenReview.indexInReviews = index
             this.modalVisibility.readReview = true
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
         },
         openModalWriteReviews() {
             this.modalVisibility.writeReview = true
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
         },
         hideModal() {
             this.modalVisibility.visibility = false
             this.modalVisibility.writeReview = false
             this.modalVisibility.readReview = false
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
         },
         nextReview(index) {
             this.currentOpenReview.review = this.reviews[index+1]
@@ -427,6 +434,7 @@ export default {
                 .then((response) => {
                     if (response.data.data) {
                         this.userReview = response.data.data
+                        console.log(response.data.data)
                     }
                 })
                 .catch((error) => {

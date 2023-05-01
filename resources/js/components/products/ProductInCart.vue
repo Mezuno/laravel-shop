@@ -27,7 +27,7 @@
                 {{ product.qty * product.price }} ₽
             </div>
             <div class="col-1">
-                <div @click="removeItemFromCart(product)" type="button" class="">
+                <div @click="this.$parent.removeProductFromCart(product)" type="button" class="">
                     <i class="far fa-trash-alt hover-circle"></i>
                 </div>
             </div>
@@ -54,7 +54,6 @@ export default {
 
     methods: {
         ...mapActions({
-            removeItemFromCart:"cartProducts/removeItemFromCart",
             setCartProducts:"cartProducts/setCartProducts",
             changeItemQtyCartProducts:"cartProducts/changeItemQtyCartProducts",
         }),
