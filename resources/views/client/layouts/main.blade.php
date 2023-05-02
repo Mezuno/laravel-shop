@@ -13,7 +13,7 @@
     @yield('content')
 </body>
 
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/css/app.scss', 'resources/js/app.js'])
 <script type="application/javascript" src="{{ asset('assets/bootstrap-5.0.2-dist/js/bootstrap.min.js') }}"></script>
 
 </html>

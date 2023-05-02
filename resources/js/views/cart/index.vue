@@ -229,6 +229,13 @@ export default {
 
         setCartHeight() {
             let qtyProducts = this.productsInCart?.length;
+            console.log(qtyProducts)
+            if (qtyProducts === 0) {
+                this.cart.height = Math.round(parseFloat(this.getHeight('cartTitle'))* 100) / 100;
+                document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
+                return
+            }
+
             this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
             this.cart.height = Math.round(this.cart.height * 100) / 100;
             document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')

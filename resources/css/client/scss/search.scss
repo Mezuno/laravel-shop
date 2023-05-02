@@ -118,6 +118,12 @@
 .search-delete-history-one {
     color: $secondary;
     transition: all 0.15s;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-delete-history-one:hover {

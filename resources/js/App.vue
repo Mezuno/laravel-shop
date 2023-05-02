@@ -109,8 +109,8 @@
 
                     <div class="search w-100 h-100 d-flex justify-content-center">
                         <div class="search-form">
-                            <input id="search-input" class="search-input" placeholder="поиск">
-                            <i class="fa fa-search search-icon cursor-pointer"></i>
+                            <input @keyup.enter="startSearch(searchInputValue)" @input="suggestSearch($event)" :value="searchInputValue" id="search-input" class="search-input" placeholder="поиск">
+                            <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>
                             <div class="search-list">
 
                                 <span
@@ -125,10 +125,15 @@
                                         v-show="this.search.searchLast.text.length !== 0"
                                     >
                                         <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">
-                                            <span  class="search-list-item-text">
-                                            <i class="fas fa-history"></i> {{ search }}
+
+                                            <span @click="startSearch(search)" class="search-list-item-text w-100">
+                                                <i class="fas fa-history"></i> {{ search }}
                                             </span>
-                                            <i @click="deleteHistoryOne(index)" class="fas fa-times search-delete-history-one"></i>
+
+                                            <span class="search-delete-history-one">
+                                                <i @click="deleteHistoryOne(index)" class="fas fa-times "></i>
+                                            </span>
+
                                         </div>
 
                                     </div>
@@ -139,7 +144,7 @@
                                         v-for="(search, index) in search.searchPopular.text"
                                         v-if="search.searchPopular.text.length !== 0"
                                     >
-                                        <div v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">
+                                        <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">
                                             <span class="search-list-item-text">
                                             <i class="fa fa-search"></i> {{ search }}
                                             </span>
@@ -181,13 +186,12 @@
         <modal-call-me-later
             class="modal-window"
             v-model:callMeLater="modalVisibility.callMeLater"
-
         />
 
         <router-view class="content-on-page mb-5"/>
 
-        <footer class="static-footer d-flex justify-content-center align-items-center flex-column">
-            <div class="mb-5">powered by ke</div>
+        <footer class="static-footer d-flex justify-content-center align-items-center flex-column py-5">
+            <div class="">powered by ke</div>
         </footer>
     </div>
 </template>
@@ -218,7 +222,8 @@ export default {
                 searchPopular: {
                     text: ['keee', 'kee', 'kekeke', 'delat ke', 'ilia ke', 'keee', 'kee', 'kekeke', 'delat ke', 'ilia ke']
                 }
-            }
+            },
+            searchInputValue: '',
         }
     },
 
@@ -271,43 +276,19 @@ export default {
             setWishlist:"auth/setWishlist",
         }),
 
-        // bodyClick(event) {
-        //
-        //     if (event.target === document.getElementsByClassName('search-input')[0]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history')[0]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[0]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[1]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[2]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[3]) {return}
-        //     if (event.target === document.getElementsByClassName('search-delete-history-one')[4]) {return}
-        //     // if (document.getElementsByClassName('search-delete-history-one')[0] === undefined) {return}
-        //
-        //     document.getElementsByClassName('search-list')[0].style.display = ''
-        //     document.getElementsByClassName('search-form')[0].style.borderBottomLeftRadius = ''
-        //     document.getElementsByClassName('search-form')[0].style.borderBottomRightRadius = ''
-        //
-        //
-        //     console.log(event.target)
-        //     console.log(document.getElementsByClassName('search-delete-history-one')[0])
-        //     console.log(document.getElementsByClassName('search-delete-history')[0])
-        //     console.log(document.getElementsByClassName('search-input')[0])
-        //
-        //
-        // },
-
-        applyCSS() {
-            let nodeId = "search-input-style";
-            let style = document.getElementById(nodeId);
-            if (!style) {
-                style = document.createElement("style");
-                style.id = nodeId;
-                style.type = "text/css";
-                this.$el.appendChild(style);
-            }
-            style.innerHTML = `#search-input:focus ~ .search-list{display: block;}
-            .search-form:has(.search-input:focus) {border-bottom-left-radius: 0; border-bottom-right-radius: 0;}`;
+        suggestSearch(event) {
+            this.searchInputValue = event.target.value
+            // console.log(event)
         },
 
+        startSearch(search) {
+            if (search === '') {
+                document.getElementById('search-input').focus()
+                return
+            }
+            this.searchInputValue = ''
+            console.log(search)
+        },
 
         deleteAllHistory() {
             document.getElementById('search-input').focus()

@@ -4,15 +4,14 @@
     transition: all ease-out .2s;
     background-color: #fff;
     min-height: 0;
-
-}
-
-.cartList {
-    transition: all linear 0.2s;
 }
 
 .cart-card:hover {
     box-shadow: 0 0 40px #ddd;
+}
+
+.cartList {
+    transition: all linear 0.2s;
 }
 
 .productImgInCart {

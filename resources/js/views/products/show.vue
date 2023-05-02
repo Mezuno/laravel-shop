@@ -158,7 +158,7 @@
                                         <h6>{{ review.title }}</h6>
                                     </div>
                                     <div class="float-left">
-                                        <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,100).length < review.body.length">... </span></p>
+                                        <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,150).length < review.body.length">... </span></p>
                                         <span class="text-nowrap h6">Читать далее</span>
                                     </div>
                                 </div>

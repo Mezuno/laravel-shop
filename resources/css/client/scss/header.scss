@@ -1,20 +1,3 @@
-
-.cart {
-    position: absolute;
-    right: -400px;
-    transition: all ease-out .3s;
-}
-
-.cart-img:hover ~ .cart {
-    position: absolute;
-    right: -3px;
-}
-
-.cart:hover {
-    position: absolute;
-    right: -3px;
-}
-
 .notification-circle {
     position: absolute;
     background-color: #dc4835;

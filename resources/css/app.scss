@@ -1,8 +1,26 @@
-
 @import 'vue3-carousel/dist/carousel.css';
+
+@import './client/scss/awesome-scrollbar';
 @import './client/scss/booooootstrap-up';
 @import './client/scss/carousel';
-@import './client/scss/awesome-scrollbar';
+@import './client/scss/cart-card.scss';
+@import './client/scss/footer.scss';
+@import './client/scss/header.scss';
+@import './client/scss/home-page.scss';
 @import './client/scss/hover';
-@import './client/scss/show-product.scss';
+@import './client/scss/modal-window.scss';
+@import './client/scss/product-card.scss';
 @import './client/scss/search.scss';
+@import './client/scss/show-product.scss';
+
+
+
+.body-scroll {
+    overflow-y: scroll;
+    min-height: 100vh;
+}
+
+.content-on-page{
+    min-height: 60vh;
+}
+
