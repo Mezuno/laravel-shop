@@ -52,16 +52,16 @@
                 </ul>
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <button @click="openModal" class="nav-link btn btn-warning text-dark">Перезвоните мне</button>
+                        <button @click="openModal" class="nav-link btn btn-main text-dark">Перезвоните мне</button>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-2">
-                        <router-link to="/wishlist" class="cart-img text-dark m-0 d-flex align-items-center btn btn-warning "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
+                        <router-link to="/wishlist" class="cart-img text-dark m-0 d-flex align-items-center btn btn-main "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
                     </li>
                     <li class="nav-item" style="position: relative;">
                         <div class="d-flex justify-content-center align-items-center notification-circle">{{ totalCount }}</div>
-                        <router-link to="/cart" class="cart-img btn btn-warning text-dark d-flex align-items-center">
+                        <router-link to="/cart" class="cart-img btn btn-main text-dark d-flex align-items-center">
                             <h4 class="mb-0 me-2">
                                 <i class="fas fa-shopping-cart"></i>
                             </h4>
@@ -73,7 +73,7 @@
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-warning bg-warning">
+        <nav class="navbar navbar-expand-lg navbar-main bg-main">
             <div class="container-xxl">
                 <router-link class="navbar-brand" to="/">Магазин</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

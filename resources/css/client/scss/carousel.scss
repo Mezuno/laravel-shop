@@ -1,54 +1,37 @@
-.carousel__prev,
-.carousel__next {
-    top: 50%;
-    transform: translate(-50%,-50%);
-    color: #696969;
-    background-color: #ffffff;
-    opacity: 1;
-    box-shadow: 0 0 20px #c9c9c9;
-    border-radius: 50%;
-    padding: 10px;
-    transition: all linear 0.1s;
-}
-
-.carousel__prev {
-    left: 20px;
-}
-.carousel__prev:hover {
-    color: #000000;
-    box-shadow: 0 0 40px #c9c9c9;
-}
-
-.carousel__prev:focus-visible {
-    outline: none;
-}
-
-.carousel__next {
-    right: -30px;
-}
-
-.carousel__next:hover {
-    color: #000000;
-    box-shadow: 0 0 40px #c9c9c9;
-}
-
-.carousel__next:focus-visible {
-    outline: none;
-}
 
 .carousel {
     text-align: start;
-    //cursor: grab;
-}
 
-//.carousel:active {
-//    cursor: grabbing;
-//}
+    &__prev, &__next {
+        top: 50%;
+        transform: translate(-50%,-50%);
+        color: $carousel-buttons-color;
+        background-color: #ffffff;
+        opacity: 1;
+        box-shadow: 0 0 20px $default-box-shadow-color;
+        border-radius: $border-radius-carousel-buttons;
+        padding: 10px;
+        transition: all linear $default-fast-transition;
 
-.carousel__prev--disabled {
-    display: none;
-}
+        &:focus-visible {
+            outline: none;
+        }
 
-.carousel__next--disabled {
-    display: none;
+        &--disabled {
+            display: none;
+        }
+
+        &:hover {
+            color: #000000;
+            box-shadow: 0 0 40px $default-box-shadow-color;
+        }
+    }
+
+    &__prev {
+        left: 20px;
+    }
+
+    &__next {
+        right: -30px;
+    }
 }

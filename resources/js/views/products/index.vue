@@ -6,21 +6,33 @@
             <!-- Pagination -->
             <div class="row" v-if="pagination.last_page > 1">
                 <ul class="pagination text-center align-items-center">
-                    <li v-if="pagination.current_page !== 1" class="next"><a
-                        @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark"><i
-                        class="fas fa-arrow-left"></i></a></li>
 
+
+                    <!-- Arrow left -->
+                    <li v-if="pagination.current_page !== 1" class="next">
+                        <a @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </li>
+                    <!-- end Arrow left -->
+
+                    <!-- Main pagination list -->
                     <li v-for="link in pagination.links" class="pe-1 ps-1">
+
+                        <!-- Pagination list -->
                         <template v-if="Number(link.label) &&
                               (pagination.current_page - link.label < 2 &&
                               pagination.current_page - link.label > -2) ||
                               Number(link.label) === 1 || Number(link.label) === pagination.last_page
                         ">
                             <a @click.prevent="getProducts(link.label)"
-                               :class="link.active ? 'text-dark rounded-circle btn btn-warning' : 'rounded-circle text-light btn btn-dark'"
+                               :class="link.active ? 'text-dark rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-minor'"
                                href="#"
                                style="width: 40px">{{ link.label }}</a>
                         </template>
+                        <!-- end Pagination list -->
+
+                        <!-- ... -->
                         <template v-if="Number(link.label) &&
                               pagination.current_page !== 3 &&
                               (pagination.current_page - link.label === 2) ||
@@ -29,12 +41,17 @@
                         ">
                             <a class="nav-link text-dark p-2">...</a>
                         </template>
+                        <!-- end ... -->
                     </li>
+                    <!-- end Main pagination list -->
 
+                    <!-- Arrow right -->
                     <li v-if="pagination.current_page !== pagination.last_page" class="next">
-                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-dark"><i
-                            class="fas fa-arrow-right"></i></a>
+                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-dark">
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
                     </li>
+                    <!-- end Arrow right -->
                 </ul>
             </div>
             <!-- end Pagination -->
@@ -49,8 +66,6 @@
 
             <h3 class="mb-3">Фильтры</h3>
             <filters class="mb-5" v-model:filters="filters"></filters>
-
-
 
 <!--            <div class="d-flex flex-column flex-grow-1 col-2 me-4 mb-4" style="max-width: 200px;">-->
 <!--                <h3 class="mb-3">Фильтры</h3>-->
@@ -100,7 +115,7 @@
                               Number(link.label) === 1 || Number(link.label) === pagination.last_page
                         ">
                             <a @click.prevent="getProducts(link.label)"
-                               :class="link.active ? 'text-dark rounded-circle btn btn-warning' : 'rounded-circle text-light btn btn-dark'"
+                               :class="link.active ? 'text-dark rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-dark'"
                                href="#"
                                style="width: 40px">{{ link.label }}</a>
                         </template>

@@ -1,10 +1,24 @@
 @import 'vue3-carousel/dist/carousel.css';
 
+/*
+    Helpers
+*/
+@import './client/scss/_variables.scss';
+
+
+/*
+    Changed
+*/
 @import './client/scss/awesome-scrollbar';
 @import './client/scss/booooootstrap-up';
 @import './client/scss/carousel';
 @import './client/scss/cart-card.scss';
 @import './client/scss/filters.scss';
+
+
+/*
+    To change
+*/
 @import './client/scss/footer.scss';
 @import './client/scss/header.scss';
 @import './client/scss/home-page.scss';
@@ -15,7 +29,9 @@
 @import './client/scss/show-product.scss';
 
 
-
+/*
+    Безхозные стили?
+ */
 .body-scroll {
     overflow-y: scroll;
     min-height: 100vh;

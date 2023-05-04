@@ -2,7 +2,7 @@
 
     <div class="tag me-2 d-inline-flex align-items-center">
         <div class="tag-title cursor-pointer unselectable">
-            <i class="fas fa-bars me-2"></i>
+            <i class="fas fa-tags me-2"></i>
             <span class="tag-text">Теги</span>
         </div>
 
@@ -10,8 +10,10 @@
 
             <div class=" tag-item" v-for="(item, index) in tags">
 
-                <input class="tag-checkbox" type="checkbox" name="tag">
-                {{item.title}}
+                <div class="text-nowrap">
+                    <input class="tag-checkbox" type="checkbox" name="tag">
+                    {{ item.title }}
+                </div>
 
             </div>
 

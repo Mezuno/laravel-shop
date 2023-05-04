@@ -10,7 +10,7 @@
 
         <price @click="openOrHide('price')" v-model:priceOpened="opened.price"/>
 
-        <div class="filter-button cursor-pointer unselectable">Применить фильтры</div>
+        <div class="btn btn-additional cursor-pointer unselectable">Применить фильтры</div>
 
     </div>
 

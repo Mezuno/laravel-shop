@@ -1,17 +1,17 @@
 .cart-card {
     border-radius: 15px;
-    box-shadow: 0 0 10px #ddd;
-    transition: all ease-out .2s;
+    box-shadow: 0 0 10px $cart-card-box-shadow;
+    transition: all ease-out $default-transition;
     background-color: #fff;
     min-height: 0;
-}
 
-.cart-card:hover {
-    box-shadow: 0 0 40px #ddd;
+    &:hover {
+        box-shadow: 0 0 40px $cart-card-box-shadow;
+    }
 }
 
 .cartList {
-    transition: all linear 0.2s;
+    transition: all linear $default-transition;
 }
 
 .productImgInCart {
@@ -25,27 +25,18 @@
 .openCartList {
     align-items: center;
     justify-content: center;
-    transition: transform ease-out .2s;
+    transition: transform ease-out $default-transition;
     outline: none;
     border: none;
 }
 
-
-
-.divMinus {
-    transition: all ease-out 0.12s;
-}
-
-.divMinus:hover {
-    background-color: #e8e8ec;
-}
-
-.divPlus {
-    transition: all ease-out 0.12s;
-}
-
-.divPlus:hover {
-    background-color: #e8e8ec;
+.div {
+    &Minus, &Plus {
+        transition: all ease-out $default-fast-transition;
+        &:hover {
+            background-color: $product-plus-minus-hover;
+        }
+    }
 }
 
 .input-qty {

@@ -1,0 +1,60 @@
+
+@import "bootstrap/scss/_functions.scss";
+@import "bootstrap/scss/_variables.scss";
+
+
+/*
+    Additional bootstrap colors
+*/
+
+$main-color: $yellow !default;
+$additional-color: #6644ff !default;
+$minor-color: $gray-900 !default;
+
+$custom-colors: (
+    "main":  $main-color,
+    "additional":  $additional-color,
+    "minor":  $minor-color
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+/*
+    Border radius
+*/
+
+$border-radius-s: 5px;
+$border-radius-m: 10px;
+$border-radius-l: 15px;
+$border-radius-xl: 25px;
+$border-radius-carousel-buttons: 50%;
+
+/*
+    Specific colors
+*/
+
+$scrollbar-hover-color: $main-color;
+$scrollbar-color: rgb(129, 131, 134);
+$carousel-buttons-color: #696969;
+$product-plus-minus-hover: #e8e8ec;
+
+$horizontal-scrollbar-height: 13px;
+$vertical-scrollbar-width: 16px;
+
+
+/*
+    Box-shadow colors
+*/
+
+$default-box-shadow-color: #c9c9c9;
+$default-dark-box-shadow-color: rgba(0, 0, 0, 0.11);
+$cart-card-box-shadow: #dddddd;
+
+
+/*
+    Transitions
+*/
+
+$default-long-transition: .4s;
+$default-transition: .2s;
+$default-fast-transition: .1s;

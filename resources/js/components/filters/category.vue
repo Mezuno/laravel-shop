@@ -2,7 +2,7 @@
 
     <div class="category me-2 d-inline-flex align-items-center">
         <div class="category-title cursor-pointer unselectable">
-            <i class="fas fa-bars me-2"></i>
+            <i class="fas fa-list me-2"></i>
             <span class="category-text">Категория</span>
         </div>
 
@@ -10,9 +10,11 @@
 
             <div class="category-item" v-for="(item, index) in categories">
 
-                <input v-if="index===0" class="category-radio" type="radio" name="category" checked>
-                <input v-else class="category-radio" type="radio" name="category">
-                {{item.title}}
+                <div class="text-nowrap">
+                    <input v-if="index===0" class="category-radio" type="radio" name="category" checked>
+                    <input v-else class="category-radio" type="radio" name="category">
+                    {{ item.title }}
+                </div>
 
             </div>
 

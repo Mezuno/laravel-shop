@@ -53,8 +53,8 @@
                     </div>
                     <p class="flex-grow-1">{{ product.description }}</p>
                     <div class="float-left text-nowrap">
-                        <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
-                        <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
+                        <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-main"></i>
+                        <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-main"></i>
                         <a @click="openModalReadReviews(reviews[currentOpenReview.indexInReviews], currentOpenReview.indexInReviews)" class="link-secondary ms-2 cursor-pointer text-decoration-none more" style="border-bottom: dashed 1px; font-size: 0.9rem;">
                             <div class="d-inline">
                                 {{ product.reviews_count }}
@@ -124,8 +124,8 @@
                     <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
                         <h3>{{ product.avg_rate }}</h3>
                         <div class="float-left text-nowrap ms-2">
-                            <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-warning"></i>
-                            <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-warning"></i>
+                            <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-main"></i>
+                            <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-main"></i>
                         </div>
                     </div>
                 </div>
@@ -144,8 +144,8 @@
                                         <h5>{{ review.user.name }} <span class="h6 text-secondary text-nowrap" v-if="review.user.id === this.$store.state.auth.user.id">(Ваш отзыв)</span></h5>
                                     </div>
                                     <div class="float-left text-nowrap" v-if="loaded">
-                                        <i v-for="star in review.rate" class="fas fa-star rate text-warning"></i>
-                                        <i v-for="star in 5 - review.rate" class="far fa-star rate text-warning"></i>
+                                        <i v-for="star in review.rate" class="fas fa-star rate text-main"></i>
+                                        <i v-for="star in 5 - review.rate" class="far fa-star rate text-main"></i>
                                     </div>
                                 </div>
 
@@ -310,7 +310,6 @@ export default {
             this.loaded = false
             window.scrollTo(0, this.top);
             this.getProduct(from.params.id)
-            this.getUserReview()
         }
     },
 
@@ -376,7 +375,7 @@ export default {
                 this.addItemToPreviousWatched(this.product)
                 if (this.authenticated) {
                     this.matchWishlist(this.product, 'addToWishlistHeart')
-                    this.getUserReview();
+                    this.getUserReview(id);
                 }
             });
         },
@@ -424,15 +423,16 @@ export default {
                 })
         },
 
-        getUserReview() {
+        getUserReview(id) {
             axios.post('/api/review/check', {
                 user_id: this.user.id,
-                product_id: this.$router.currentRoute._value.params.id,
+                product_id: id,
             })
                 .then((response) => {
                     if (response.data.data) {
                         this.userReview = response.data.data
-                        console.log(response.data.data)
+                    } else {
+                        this.userReview = null
                     }
                 })
                 .catch((error) => {

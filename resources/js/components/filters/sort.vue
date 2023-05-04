@@ -13,9 +13,11 @@
 
             <div class="sort-item" v-for="(item, index) in sortBy">
 
-                <input v-if="index===0" @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort" checked>
-                <input v-else @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort">
-                {{item}}
+                <div class="text-nowrap">
+                    <input v-if="index===0" @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort" checked>
+                    <input v-else @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort">
+                    {{ item }}
+                </div>
 
             </div>
 
