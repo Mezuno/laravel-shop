@@ -2,7 +2,7 @@
 
     <div v-if="readReview" @click.stop="$parent.hideModal">
 
-        <div class="content-in-modal" @click.stop>
+        <div class="modal-content" @click.stop>
 
             <div class="p-4 w-100 h-100 d-flex flex-column align-items-start">
 
@@ -39,7 +39,7 @@
                     <i class="fas fa-chevron-right"></i>
                 </div>
 
-                <div @click="$parent.hideModal" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">
+                <div @click="$parent.hideModal" class="cursor-pointer modal-close-button d-flex align-items-center justify-content-center">
                     <i class="fas fa-times"></i>
                 </div>
 

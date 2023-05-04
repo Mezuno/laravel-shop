@@ -2,7 +2,7 @@
 
     <div v-if="writeReview" @click.stop="$parent.hideModal">
 
-        <div @click.stop class="content-in-modal">
+        <div @click.stop class="modal-content">
 
             <div v-if="!userReview" class="p-4">
                 <div class="d-flex flex-column">
@@ -38,7 +38,7 @@
 
                     <button class="btn btn-primary" @click="$parent.storeReview()">Оставить отзыв</button>
 
-                    <div @click="$parent.hideModal" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">
+                    <div @click="$parent.hideModal" class="cursor-pointer modal-close-button d-flex align-items-center justify-content-center">
                         <i class="fas fa-times"></i>
                     </div>
 

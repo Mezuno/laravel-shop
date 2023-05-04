@@ -1,5 +1,5 @@
 .show-product-img {
-    border-radius: 15px;
+    border-radius: $border-radius-l;
     padding: 2px;
 }
 
@@ -8,21 +8,18 @@
     padding: 0;
 }
 
-.gradient-parent {
-    position: relative;
-}
-
 .gradient {
     position: absolute;
-    /*background-color: #e70001;*/
-    /*height: 100%;*/
-    /*width: 100%;*/
     background: linear-gradient(to top, $light, rgba(248, 249, 250, 0));
+
+    &-parent {
+        position: relative;
+    }
 }
 
 .more:hover {
-    color: $warning;
-    border-bottom: dashed 1px $warning;
+    color: $main-color;
+    border-bottom: dashed 1px $main-color;
 }
 
 .products-in-catalog {

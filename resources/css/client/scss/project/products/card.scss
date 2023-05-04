@@ -1,0 +1,50 @@
+.product-card {
+    position: relative;
+    margin-bottom: 90px;
+
+    &-content {
+        position: absolute;
+        z-index: 600;
+
+        &-emerging {
+            position: relative;
+            display: none;
+        }
+    }
+
+    &-absolute-background {
+        border-radius: 15px;
+        box-shadow: 0 0 0 #ddd;
+        background-color: #fff;
+        opacity: 0;
+        padding: 15px;
+        position: absolute;
+        top: -15px;
+        bottom:-15px;
+        left: -15px;
+        right: -15px;
+        z-index: -200;
+    }
+
+    &-image {
+        position: relative;
+        z-index: -100;
+        border-radius: 10px;
+    }
+
+    &-heart {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        display: none;
+        z-index: 600;
+
+        &:hover {
+            color: #dc3545;
+        }
+    }
+
+    &:hover &-heart {
+        display: flex;
+    }
+}

@@ -1,6 +1,6 @@
 <template>
     <div v-if="callMeLater" @click.stop="$parent.hideModal">
-        <div class="content-in-modal" @click.stop>
+        <div class="modal-content" @click.stop>
 
             <h3>Проконсультируйте меня</h3>
             <p>Наш оператор перезвонит Вам в течение 5 минут</p>
@@ -9,7 +9,7 @@
                 <button @click.prevent="$parent.hideModal()" class="btn btn-minor w-100">Свяжитесь со мной</button>
             </form>
 
-            <div @click="$parent.hideModal" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">
+            <div @click="$parent.hideModal" class="cursor-pointer modal-close-button d-flex align-items-center justify-content-center">
                 <i class="fas fa-times"></i>
             </div>
         </div>
