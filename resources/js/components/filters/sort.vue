@@ -3,8 +3,8 @@
     <div class="sort me-2 d-inline-flex align-items-center">
 
         <div class="sort-title cursor-pointer unselectable">
-            <i class="fas fa-long-arrow-alt-up"></i>
-            <i class="fas fa-long-arrow-alt-down me-2"></i>
+            <i class="sort-icon fas fa-long-arrow-alt-up"></i>
+            <i class="sort-icon fas fa-long-arrow-alt-down me-2"></i>
             <span class="sort-text">{{sortBy[currentSortIndex]}}</span>
         </div>
         <div v-show="sortOpened" class="pseudo-el-sort"></div>

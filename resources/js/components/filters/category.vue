@@ -2,7 +2,7 @@
 
     <div class="category me-2 d-inline-flex align-items-center">
         <div class="category-title cursor-pointer unselectable">
-            <i class="fas fa-list me-2"></i>
+            <i class="category-icon fas fa-list me-2"></i>
             <span class="category-text">Категория</span>
         </div>
 

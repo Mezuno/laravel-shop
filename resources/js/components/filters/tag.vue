@@ -2,7 +2,7 @@
 
     <div class="tag me-2 d-inline-flex align-items-center">
         <div class="tag-title cursor-pointer unselectable">
-            <i class="fas fa-tags me-2"></i>
+            <i class="tag-icon fas fa-tags me-2"></i>
             <span class="tag-text">Теги</span>
         </div>
 
