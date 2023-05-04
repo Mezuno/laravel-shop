@@ -61,11 +61,9 @@ export default {
                         return
                     }
                 }
-
                 if (openedKey === open) {
                     this.opened[openedKey] = !this.opened[openedKey]
                 }
-
             }
         },
     }

@@ -7,8 +7,9 @@
             <i class="fas fa-long-arrow-alt-down me-2"></i>
             <span>{{sortBy[currentSortIndex]}}</span>
         </div>
+        <div v-show="sortOpened" class="pseudo-el-sort"></div>
 
-        <div @click.stop class="sort-list" v-show="sortOpened" >
+        <div @click.stop class="sort-list" v-show="sortOpened">
 
             <div class="sort-item" v-for="(item, index) in sortBy">
 

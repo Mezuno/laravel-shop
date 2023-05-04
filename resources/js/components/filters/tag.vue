@@ -3,7 +3,7 @@
     <div class="tag me-2 d-inline-flex align-items-center">
         <div class="tag-title cursor-pointer unselectable">
             <i class="fas fa-bars me-2"></i>
-            <span>Тэги</span>
+            <span>Теги</span>
         </div>
 
         <div @click.stop class="tag-list" v-show="tagOpened" >
