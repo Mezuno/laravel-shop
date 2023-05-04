@@ -13,6 +13,7 @@
 @import './client/scss/booooootstrap-up';
 @import './client/scss/carousel';
 @import './client/scss/cart-card.scss';
+@import './client/scss/custom-buttons.scss';
 @import './client/scss/filters.scss';
 
 
@@ -30,10 +31,11 @@
 
 
 /*
-    Безхозные стили?
+    Безхозные стили? стили для корневого элемента подумал что тут оставить норм потому что это корневой scss файл но я вынесу потом уже знаю как и куда
  */
 .body-scroll {
     overflow-y: scroll;
+    overflow-x: hidden;
     min-height: 100vh;
 }
 

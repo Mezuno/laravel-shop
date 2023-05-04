@@ -5,7 +5,7 @@
         <div class="sort-title cursor-pointer unselectable">
             <i class="sort-icon fas fa-long-arrow-alt-up"></i>
             <i class="sort-icon fas fa-long-arrow-alt-down me-2"></i>
-            <span class="sort-text">{{sortBy[currentSortIndex]}}</span>
+            <span class="sort-text">{{sortBy[checkedIndex]}}</span>
         </div>
         <div v-show="sortOpened" class="pseudo-el-sort"></div>
 
@@ -13,10 +13,10 @@
 
             <div class="sort-item" v-for="(item, index) in sortBy">
 
-                <div class="text-nowrap">
-                    <input v-if="index===0" @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort" checked>
-                    <input v-else @click="changeCurrentSort(index)" class="sort-radio" type="radio" name="sort">
-                    {{ item }}
+                <div @click="changeCheckedSort(index)" class="text-nowrap">
+                    <radio :checkedIndex="checkedIndex" :index="index">
+                        <span class="unselectable">{{ item }}</span>
+                    </radio>
                 </div>
 
             </div>
@@ -28,26 +28,31 @@
 </template>
 
 <script>
+import radio from "../customButtons/radio.vue";
+
 export default {
     name: "sort",
+
+    components: {radio},
 
     props: {
         sortOpened: {
             type: Boolean
         },
+        checkedIndex: {
+            type: Number
+        }
     },
 
     data() {
         return {
-            sortBy: ['По популярности','По возрастанию цены','По убыванию цены','По рейтингу'],
-            currentSortIndex: 0,
-
+            sortBy: ['По умолчанию', 'По популярности','По возрастанию цены','По убыванию цены','По рейтингу'],
         }
     },
 
     methods: {
-        changeCurrentSort(index) {
-            this.currentSortIndex = index
+        changeCheckedSort(index) {
+            this.$emit('checkSort', index)
         },
     },
 

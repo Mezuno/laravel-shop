@@ -2,13 +2,33 @@
 
     <div class="filters d-inline-flex mb-4">
 
-        <sort @click="openOrHide('sort')" v-model:sortOpened="opened.sort"/>
+        <sort
+            @click="openOrHide('sort')"
+            v-model:sortOpened="opened.sort"
+            v-model:checkedIndex="checkedIndex.sort"
+            @checkSort="changeCheckedSort"
+        />
 
-        <category @click="openOrHide('category')" v-model:categoryOpened="opened.category" v-model:categories="filters.categories"/>
+        <category
+            @click="openOrHide('category')"
+            v-model:categoryOpened="opened.category"
+            v-model:categories="filters.categories"
+            v-model:checkedIndex="checkedIndex.category"
+            @checkCategory="changeCheckedCategory"
+        />
 
-        <tag @click="openOrHide('tag')" v-model:tagOpened="opened.tag" v-model:tags="filters.tags"/>
+        <tag
+            @click="openOrHide('tag')"
+            v-model:tagOpened="opened.tag"
+            v-model:tags="filters.tags"
+            v-model:checkedIndex="checkedIndex.tags"
+            @checkTags="changeCheckedTags"
+        />
 
-        <price @click="openOrHide('price')" v-model:priceOpened="opened.price"/>
+        <price
+            @click="openOrHide('price')"
+            v-model:priceOpened="opened.price"
+        />
 
         <div class="btn btn-additional cursor-pointer unselectable">Применить фильтры</div>
 
@@ -46,7 +66,13 @@ export default {
                 category: false,
                 tag: false,
                 price: false,
-            }
+            },
+            checkedIndex: {
+                sort: 0,
+                category: 0,
+                tags: []
+            },
+
         }
     },
 
@@ -66,6 +92,7 @@ export default {
     },
 
     methods: {
+
         openOrHide(key) {
             for (let openedKey in this.opened) {
                 if (this.opened[openedKey]) {
@@ -79,7 +106,21 @@ export default {
                 }
             }
         },
+        changeCheckedSort(index) {
+            this.checkedIndex.sort = index
+        },
+        changeCheckedCategory(index) {
+            this.checkedIndex.category = index
+        },
+        changeCheckedTags(index) {
 
+            if (this.checkedIndex.tags.includes(index)) {
+                this.checkedIndex.tags.splice(this.checkedIndex.tags.indexOf(index), 1)
+                return
+            }
+            this.checkedIndex.tags.unshift(index)
+
+        },
 
     }
 

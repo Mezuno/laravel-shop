@@ -10,10 +10,10 @@
 
             <div class="category-item" v-for="(item, index) in categories">
 
-                <div class="text-nowrap">
-                    <input v-if="index===0" class="category-radio" type="radio" name="category" checked>
-                    <input v-else class="category-radio" type="radio" name="category">
-                    {{ item.title }}
+                <div @click="changeCheckedCategory(index)" class="text-nowrap">
+                    <radio :checkedIndex="checkedIndex" :index="index">
+                        <span class="unselectable">{{ item.title }}</span>
+                    </radio>
                 </div>
 
             </div>
@@ -25,8 +25,12 @@
 </template>
 
 <script>
+import radio from "../customButtons/radio.vue";
+
 export default {
     name: "category",
+
+    components: {radio},
 
     props: {
         categoryOpened: {
@@ -34,17 +38,16 @@ export default {
         },
         categories: {
             type: Object,
-        }
-    },
-
-    data() {
-        return {
-
+        },
+        checkedIndex: {
+            type: Number
         }
     },
 
     methods: {
-
+        changeCheckedCategory(index) {
+            this.$emit('checkCategory', index)
+        },
     },
 }
 </script>

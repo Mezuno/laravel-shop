@@ -10,9 +10,10 @@
 
             <div class=" tag-item" v-for="(item, index) in tags">
 
-                <div class="text-nowrap">
-                    <input class="tag-checkbox" type="checkbox" name="tag">
-                    {{ item.title }}
+                <div @click="changeCheckedTags(index)" class="text-nowrap">
+                    <checkbox :checkedIndex="checkedIndex" :index="index">
+                        <span class="unselectable">{{ item.title }}</span>
+                    </checkbox>
                 </div>
 
             </div>
@@ -24,8 +25,12 @@
 </template>
 
 <script>
+import checkbox from "../customButtons/checkbox.vue";
+
 export default {
     name: "tag",
+
+    components: {checkbox},
 
     props: {
         tagOpened: {
@@ -33,6 +38,9 @@ export default {
         },
         tags: {
             type: Object,
+        },
+        checkedIndex: {
+            type: Array
         }
     },
 
@@ -43,7 +51,9 @@ export default {
     },
 
     methods: {
-
+        changeCheckedTags(index) {
+            this.$emit('checkTags', index)
+        },
     },
 }
 </script>

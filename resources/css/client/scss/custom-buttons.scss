@@ -1,0 +1,74 @@
+
+.custom-button {
+
+    &-checkbox {
+        cursor: pointer;
+
+        &-unchecked {
+            width: $custom-checkbox-button-size;
+            height: $custom-checkbox-button-size;
+            border: 1px solid $additional-color;
+            background-color: white;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        &-checked {
+            position: relative;
+            width: $custom-checkbox-button-size;
+            height: $custom-checkbox-button-size;
+            border: 1px solid $additional-color;
+            background-color: $additional-color;
+            border-radius: 4px;
+            margin-right: 5px;
+
+            &-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 9px;
+                color: white;
+            }
+        }
+
+    }
+
+    &-radio {
+        cursor: pointer;
+
+        &-unchecked {
+            width: $custom-radio-button-size;
+            height: $custom-radio-button-size;
+            border: 2px solid $additional-color;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        &-checked {
+            position: relative;
+            width: $custom-radio-button-size;
+            height: $custom-radio-button-size;
+            border: 2px solid $additional-color;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 5px;
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: $custom-radio-pseudo-element-size;
+                height: $custom-radio-pseudo-element-size;
+                background-color: $additional-color;
+                border-radius: 50%;
+            }
+        }
+    }
+
+
+
+
+}
