@@ -2,8 +2,6 @@
 
     <div class="filters d-inline-flex mb-4">
 
-
-
         <sort @click="openOrHide('sort')" v-model:sortOpened="opened.sort"/>
 
         <category @click="openOrHide('category')" v-model:categoryOpened="opened.category" v-model:categories="filters.categories"/>
@@ -12,7 +10,7 @@
 
         <price @click="openOrHide('price')" v-model:priceOpened="opened.price"/>
 
-        <div @click="openOrHide('')" class="filter-button cursor-pointer unselectable">Применить фильтры</div>
+        <div class="filter-button cursor-pointer unselectable">Применить фильтры</div>
 
     </div>
 
@@ -52,20 +50,33 @@ export default {
         }
     },
 
-    methods: {
-        openOrHide(open) {
+    created() {
+        window.addEventListener('click',(event) => {
             for (let openedKey in this.opened) {
-                if (this.opened[openedKey] === true) {
+                if (event.target === document.getElementsByClassName(openedKey+'-title')[0] || event.target === document.getElementsByClassName(openedKey+'-text')[0]) {
+                    return
+                }
+                this.opened[openedKey] = false
+            }
+        })
+    },
+
+    methods: {
+        openOrHide(key) {
+            for (let openedKey in this.opened) {
+                if (this.opened[openedKey]) {
                     this.opened[openedKey] = false
-                    if (openedKey === open) {
+                    if (openedKey === key) {
                         return
                     }
                 }
-                if (openedKey === open) {
-                    this.opened[openedKey] = !this.opened[openedKey]
+                if (openedKey === key) {
+                    this.opened[openedKey] = true
                 }
             }
         },
+
+
     }
 
 

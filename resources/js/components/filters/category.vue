@@ -3,7 +3,7 @@
     <div class="category me-2 d-inline-flex align-items-center">
         <div class="category-title cursor-pointer unselectable">
             <i class="fas fa-bars me-2"></i>
-            <span>Категория</span>
+            <span class="category-text">Категория</span>
         </div>
 
         <div @click.stop class="category-list" v-show="categoryOpened" >
