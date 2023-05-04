@@ -142,7 +142,7 @@
                                 <div class="popular-search">
                                     <div
                                         v-for="(search, index) in search.searchPopular.text"
-                                        v-if="search.searchPopular.text.length !== 0"
+                                        v-if="this.search.searchPopular.text.length !== 0"
                                     >
                                         <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">
                                             <span class="search-list-item-text">
@@ -199,15 +199,13 @@
 <script>
 
 import {mapActions} from 'vuex'
-import ModalWindow from "./components/UI/modals/modalWindow.vue";
-import ModalCallMeLater from "./components/UI/modals/ModalCallMeLater.vue";
+import ModalCallMeLater from "./components/modals/ModalCallMeLater.vue";
 
 export default {
     name: 'App',
 
     components: {
         ModalCallMeLater,
-        ModalWindow
     },
 
     data() {
@@ -278,7 +276,6 @@ export default {
 
         suggestSearch(event) {
             this.searchInputValue = event.target.value
-            // console.log(event)
         },
 
         startSearch(search) {
@@ -286,8 +283,14 @@ export default {
                 document.getElementById('search-input').focus()
                 return
             }
-            this.searchInputValue = ''
             console.log(search)
+            this.search.searchLast.text.forEach((item, i) => {
+                if (item === search) {
+                    this.search.searchLast.text.splice(i, 1)
+                }
+            })
+            this.search.searchLast.text.unshift(search);
+
         },
 
         deleteAllHistory() {

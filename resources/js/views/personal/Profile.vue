@@ -2,39 +2,6 @@
     <div>
         <div class="container-xxl my-5 pb-5">
 
-            <modal-window v-model:openModal="modalVisibility" style="z-index: 1000">
-                <div class="content-in-modal">
-                    <h3 class="mb-3">
-                        Выберите что хотите изменить
-                    </h3>
-                    <div class="mb-3">
-                        <button class="btn btn-outline-dark me-3 shadow-none" @click.prevent="inputShow.name = !inputShow.name">
-                            Имя
-                        </button>
-                        <button class="btn btn-outline-dark me-3 shadow-none" @click.prevent="inputShow.mail = !inputShow.mail">
-                            Электронная почта
-                        </button>
-                        <button class="btn btn-outline-dark me-3 shadow-none" @click.prevent="inputShow.phone = !inputShow.phone">
-                            Телефон
-                        </button>
-                        <button class="btn btn-outline-dark shadow-none" @click.prevent="inputShow.password = !inputShow.password">
-                            Пароль
-                        </button>
-                    </div>
-                    <div>
-                        <input v-show="inputShow.name" class="w-100 border border-dark rounded form-control shadow-none mb-3 input-name" type="text" placeholder="Имя" style="height: 45px;">
-                        <input v-show="inputShow.mail" class="w-100 border border-dark rounded form-control shadow-none mb-3 input-mail" type="text"  placeholder="Электронная почта" style="height: 45px;">
-                        <input v-show="inputShow.phone" class="w-100 border border-dark rounded form-control shadow-none mb-3 input-phone" type="text"  placeholder="Телефон" style="height: 45px;">
-                        <input v-show="inputShow.password" class="w-100 border border-dark rounded form-control shadow-none mb-3 input-password" type="text"  placeholder="Пароль" style="height: 45px;">
-                        <input v-show="inputShow.password" class="w-100 border border-dark rounded form-control shadow-none mb-3 input-password" type="text"  placeholder="Подтвердите Пароль" style="height: 45px;">
-                    </div>
-
-                    <div class="d-flex justify-content-end">
-                        <button @click="saveChanges" class="btn btn-outline-dark mt-3 shadow-none"> Сохранить изменения</button>
-                    </div>
-                    </div>
-            </modal-window>
-
             <h1 class="mb-4">Профиль</h1>
             <div v-if="profileLoading" class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
@@ -209,14 +176,13 @@
 </template>
 
 <script>
-import ModalWindow from "../../components/UI/modals/modalWindow.vue";
 import {mapActions, mapMutations} from "vuex";
 
 export default {
     name: "Profile",
 
     components: {
-        ModalWindow
+
     },
 
     data() {

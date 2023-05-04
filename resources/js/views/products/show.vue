@@ -204,10 +204,9 @@
 </template>
 
 <script>
-import ModalWindow from "../../components/UI/modals/modalWindow.vue";
 import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
-import ModalReadReviews from "../../components/UI/modals/ModalReadReviews.vue";
-import ModalWriteReview from "../../components/UI/modals/ModalWriteReview.vue";
+import ModalReadReviews from "../../components/modals/ModalReadReviews.vue";
+import ModalWriteReview from "../../components/modals/ModalWriteReview.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -223,7 +222,6 @@ export default {
         Carousel,
         Slide,
         Navigation,
-        ModalWindow,
         AlternativeProductCard,
         ModalReadReviews,
         ModalWriteReview,

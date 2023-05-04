@@ -9,11 +9,6 @@ import '../css/app.scss'
 
 const app = createApp(App)
 
-// COMPONENTS
-import wishHeart from "./components/UI/wishHeart.vue";
-app.component('wish-heart', wishHeart)
-import modalWindow from "./components/UI/modals/modalWindow.vue";
-app.component('modal-window', modalWindow)
 
 
 app.use(router)

@@ -47,6 +47,10 @@
 
 
 
+            <h3 class="mb-3">Фильтры</h3>
+            <filters v-model:filters="filters"></filters>
+
+
             <div class="d-flex flex-column flex-grow-1 col-2 me-4 mb-4" style="max-width: 200px;">
                 <h3 class="mb-3">Фильтры</h3>
                 <form v-if="filters" class="d-flex" id="filterForm">
@@ -89,18 +93,64 @@
             </div>
 
 
+            <div class="row" v-if="pagination.last_page > 1">
+                <ul class="pagination text-center align-items-center">
+                    <li v-if="pagination.current_page !== 1" class="next"><a
+                        @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark"><i
+                        class="fas fa-arrow-left"></i></a></li>
+
+                    <li v-for="link in pagination.links" class="pe-1 ps-1">
+                        <template v-if="Number(link.label) &&
+                              (pagination.current_page - link.label < 2 &&
+                              pagination.current_page - link.label > -2) ||
+                              Number(link.label) === 1 || Number(link.label) === pagination.last_page
+                        ">
+                            <a @click.prevent="getProducts(link.label)"
+                               :class="link.active ? 'text-dark rounded-circle btn btn-warning' : 'rounded-circle text-light btn btn-dark'"
+                               href="#"
+                               style="width: 40px">{{ link.label }}</a>
+                        </template>
+                        <template v-if="Number(link.label) &&
+                              pagination.current_page !== 3 &&
+                              (pagination.current_page - link.label === 2) ||
+                              (pagination.current_page !== pagination.last_page - 2 &&
+                              pagination.current_page - link.label === -2)
+                        ">
+                            <a class="nav-link text-dark p-2">...</a>
+                        </template>
+                    </li>
+
+                    <li v-if="pagination.current_page !== pagination.last_page" class="next">
+                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-dark"><i
+                            class="fas fa-arrow-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script>
 import ProductCard from "../../components/products/ProductCard.vue";
+import Filters from "../../components/filters/filters.vue";
+import category from "../../components/filters/category.vue";
+import price from "../../components/filters/price.vue";
+import sort from "../../components/filters/sort.vue";
+import tag from "../../components/filters/tag.vue";
+
 import {mapActions} from "vuex";
+
 export default {
     name: "products.index",
 
     components: {
+        Filters,
         ProductCard,
+        category,
+        price,
+        sort,
+        tag,
     },
 
     data() {

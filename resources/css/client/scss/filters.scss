@@ -1,0 +1,194 @@
+.filters {
+
+}
+
+
+.category {
+    position: relative;
+}
+
+.category-title {
+    padding: 5px 12px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}
+
+.category-list {
+    z-index: 900;
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    transform: translate(-50%,100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+    background-color: white;
+    width: 190px;
+}
+
+.category-list::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -100%);
+    border: 12px solid transparent;
+    border-bottom: 12px solid white;
+}
+
+.category-item {
+    padding: 5px 12px;
+    cursor: default;
+}
+
+.category-radio {
+    cursor: pointer;
+}
+
+.sort {
+    position: relative;
+}
+
+.sort-title {
+    padding: 5px 12px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}
+
+.sort-list {
+    z-index: 900;
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    transform: translate(-50%,100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+    background-color: white;
+    width: 210px;
+}
+
+.sort-list::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -100%);
+    border: 12px solid transparent;
+    border-bottom: 12px solid white;
+}
+
+.sort-item {
+    padding: 5px 12px;
+    cursor: default;
+}
+
+.sort-radio {
+    cursor: pointer;
+}
+
+.tag {
+    position: relative;
+}
+
+.tag-title {
+    padding: 5px 12px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}
+
+.tag-list {
+    z-index: 900;
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    transform: translate(-50%,100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+    background-color: white;
+    width: 180px;
+}
+
+.tag-list::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -100%);
+    border: 12px solid transparent;
+    border-bottom: 12px solid white;
+}
+
+.tag-item {
+    padding: 5px 12px;
+    cursor: default;
+}
+
+.tag-checkbox {
+    cursor: pointer;
+}
+
+.price {
+    position: relative;
+}
+
+.price-title {
+    padding: 5px 12px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}
+
+.price-choice {
+    z-index: 900;
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    transform: translate(-50%,100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+    background-color: white;
+    width: 210px;
+    padding: 12px 12px;
+}
+
+.price-choice::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -100%);
+    border: 12px solid transparent;
+    border-bottom: 12px solid white;
+}
+
+.price-min {
+    color: $secondary;
+}
+
+.price-min-input {
+    width: 80px;
+    background-color: $light;
+    border: 0;
+    outline:none;
+}
+
+
+.price-max {
+    color: $secondary;
+}
+
+.price-max-input {
+    width: 80px;
+    background-color: $light;
+    border: 0;
+    outline:none;
+}
+
+.filter-button {
+    padding: 5px 12px;
+    background-color: $warning;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}

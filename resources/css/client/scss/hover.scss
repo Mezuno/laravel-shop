@@ -11,3 +11,10 @@
 .hover-circle:hover {
     box-shadow: 0 0 20px 10px #ececec;
 }
+
+.unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

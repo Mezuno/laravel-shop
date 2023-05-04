@@ -3,6 +3,7 @@ import createPersistedState from 'vuex-persistedstate'
 import auth from '@/store/auth'
 import cartProducts from '@/store/cartProducts'
 import previousWatched from '@/store/previousWatched'
+import lastSearch from '@/store/lastSearch'
 
 const store = createStore({
     plugins:[
@@ -12,6 +13,7 @@ const store = createStore({
         auth,
         cartProducts,
         previousWatched,
+        lastSearch,
     }
 })
 
