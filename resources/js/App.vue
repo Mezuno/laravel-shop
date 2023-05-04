@@ -36,11 +36,11 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto me-auto">
-                    <li class="nav-item d-flex text-dark">
+                    <li class="nav-item d-flex text-minor">
                         <h2 class="d-flex align-items-center mb-0"><i class="fas fa-phone"></i></h2>
                         <div>
                             <h4 class="m-0 pb-0">
-                                <a href="tel:+79999999999" class="nav-link link-dark pb-0">
+                                <a href="tel:+79999999999" class="nav-link link-minor pb-0">
                                     +7 (999) 999-99-99
                                 </a>
                             </h4>
@@ -52,16 +52,16 @@
                 </ul>
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <button @click="openModal" class="nav-link btn btn-main text-dark">Перезвоните мне</button>
+                        <button @click="openModal" class="nav-link btn btn-main text-minor">Перезвоните мне</button>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-2">
-                        <router-link to="/wishlist" class="cart-img text-dark m-0 d-flex align-items-center btn btn-main "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
+                        <router-link to="/wishlist" class="cart-img text-minor m-0 d-flex align-items-center btn btn-main "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
                     </li>
                     <li class="nav-item" style="position: relative;">
                         <div class="d-flex justify-content-center align-items-center notification-circle">{{ totalCount }}</div>
-                        <router-link to="/cart" class="cart-img btn btn-main text-dark d-flex align-items-center">
+                        <router-link to="/cart" class="cart-img btn btn-main text-minor d-flex align-items-center">
                             <h4 class="mb-0 me-2">
                                 <i class="fas fa-shopping-cart"></i>
                             </h4>

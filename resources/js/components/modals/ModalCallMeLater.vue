@@ -6,7 +6,7 @@
             <p>Наш оператор перезвонит Вам в течение 5 минут</p>
             <form action="">
                 <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">
-                <button @click.prevent="$parent.hideModal()" class="btn btn-dark w-100">Свяжитесь со мной</button>
+                <button @click.prevent="$parent.hideModal()" class="btn btn-minor w-100">Свяжитесь со мной</button>
             </form>
 
             <div @click="$parent.hideModal" class="cursor-pointer close-modal-button d-flex align-items-center justify-content-center">

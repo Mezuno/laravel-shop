@@ -6,7 +6,7 @@
 <!--                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">-->
             </div>
             <div>
-                <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none cursor-pointer">
+                <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none cursor-pointer">
                     <img class="w-100 image-in-product-card" :src="product.image_url" alt="" :id="`image${product.id}`">
                 </router-link>
             </div>
@@ -14,7 +14,7 @@
             <div class="content-in-product-card d-flex flex-column w-100">
                 <div :id="`contentVisible${product.id}`">
                     <h5 class="mt-2 mb-0">{{ product.price.slice(0, -3) }} ₽</h5>
-                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
+                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none">
                         <span class="fw-semibold">{{ product.company.title }}</span> / {{ product.title }}
                     </router-link>
                     <div class="d-flex flex-grow-1">

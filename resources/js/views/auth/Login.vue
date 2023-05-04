@@ -10,7 +10,7 @@
             <input v-model="loginData.email" type="email" placeholder="E-mail" class="mb-2 form-control form-control-lg p-2 px-3">
             <input v-model="loginData.password" type="password" placeholder="Пароль" class="mb-2 form-control form-control-lg p-2 px-3">
             <p>Не зарегистрированы? <router-link to="/user/registration">Регистрация</router-link></p>
-            <button class="btn btn-dark btn-lg w-100" @click.prevent="login()">{{ !processing ? 'Войти' : 'Загрузка' }}</button>
+            <button class="btn btn-minor btn-lg w-100" @click.prevent="login()">{{ !processing ? 'Войти' : 'Загрузка' }}</button>
         </form>
     </div>
 </template>

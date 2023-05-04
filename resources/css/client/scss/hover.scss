@@ -2,14 +2,16 @@
     cursor: pointer;
 }
 
+.hover {
+    &-circle {
+        padding: 10px;
+        border-radius: 50%;
+        transition: .2s;
 
-.hover-circle {
-    padding: 10px;
-    border-radius: 50%;
-    transition: .2s;
-}
-.hover-circle:hover {
-    box-shadow: 0 0 20px 10px #ececec;
+        &:hover {
+            box-shadow: 0 0 20px 10px #ececec;
+        }
+    }
 }
 
 .unselectable {
