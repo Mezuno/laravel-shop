@@ -238,6 +238,10 @@ export default {
         wishlist: function () {
             return this.$store.state.auth.wishlist
         },
+        lastSearches: function () {
+            return this.$store.state.lastSearch.searches
+        },
+
         totalPrice: function () {
             let total = 0
             if (this.productsInCart && Object.keys(this.productsInCart).length > 0) {
@@ -247,6 +251,7 @@ export default {
             }
             return total
         },
+
         totalCount: function () {
             let total = 0
             if (this.productsInCart && Object.keys(this.productsInCart).length > 0) {
@@ -272,6 +277,9 @@ export default {
         ...mapActions({
             signOut:"auth/logout",
             setWishlist:"auth/setWishlist",
+            addItemToLastSearch:"lastSearch/addItemToLastSearch",
+            removeItemFromLastSearch:"lastSearch/removeItemFromLastSearch",
+            setLastSearch:"lastSearch/setLastSearch",
         }),
 
         suggestSearch(event) {

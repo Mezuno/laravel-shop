@@ -1,14 +1,17 @@
 
 export default {
     namespaced: true,
+
     state:{
         products:[],
     },
+
     getters:{
         products(state){
             return state.products
         },
     },
+
     mutations:{
         REMOVE_ITEM_FROM_PREVIOUS_WATCHED_PRODUCTS (state, index) {
             state.products.splice(index, 1)
@@ -17,6 +20,7 @@ export default {
             state.products.unshift(product)
         },
     },
+
     actions:{
 
         addItemToPreviousWatched({commit, state}, product) {
