@@ -46,7 +46,7 @@ class Order extends Model
 
     public function getOrderStatusStringAttribute()
     {
-        return self::getPaymentStatusString()[$this->status];
+        return self::getOrderStatusString()[$this->status];
     }
 
     public function user()
