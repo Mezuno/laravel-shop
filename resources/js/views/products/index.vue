@@ -155,6 +155,8 @@ export default {
         }
     },
 
+
+
     mounted() {
         this.getProducts()
         this.getFilterList()

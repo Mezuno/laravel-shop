@@ -3,7 +3,7 @@
     <div class="price me-2 d-inline-flex align-items-center">
 
         <div class="price-title cursor-pointer unselectable">
-            <span>Цена ₽</span>
+            <span class="price-text">Цена ₽</span>
         </div>
 
         <div @click.stop v-show="priceOpened" class="price-choice row">
