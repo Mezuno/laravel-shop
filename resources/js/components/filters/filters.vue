@@ -53,7 +53,11 @@ export default {
     created() {
         window.addEventListener('click',(event) => {
             for (let openedKey in this.opened) {
-                if (event.target === document.getElementsByClassName(openedKey+'-title')[0] || event.target === document.getElementsByClassName(openedKey+'-text')[0]) {
+                if (event.target === document.getElementsByClassName(openedKey+'-title')[0]
+                    || event.target === document.getElementsByClassName(openedKey+'-text')[0]
+                    || event.target === document.getElementsByClassName(openedKey+'-icon')[0]
+                    || event.target === document.getElementsByClassName(openedKey+'-icon')[1])
+                {
                     return
                 }
                 this.opened[openedKey] = false
