@@ -33,7 +33,7 @@
                         <h3 class="d-flex justify-content-center align-items-center">Вы ещё ничего не заказали</h3>
                         <div class="d-flex justify-content-center align-items-center">
                             <router-link to="/" class="btn btn-outline-main rounded-0">Перейти на главную</router-link>
-                            <router-link to="/cart" class="btn btn-outline-dark ms-4 rounded-0">перейти в корзину</router-link>
+                            <router-link to="/cart" class="btn btn-outline-minor ms-4 rounded-0">перейти в корзину</router-link>
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
 

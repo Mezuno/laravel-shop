@@ -10,7 +10,7 @@
 
                     <!-- Arrow left -->
                     <li v-if="pagination.current_page !== 1" class="next">
-                        <a @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark">
+                        <a @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-minor">
                             <i class="fas fa-arrow-left"></i>
                         </a>
                     </li>
@@ -26,7 +26,7 @@
                               Number(link.label) === 1 || Number(link.label) === pagination.last_page
                         ">
                             <a @click.prevent="getProducts(link.label)"
-                               :class="link.active ? 'text-dark rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-minor'"
+                               :class="link.active ? 'text-minor rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-minor'"
                                href="#"
                                style="width: 40px">{{ link.label }}</a>
                         </template>
@@ -39,7 +39,7 @@
                               (pagination.current_page !== pagination.last_page - 2 &&
                               pagination.current_page - link.label === -2)
                         ">
-                            <a class="nav-link text-dark p-2">...</a>
+                            <a class="nav-link text-minor p-2">...</a>
                         </template>
                         <!-- end ... -->
                     </li>
@@ -47,7 +47,7 @@
 
                     <!-- Arrow right -->
                     <li v-if="pagination.current_page !== pagination.last_page" class="next">
-                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-dark">
+                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-minor">
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </li>
@@ -90,7 +90,7 @@
 <!--                        </div>-->
 <!--                    </div>-->
 
-<!--                    <button form="filterForm" @click.prevent="filterProducts()" class="btn btn-outline-dark ms-3 h-100 align-self-center">Применить</button>-->
+<!--                    <button form="filterForm" @click.prevent="filterProducts()" class="btn btn-outline-minor ms-3 h-100 align-self-center">Применить</button>-->
 <!--                </form>-->
 <!--            </div>-->
 
@@ -105,7 +105,7 @@
             <div class="row" v-if="pagination.last_page > 1">
                 <ul class="pagination text-center align-items-center">
                     <li v-if="pagination.current_page !== 1" class="next"><a
-                        @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-dark"><i
+                        @click.prevent="getProducts(pagination.current_page-1)" href="" class="nav-link text-minor"><i
                         class="fas fa-arrow-left"></i></a></li>
 
                     <li v-for="link in pagination.links" class="pe-1 ps-1">
@@ -115,7 +115,7 @@
                               Number(link.label) === 1 || Number(link.label) === pagination.last_page
                         ">
                             <a @click.prevent="getProducts(link.label)"
-                               :class="link.active ? 'text-dark rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-dark'"
+                               :class="link.active ? 'text-minor rounded-circle btn btn-main' : 'rounded-circle text-light btn btn-minor'"
                                href="#"
                                style="width: 40px">{{ link.label }}</a>
                         </template>
@@ -125,12 +125,12 @@
                               (pagination.current_page !== pagination.last_page - 2 &&
                               pagination.current_page - link.label === -2)
                         ">
-                            <a class="nav-link text-dark p-2">...</a>
+                            <a class="nav-link text-minor p-2">...</a>
                         </template>
                     </li>
 
                     <li v-if="pagination.current_page !== pagination.last_page" class="next">
-                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-dark"><i
+                        <a @click.prevent="getProducts(pagination.current_page+1)" href="" class="nav-link text-minor"><i
                             class="fas fa-arrow-right"></i></a>
                     </li>
                 </ul>

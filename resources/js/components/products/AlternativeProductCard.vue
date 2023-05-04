@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none cursor-pointer">
+    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none cursor-pointer">
 
         <div @mouseout="hideProductCardContent(identifier, product.id)" @mouseover="emergingProductCardContent(identifier, product.id)" class="product-card">
 
@@ -14,7 +14,7 @@
                 <div :id="`contentVisible${identifier}${product.id}`">
 
                     <h5 class="mb-0 mt-2">{{ product.price.slice(0, -3) }} ₽</h5>
-                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-dark text-decoration-none">
+                    <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none">
                         {{ product.title }}
                     </router-link>
 

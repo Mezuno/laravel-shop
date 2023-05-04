@@ -12,7 +12,7 @@
 
                 <div class="row">
 
-                    <router-link to="/profile" class="col-12 text-decoration-none text-dark" href="#" @click.prevent="openModal">
+                    <router-link to="/profile" class="col-12 text-decoration-none text-minor" href="#" @click.prevent="openModal">
                         <div class=" cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2 class="mb-3">{{ user.name }}</h2>
@@ -27,13 +27,13 @@
 
                 <div class="row mt-4">
 
-                    <router-link to="/purchases" class="col-4 pe-3 text-decoration-none text-dark" href="#">
+                    <router-link to="/purchases" class="col-4 pe-3 text-decoration-none text-minor" href="#">
                         <div class=" cart-card ps-4 pt-4 pb-4 h-100">
                             <h2 class="mb-3">Совершенные покупки</h2>
                         </div>
                     </router-link>
 
-                    <router-link to="/cart" class="col-4 ps-3 text-decoration-none text-dark" href="#">
+                    <router-link to="/cart" class="col-4 ps-3 text-decoration-none text-minor" href="#">
                         <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between mb-2">
                                 <h2>Корзина</h2>
@@ -83,7 +83,7 @@
                         </div>
                     </router-link>
 
-                    <router-link to="/wishlist" class="col-4 ps-3 text-decoration-none text-dark" href="#">
+                    <router-link to="/wishlist" class="col-4 ps-3 text-decoration-none text-minor" href="#">
                         <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between mb-2">
                                 <h2>Желаемое</h2>
@@ -124,7 +124,7 @@
 
                 <div class="row mt-4">
 
-                    <router-link to="/orders" class="col-12 text-decoration-none text-dark" href="#">
+                    <router-link to="/orders" class="col-12 text-decoration-none text-minor" href="#">
                         <div class="cart-card p-4 h-100">
                             <div class="d-flex flex flex-wrap justify-content-between">
                                 <h2>Заказы</h2>
@@ -137,7 +137,7 @@
                                 <div v-if="orders && !profileLoading" v-for="order in orders.slice(0, 3)" class="d-flex me-3">
                                     <div class="d-flex rounded-4 flex-column pe-3">
                                         <div class="d-flex flex-column">
-                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-dark fw-bold fst-italic" style="text-align: left; width: fit-content">Заказ #{{ order.id }}</div>
+                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-minor fw-bold fst-italic" style="text-align: left; width: fit-content">Заказ #{{ order.id }}</div>
 <!--                                            <div class="d-inline text-nowrap ms-2 p-2 alert alert-info fw-bold fst-italic" style="text-align: left; width: fit-content">Сумма {{ order.total_price }} ₽</div>-->
 <!--                                            <div :class="`d-inline text-nowrap ms-2 p-2 alert fw-bold fst-italic ${ order.payment_status ? 'alert-success' : 'alert-warning' }`" style="text-align: left; width: fit-content">-->
 <!--                                                Статус оплаты: {{ order.payment_status_string }}-->
@@ -147,14 +147,14 @@
                                             <div v-for="orderProduct in order.products" class="card mx-2 mb-3">
                                                 <img :src="orderProduct.image_url" width="170" alt="">
                                                 <div class="p-2">
-                                                    <router-link :to="`/products/${orderProduct.id}`" class="link-dark">{{ orderProduct.title }}</router-link>
+                                                    <router-link :to="`/products/${orderProduct.id}`" class="link-minor">{{ orderProduct.title }}</router-link>
                                                     <p>{{ orderProduct.price }} ₽ x {{ orderProduct.qty }}: {{ orderProduct.price * orderProduct.qty }} ₽</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column">
                                             <div class="d-inline text-nowrap ms-2 p-2 alert alert-info fw-bold fst-italic" style="text-align: left; width: fit-content">Сумма {{ order.total_price }} ₽</div>
-                                            <div :class="`d-inline text-nowrap ms-2 p-2 alert fw-bold fst-italic ${ order.payment_status ? 'alert-success' : 'alert-warning' }`" style="text-align: left; width: fit-content">
+                                            <div :class="`d-inline text-nowrap ms-2 p-2 alert fw-bold fst-italic ${ order.payment_status ? 'alert-success' : 'alert-main' }`" style="text-align: left; width: fit-content">
                                                 Статус оплаты: {{ order.payment_status_string }}
                                             </div>
                                         </div>

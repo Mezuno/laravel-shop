@@ -9,7 +9,7 @@
         <div class="col-10 row ">
             <div class="col-3">
                 <router-link class="text-decoration-none" :to="{name: 'products.show', params: {id: product.id}}">
-                    <p class="card-text h5 text-dark">{{ index + 1 }}. {{ product.title }}</p>
+                    <p class="card-text h5 text-minor">{{ index + 1 }}. {{ product.title }}</p>
                 </router-link>
                 <p class="text-secondary h6">Инфо о товаре</p>
             </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="col-3 text-nowrap">
                 <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 divMinus"><i
-                    class="fas fa-minus text-dark"></i></div>
+                    class="fas fa-minus text-minor"></i></div>
                 <input @input="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
                 <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none divPlus"><i
                     class="fas fa-plus plus"></i></div>

@@ -12,7 +12,7 @@
             <input v-model="user.password" type="password" placeholder="Пароль" class="mb-2 form-control form-control-lg">
             <input v-model="user.password_confirmation" type="password" placeholder="Подтвердите пароль" class="mb-2 form-control form-control-lg">
             <p>Есть аккаунт? <router-link to="/user/login">Войти</router-link></p>
-            <button class="btn btn-dark btn-lg w-100" @click.prevent="register()">{{ !processing ? 'Зарегестрироваться' : 'Загрузка' }}</button>
+            <button class="btn btn-minor btn-lg w-100" @click.prevent="register()">{{ !processing ? 'Зарегестрироваться' : 'Загрузка' }}</button>
         </form>
         <p>{{ response }}</p>
     </div>

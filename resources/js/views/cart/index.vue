@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-warning">
+            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-main">
                 <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>
                 <pre>{{ successOrder }}</pre>
             </div>
@@ -59,20 +59,20 @@
                                     <div v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</div>
                                 </div>
                             </div>
-                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="storeOrderData.name" placeholder="Ваше имя" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="storeOrderData.email" placeholder="Электронная почта" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-dark rounded form-control shadow-none" type="text" v-model="storeOrderData.address" placeholder="Адресс доставки" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.name" placeholder="Ваше имя" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.email" placeholder="Электронная почта" style="height: 45px;">
+                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.address" placeholder="Адресс доставки" style="height: 45px;">
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input shadow-none border-dark" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
+                            <input class="form-check-input shadow-none border-minor" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
                             <label class="form-check-label shadow-none " for="flexCheckDefault">
                                 Запомнить адресс?
                             </label>
                         </div>
 
                         <div class="mt-2">
-                            <div class="text-dark text-nowrap">
+                            <div class="text-minor text-nowrap">
                                 <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
                                     <p class="mb-2 text-secondary">Товары, {{ totalCount }}шт</p>
                                     <p class="mb-2 text-secondary">{{ totalPrice }} ₽</p>
@@ -82,7 +82,7 @@
                                     <span>{{ totalPrice }} ₽</span>
                                 </h4>
                             </div>
-                            <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-dark w-100">
+                            <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-minor w-100">
                                 {{ orderProcessing ? 'Оформляем' : 'Оформить' }}
                             </div>
                         </div>

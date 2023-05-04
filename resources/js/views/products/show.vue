@@ -64,7 +64,7 @@
                                 <span v-else>Отзывов</span>
                             </div>
                         </a>
-                        <p class="text-secondary mt-2">Артикул: <span class="text-dark">{{ product.vendor_code }}</span></p>
+                        <p class="text-secondary mt-2">Артикул: <span class="text-minor">{{ product.vendor_code }}</span></p>
 
                         <div class="text-wrap" style="font-size: 0.9rem;">
                             <div v-for="(prop, key, index) in product.content">
@@ -96,8 +96,8 @@
                 <div class="card border border-0 cart-card col-3 h-100 p-4">
 
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-text text-dark fw-bold">
-                            {{ product.price.slice(0, -3) }}<span class="ms-2 d-inline text-dark">₽</span>
+                        <h3 class="card-text text-minor fw-bold">
+                            {{ product.price.slice(0, -3) }}<span class="ms-2 d-inline text-minor">₽</span>
                         </h3>
                         <h4 class="ps-3 m-0 text-danger">
                             <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-dark" id="addToCartButton">
+                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-minor" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!userReview && loaded" class="btn btn-outline-dark px-4" style="margin-right: 30px" @click="openModalWriteReviews">
+                <div v-if="!userReview && loaded" class="btn btn-outline-minor px-4" style="margin-right: 30px" @click="openModalWriteReviews">
                     Оставить отзыв
                 </div>
             </div>

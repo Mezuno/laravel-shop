@@ -4,7 +4,7 @@
             <h1>404 Не найдено</h1>
             <h2 class="mb-3">Похоже, вы зашли на несуществующую страницу</h2>
             <router-link to="/">
-                <div class="btn btn-warning">
+                <div class="btn btn-main">
                     <h5>Вернуться на главную</h5>
                 </div>
             </router-link>
