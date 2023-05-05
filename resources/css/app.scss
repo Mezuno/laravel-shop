@@ -1,45 +1,52 @@
-@import 'vue3-carousel/dist/carousel.css';
+/*
+
+    Main scss file which imports all other scss files.
+
+    Consist of following sections:
+
+    Helpers - files which deliver variables and styles for basic web entities.
+    Bootstrap - files of bootstrap.
+    General - files which deliver styles for current project web entities.
+    Overwrite - files which change default css of some library.
+
+    --- All files don`t belong to libraries can be changed depends on project`s needs.
+
+*/
+
 
 /*
     Helpers
 */
-@import './client/scss/_variables.scss';
-
+@import './client/scss/helpers/_variables';
+@import './client/scss/helpers/_notifications';
+@import './client/scss/helpers/_hover';
+@import './client/scss/helpers/_modal';
+@import './client/scss/helpers/_scrollbar';
+@import './client/scss/helpers/_custom-buttons';
 
 /*
-    Changed
+    Bootstrap
 */
-@import './client/scss/awesome-scrollbar';
-@import './client/scss/booooootstrap-up';
-@import './client/scss/carousel';
-@import './client/scss/cart-card.scss';
-@import './client/scss/custom-buttons.scss';
-@import './client/scss/filters.scss';
-@import './client/scss/footer.scss';
-@import './client/scss/header.scss';
-@import './client/scss/home-page.scss';
-@import './client/scss/hover';
-
+@import "bootstrap";
 
 /*
-    To change
+    General
 */
-@import './client/scss/modal-window.scss';
-@import './client/scss/product-card.scss';
-@import './client/scss/search.scss';
-@import './client/scss/show-product.scss';
-
+@import "./client/scss/project/main";
+@import './client/scss/project/home';
+@import './client/scss/project/search';
+@import './client/scss/project/filters';
+@import './client/scss/project/products/card';
+@import './client/scss/project/products/card-cart';
+@import './client/scss/project/products/show';
 
 /*
-    Безхозные стили? стили для корневого элемента подумал что тут оставить норм потому что это корневой scss файл но я вынесу потом уже знаю как и куда
- */
-.body-scroll {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    min-height: 100vh;
-}
+    Overwrite | Bootstrap
+*/
+@import 'client/scss/overwrite/bootstrap';
 
-.content-on-page{
-    min-height: 60vh;
-}
-
+/*
+    Overwrite | Carousel
+*/
+@import 'vue3-carousel/dist/carousel.css';
+@import './client/scss/overwrite/carousel';

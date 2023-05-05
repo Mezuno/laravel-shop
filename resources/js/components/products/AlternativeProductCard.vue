@@ -3,14 +3,13 @@
 
         <div @mouseout="hideProductCardContent(identifier, product.id)" @mouseover="emergingProductCardContent(identifier, product.id)" class="product-card">
 
-            <div class="absolute-background" :id="`absoluteBackground${identifier}${product.id}`">
-<!--                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">-->
-            </div>
+            <div class="product-card-absolute-background" :id="`absoluteBackground${identifier}${product.id}`"></div>
+
             <div>
-                <img class="w-100 image-in-product-card" :src="product.image_url" alt="" :id="`image${identifier}${product.id}`">
+                <img class="w-100 product-card-image" :src="product.image_url" alt="" :id="`image${identifier}${product.id}`">
             </div>
 
-            <div class="content-in-product-card d-flex flex-column w-100">
+            <div class="product-card-content d-flex flex-column w-100">
                 <div :id="`contentVisible${identifier}${product.id}`">
 
                     <h5 class="mb-0 mt-2">{{ product.price.slice(0, -3) }} ₽</h5>

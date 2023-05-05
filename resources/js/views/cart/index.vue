@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import {mapActions, mapMutations} from "vuex";
+import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import ProductInCart from "../../components/products/ProductInCart.vue";
 import getElementPropertiesMixin from "../../mixins/getElementPropertiesMixin.vue";
@@ -177,7 +177,7 @@ export default {
             console.log(this.storeOrderData.products);
             this.orderProcessing = true
             window.axios.post('http://localhost:8000/api/order', this.storeOrderData).then(({data}) => {
-                this.setCartProducts({})
+                this.setCartProducts([])
                 this.successOrder = data.data
                 this.validationErrors = {}
             }).catch(({response})=>{

@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Entities\Category\Models\Category;
 use App\Entities\Company\Models\Company;
 use App\Entities\Product\Models\Product;
+use App\Entities\Tag\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
@@ -20,7 +22,8 @@ class ProductSeeder extends Seeder
         $data = [];
         $recordCount = 160;
 
-        $colors = ['yellow', 'red', 'blue', 'green'];
+        $files_preview_image = Storage::files('/public/images/products/');
+        $tags = Tag::all();
 
         for ($i = 0; $i < $recordCount; $i++) {
             $data[] = [
@@ -35,11 +38,11 @@ class ProductSeeder extends Seeder
                 ]),
                 'price' => rand(1,100)*10,
                 'count' => rand(0, 100),
-                'vendor_code' => $i+1,
+                'vendor_code' => $i + 1,
                 'company_id' => Company::get('id')->random()->id,
                 'is_published' => rand(0,1),
                 'category_id' => Category::get('id')->random()->id,
-                'preview_image' => 'images/products/900x1200-(' . $colors[array_rand($colors, 1)] . ').png',
+                'preview_image' => mb_substr($files_preview_image[array_rand($files_preview_image, 1)], 7),
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ];
@@ -48,5 +51,9 @@ class ProductSeeder extends Seeder
         foreach (array_chunk($data, 1000) as $chunk) {
             Product::insert($chunk);
         }
+
+        Product::all()->each(function($product) use($tags){
+            $product->tags()->attach($tags->random(rand(1,3)));
+        });
     }
 }

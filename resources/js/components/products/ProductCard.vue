@@ -2,16 +2,15 @@
     <div>
         <div @mouseout="hideProductCardContent(product.id)" @mouseover="emergingProductCardContent(product.id)" class="product-card">
 
-            <div class="absolute-background" :id="`absoluteBackground${product.id}`">
-<!--                <img class="w-100 image-in-product-card cursor-pointer" :src="product.image_url" alt="">-->
-            </div>
+            <div class="product-card-absolute-background" :id="`absoluteBackground${product.id}`"></div>
+
             <div>
                 <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none cursor-pointer">
-                    <img class="w-100 image-in-product-card" :src="product.image_url" alt="" :id="`image${product.id}`">
+                    <img class="w-100 product-card-image" :src="product.image_url" alt="" :id="`image${product.id}`">
                 </router-link>
             </div>
 
-            <div class="content-in-product-card d-flex flex-column w-100">
+            <div class="product-card-content d-flex flex-column w-100">
                 <div :id="`contentVisible${product.id}`">
                     <h5 class="mt-2 mb-0">{{ product.price.slice(0, -3) }} ₽</h5>
                     <router-link :to="{name: 'products.show', params: {id: product.id}}" class="text-minor text-decoration-none">
@@ -26,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="content-in-product-card-emerging flex-column" :id="`contentInvisible${product.id}`">
+                <div class="product-card-content-emerging flex-column" :id="`contentInvisible${product.id}`">
 
                     <p class="card-text">{{ product.category.title }}</p>
 
@@ -48,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="heart-in-product cursor-pointer">
+            <div class="product-card-heart cursor-pointer">
                 <h3><i @click.prevent="switchWish(product, `heart${identifier}${product.id}`)" :id="`heart${identifier}${product.id}`" class="far fa-heart"></i></h3>
             </div>
 

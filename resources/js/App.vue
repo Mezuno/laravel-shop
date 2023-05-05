@@ -30,11 +30,13 @@
 
         <nav class="navbar navbar-expand p-4 navbar-light bg-light bg-img">
             <div class="container-xxl" style="z-index: 3">
+
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <h1><router-link to="/" class="nav-link">LOGO</router-link></h1>
                     </li>
                 </ul>
+
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item d-flex text-minor">
                         <h2 class="d-flex align-items-center mb-0"><i class="fas fa-phone"></i></h2>
@@ -50,66 +52,62 @@
                         </div>
                     </li>
                 </ul>
+
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
                         <button @click="openModal" class="nav-link btn btn-main text-minor">Перезвоните мне</button>
                     </li>
                 </ul>
+
                 <ul class="navbar-nav ms-auto">
+
                     <li class="nav-item me-2">
                         <router-link to="/wishlist" class="cart-img text-minor m-0 d-flex align-items-center btn btn-main "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
                     </li>
+
                     <li class="nav-item" style="position: relative;">
                         <div class="d-flex justify-content-center align-items-center notification-circle">{{ totalCount }}</div>
                         <router-link to="/cart" class="cart-img btn btn-main text-minor d-flex align-items-center">
                             <h4 class="mb-0 me-2">
                                 <i class="fas fa-shopping-cart"></i>
                             </h4>
-<!--                            <h5 class="p-0 m-0">{{ totalPrice }}</h5>-->
-<!--                            <i class="fas fa-ruble-sign"></i>-->
                         </router-link>
                     </li>
+
                 </ul>
             </div>
         </nav>
 
         <nav class="navbar navbar-expand-lg navbar-main bg-main">
             <div class="container-xxl">
+
                 <router-link class="navbar-brand" to="/">Магазин</router-link>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                         <li class="nav-item">
                             <router-link to="/" class="nav-link">Главная</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/products" class="nav-link">Каталог</router-link>
                         </li>
-                        <!--            <li class="nav-item dropdown">-->
-                        <!--              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-                        <!--                Dropdown-->
-                        <!--              </a>-->
-                        <!--              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                        <!--                <li><a class="dropdown-item" href="#">Action</a></li>-->
-                        <!--                <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                        <!--                <li><hr class="dropdown-divider"></li>-->
-                        <!--                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                        <!--              </ul>-->
-                        <!--            </li>-->
-                        <!--            <li class="nav-item">-->
-                        <!--              <a class="nav-link disabled">Disabled</a>-->
-                        <!--            </li>-->
                     </ul>
 
                     <div class="search w-100 h-100 d-flex justify-content-center">
                         <div class="search-form">
-                            <input @keyup.enter="startSearch(searchInputValue)" @input="suggestSearch($event)" :value="searchInputValue" id="search-input" class="search-input" placeholder="поиск">
+                            <input @keyup.enter="startSearch(searchInputValue)"
+                                   @input="suggestSearch($event)"
+                                   :value="searchInputValue"
+                                   id="search-input" class="search-input"
+                                   placeholder="поиск" autocomplete="off"
+                            >
                             <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>
                             <div class="search-list">
 
@@ -157,11 +155,6 @@
                     </div>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-<!--                        <li class="nav-item">-->
-<!--                            <a href="" class="nav-link">-->
-<!--                                {{ authenticated }}-->
-<!--                            </a>-->
-<!--                        </li>-->
                         <li v-show="authenticated" class="nav-item">
                             <router-link to="/profile" class="nav-link text-nowrap">Личный кабинет <i class="fas fa-user" style="color: #000"></i></router-link>
                         </li>
@@ -181,7 +174,6 @@
 
         </nav>
 
-
         <modal-call-me-later
             class="modal-window"
             v-model:callMeLater="modalVisibility.callMeLater"
@@ -190,7 +182,7 @@
         <router-view class="content-on-page mb-5"/>
 
         <footer class="static-footer d-flex justify-content-center align-items-center flex-column py-5">
-            <div class="">powered by ke</div>
+            <div class="">powered by keril</div>
         </footer>
     </div>
 </template>
@@ -290,14 +282,14 @@ export default {
                 document.getElementById('search-input').focus()
                 return
             }
-            console.log(search)
+
             this.search.searchLast.text.forEach((item, i) => {
                 if (item === search) {
                     this.search.searchLast.text.splice(i, 1)
                 }
             })
-            this.search.searchLast.text.unshift(search);
 
+            this.search.searchLast.text.unshift(search);
         },
 
         deleteAllHistory() {
