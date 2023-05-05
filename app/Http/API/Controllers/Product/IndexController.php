@@ -10,11 +10,9 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-    public function __invoke(IndexRequest $request)
+    public function __invoke()
     {
-        $data = $request->validated();
-        $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
-        $products = Product::filter($filter)->where('is_published', 1)->orderByDesc('id')->paginate(12, ['*'], 'page', $data['page']);
+        $products = Product::where('is_published', 1)->orderByDesc('id')->get();
         return ProductResource::collection($products);
     }
 }

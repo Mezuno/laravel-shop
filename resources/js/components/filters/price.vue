@@ -6,13 +6,13 @@
             <span class="price-text">Цена ₽</span>
         </div>
 
-        <div @click.stop v-show="priceOpened" class="price-choice row">
-            <div class="price-min col-6 px-0">
+        <div @click.stop v-show="priceOpened" class="price-choice">
+            <div class="price-min px-0">
                 <span class="unselectable">От</span>
                 <input @input="changeMinPrice($event)" class="price-min-input" maxlength="5" v-model="price.min">
             </div>
 
-            <div class="price-max col-6 px-0">
+            <div class="price-max px-0">
                 <span class="unselectable">До</span>
                 <input @input="changeMaxPrice($event)" class="price-max-input" maxlength="5" v-model="price.max">
             </div>

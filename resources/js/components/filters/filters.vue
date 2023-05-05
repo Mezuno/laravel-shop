@@ -2,6 +2,7 @@
 
     <div class="filters d-inline-flex mb-4">
 
+
         <sort
             @click="openOrHide('sort')"
             v-model:sortOpened="opened.sort"
@@ -30,7 +31,7 @@
             v-model:priceOpened="opened.price"
         />
 
-        <div class="btn btn-additional cursor-pointer unselectable">Применить фильтры</div>
+        <div @click="setDataToGetProducts" class="btn btn-additional cursor-pointer unselectable">Применить фильтры</div>
 
     </div>
 
@@ -70,7 +71,7 @@ export default {
             checkedIndex: {
                 sort: 0,
                 category: 0,
-                tags: []
+                tags: [],
             },
 
         }
@@ -93,6 +94,10 @@ export default {
 
     methods: {
 
+        setDataToGetProducts() {
+            this.$emit('getDataToGetProducts', this.checkedIndex)
+        },
+
         openOrHide(key) {
             for (let openedKey in this.opened) {
                 if (this.opened[openedKey]) {
@@ -108,18 +113,20 @@ export default {
         },
         changeCheckedSort(index) {
             this.checkedIndex.sort = index
+            this.setDataToGetProducts()
         },
         changeCheckedCategory(index) {
             this.checkedIndex.category = index
+            this.setDataToGetProducts()
         },
         changeCheckedTags(index) {
-
             if (this.checkedIndex.tags.includes(index)) {
                 this.checkedIndex.tags.splice(this.checkedIndex.tags.indexOf(index), 1)
+                this.setDataToGetProducts()
                 return
             }
-            this.checkedIndex.tags.unshift(index)
-
+            this.checkedIndex.tags.push(index)
+            this.setDataToGetProducts()
         },
 
     }

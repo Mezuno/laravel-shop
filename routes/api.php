@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/products', App\Http\API\Controllers\Product\IndexController::class)->name('product.index');
+Route::get('/products', App\Http\API\Controllers\Product\IndexController::class)->name('product.index');
 Route::get('/products/main', App\Http\API\Controllers\Product\MainController::class)->name('product.main');
 Route::get('/products/filters', App\Http\API\Controllers\Product\FilterListController::class)->name('product.filter.list');
 Route::get('/products/{product}', App\Http\API\Controllers\Product\ShowController::class)->where('product', '[0-9]+')->name('product.show');

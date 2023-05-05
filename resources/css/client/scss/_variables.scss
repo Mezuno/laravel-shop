@@ -11,12 +11,14 @@ $main-color: $yellow !default;
 $additional-color: #6644ff !default;
 $minor-color: $gray-900 !default;
 $notification-color: #dc4835 !default;
+$dark-secondary: #f1f1f1 !default;
 
 $custom-colors: (
     "main":  $main-color,
     "additional":  $additional-color,
     "minor":  $minor-color,
-    "notification": $notification-color
+    "notification": $notification-color,
+    "dark-secondary": $dark-secondary,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
