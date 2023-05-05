@@ -3,7 +3,6 @@
 /public/build
 /public/hot
 /public/storage
-/public/adminlte
 /storage/*.key
 /vendor
 .env
