@@ -6,10 +6,7 @@ import store from '@/store'
 
 import '../css/app.scss'
 
-
 const app = createApp(App)
-
-
 
 app.use(router)
 app.use(store)

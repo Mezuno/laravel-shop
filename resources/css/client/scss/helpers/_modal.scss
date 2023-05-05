@@ -9,17 +9,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 999;
+        z-index: 990;
     }
 
     &-content {
         margin: auto;
-        background-color: white;
-        border-radius: 15px;
+        background-color: white !important;
+        border-radius: $border-radius-m !important;
         padding: 15px;
         box-shadow: 0 0 40px #606060;
         max-width: 500px;
         position: relative;
+        z-index: 999;
     }
 
     &-close-button {

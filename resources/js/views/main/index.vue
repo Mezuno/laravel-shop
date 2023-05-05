@@ -66,7 +66,6 @@
                     <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
 
-
             </div>
 
             <div class="d-flex flex-wrap justify-content-between mb-5 banners">
@@ -156,9 +155,6 @@
 
 <script>
 import ProductCard from "@/components/products/ProductCard.vue";
-
-var myCarousel = document.querySelector('#myCarousel')
-var carousel = new bootstrap.Carousel(myCarousel)
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 

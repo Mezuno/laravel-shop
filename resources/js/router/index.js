@@ -8,7 +8,7 @@ const router = createRouter({
             // this generates a separate chunk (About.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
             meta: {
-                title: "VueShop | Главная",
+                title: "Store | Главная",
             },
             component: () => import('../views/main/index.vue')
         },
@@ -16,7 +16,7 @@ const router = createRouter({
             path: '/products',
             name: 'products.index',
             meta: {
-                title: "VueShop | Каталог",
+                title: "Store | Каталог",
             },
             component: () => import('../views/products/index.vue')
         },
@@ -24,7 +24,7 @@ const router = createRouter({
             path: '/products/:id',
             name: 'products.show',
             meta: {
-                title: "VueShop | Товар",
+                title: "Store | Товар",
             },
             component: () => import('../views/products/show.vue')
         },
@@ -32,14 +32,14 @@ const router = createRouter({
             path: '/cart',
             name: 'cart',
             meta: {
-                title: "VueShop | Корзина",
+                title: "Store | Корзина",
             },
             component: () => import('../views/cart/index.vue')
         },
         {
             path: '/profile',
             meta: {
-                title: "VueShop | Профиль",
+                title: "Store | Профиль",
                 middleware: "auth"
             },
             name: 'profile', // route level code-splitting
@@ -49,7 +49,7 @@ const router = createRouter({
             path: '/user/login',
             name: 'user.login', // route level code-splitting
             meta: {
-                title: "VueShop | Вход",
+                title: "Store | Вход",
                 middleware: "guest"
             },
             component: () => import('../views/auth/Login.vue')
@@ -58,7 +58,7 @@ const router = createRouter({
             path: '/user/registration',
             name: 'user.registration', // route level code-splitting
             meta: {
-                title: "VueShop | Регистрация",
+                title: "Store | Регистрация",
                 middleware: "guest"
             },
             component: () => import('../views/auth/Registration.vue')
@@ -66,7 +66,7 @@ const router = createRouter({
         {
             path: '/wishlist',
             meta: {
-                title: "VueShop | Избранное",
+                title: "Store | Избранное",
                 middleware: "auth"
             },
             name: 'wishlist', // route level code-splitting
@@ -75,7 +75,7 @@ const router = createRouter({
         {
             path: '/orders',
             meta: {
-                title: "VueShop | Заказы",
+                title: "Store | Заказы",
                 middleware: "auth"
             },
             name: 'orders', // route level code-splitting
@@ -84,7 +84,7 @@ const router = createRouter({
         {
             path: '/purchases',
             meta: {
-                title: "VueShop | Покупки",
+                title: "Store | Покупки",
                 middleware: "auth"
             },
             name: 'purchases', // route level code-splitting
@@ -93,13 +93,16 @@ const router = createRouter({
         {
             path: '/404',
             meta: {
-                title: "VueShop | 404",
+                title: "Store | 404",
             },
             props: { errorMessage: null },
             name: '404', // route level code-splitting
             component: () => import('../views/404.vue')
         },
         {
+            meta: {
+                title: "Store | 404",
+            },
             path: "/:pathMatch(.*)*",
             component: () => import('../views/404.vue')
         }

@@ -1,12 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap"
+import * as name from 'bootstrap/dist/js/bootstrap.esm'
 
 import loadash from 'lodash'
 window._ = loadash
 
 import * as Popper from '@popperjs/core'
 window.Popper = Popper
-
-import 'bootstrap'
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

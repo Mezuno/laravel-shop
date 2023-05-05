@@ -82,8 +82,8 @@ export default {
 
         switchAddToCartButtonClasses(buttonId, qty) {
             document.getElementById(buttonId).innerText = 'Добавлено! (' + qty + 'шт.)'
-            document.getElementById(buttonId).classList.remove('btn-outline-minor')
-            document.getElementById(buttonId).classList.add('btn-minor')
+            document.getElementById(buttonId).classList.remove('btn-outline-additional')
+            document.getElementById(buttonId).classList.add('btn-additional')
         },
     }
 }

@@ -2,7 +2,7 @@
 .bg-img {
 
     // Aliases - мб поможет решить
-    background: url('../../../../../public/storage/images/header-image.jpg');
+    background: url('/storage/images/header-image.jpg');
 
     &:after {
         content: '';

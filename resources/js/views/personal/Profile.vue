@@ -176,14 +176,10 @@
 </template>
 
 <script>
-import {mapActions, mapMutations} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
     name: "Profile",
-
-    components: {
-
-    },
 
     data() {
         return {
@@ -268,7 +264,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 
 
 </style>

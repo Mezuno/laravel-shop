@@ -17,7 +17,7 @@
                         <span class="fw-semibold">{{ product.company.title }}</span> / {{ product.title }}
                     </router-link>
                     <div class="d-flex flex-grow-1">
-                        <p class="text-warning d-inline-block">
+                        <p class="text-main d-inline-block">
                             <i v-for="n in Math.round(product.avg_rate)" class="fas fa-star"></i>
                             <i v-for="n in 5 - Math.round(product.avg_rate)" class="far fa-star"></i>
                         </p>
@@ -40,7 +40,7 @@
                     </div>
 
                     <div @click.prevent="addToCart(product, `addCart${identifier}${product.id}`)"
-                         class="m-0 btn btn-warning text-white border-0 col-12"
+                         class="m-0 btn btn-main border-0 col-12"
                          style="white-space: nowrap; width: fit-content" :id="`addCart${identifier}${product.id}`">
                         В корзину <i class="fas fa-shopping-cart"></i>
                     </div>
