@@ -8,7 +8,9 @@ use App\Entities\Review\Models\Review;
 use App\Entities\User\Models\User;
 use App\Entities\Wishlist\Models\Wishlist;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Mail\TestMail;
 use App\Traits\AdminFilterHelperTrait;
+use Illuminate\Support\Facades\Mail;
 
 class IndexController extends Controller
 {
@@ -21,6 +23,8 @@ class IndexController extends Controller
 
     public function __invoke()
     {
+        Mail::to('mekishido@gmail.com')->send(new TestMail());
+
         $orders = Order::all();
 
         $mostPopularProductsCount = $this->service->getMostPopularProductsCount($orders);
