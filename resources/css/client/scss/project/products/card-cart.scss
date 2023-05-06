@@ -1,5 +1,5 @@
 .cart-card {
-    border-radius: 15px;
+    border-radius: $border-radius-l;
     box-shadow: 0 0 10px $cart-card-box-shadow;
     transition: all ease-out $default-transition;
     background-color: #fff;
@@ -10,27 +10,24 @@
     }
 }
 
-.cartList {
-    transition: all linear $default-transition;
-}
-
-.productImgInCart {
-    border-radius: 10px;
-}
-
-.openCartList {
-    align-items: center;
-    justify-content: center;
-    transition: transform ease-out $default-transition;
-    outline: none;
-    border: none;
-}
-
-.div {
-    &Minus, &Plus {
-        transition: all ease-out $default-fast-transition;
-        &:hover {
-            background-color: $product-plus-minus-hover;
+.cart {
+    &-list {
+        transition: all linear $default-transition;
+        &__open {
+            align-items: center;
+            justify-content: center;
+            transition: transform ease-out $default-transition;
+            outline: none;
+            border: none;
+        }
+        &__image {
+            border-radius: $border-radius-m
+        }
+        &__minus, &__plus {
+            transition: all ease-out $default-fast-transition;
+            &:hover {
+                background-color: $product-plus-minus-hover;
+            }
         }
     }
 }

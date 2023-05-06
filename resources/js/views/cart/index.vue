@@ -25,32 +25,39 @@
             </div>
 
             <div class="d-flex">
-                <div class="border border-0 cart-card w-75 h-100 me-5 overflow-hidden" id="cart-card">
+                <div
+                    class="border border-0 cart-card h-100 me-5 overflow-hidden"
+                    id="cart-card"
+                    :class="Object.keys(productsInCart).length === 0 ? 'w-100':'w-75'"
+                >
                     <div class="p-4" id="cart-card2">
-                        <div class="cartList" id="cartList">
-                            <div class="d-flex flex-wrap justify-content-between" id="cartTitle">
+                        <div class="cart-list" id="cart-list">
+                            <div class="d-flex flex-wrap justify-content-between" id="cart-title">
 
-                                <h3 class="card-title mt-1 ">
+                                <h3 class="mt-1">
                                     Корзина
                                     <span v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</span>
                                 </h3>
 
-                                <div v-show="productsInCart && productsInCart.length > 2" @click="openCartList()" class="btn openCartList">
-                                    <h4><i class="fas fa-chevron-up openCartListIcon"></i></h4>
+                                <div v-show="productsInCart && productsInCart.length > 2" @click="openCartList()" class="btn cart-list__open">
+                                    <h4 class="mb-1"><i class="fas fa-chevron-up"></i></h4>
                                 </div>
 
                             </div>
 
 
 
-                            <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4 productsInCartList" :id="`productInCartList${product.id}`">
-                                <product-in-cart class="row mt-4 productInCartList" :product="product" :index="index" />
+                            <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4" :id="`cart-list-product${product.id}`">
+                                <product-in-cart class="row mt-4" :product="product" :index="index" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div v-show="productsInCart !== null && Object.keys(productsInCart).length > 0" class="card border border-0 cart-card w-25 h-100">
+                <div
+                    v-show="productsInCart !== null && Object.keys(productsInCart).length > 0"
+                    class="card border border-0 cart-card w-25 h-100"
+                >
                     <div class="card-body px-4">
                         <h3 class="card-title mt-1 mb-3">Оформить заказ</h3>
                         <div>
@@ -162,7 +169,7 @@ export default {
             this.setStoreOrderData()
         }
         this.setTotalPrice()
-        setTimeout(() => {document.getElementById('cartList').style.height = this.getHeight('cartList')}, 1000)
+        setTimeout(() => {document.getElementById('cart-list').style.height = this.getHeight('cart-list')}, 1000)
     },
 
     methods: {
@@ -203,7 +210,7 @@ export default {
         },
 
         openCartList() {
-            this.cart.titleHeight = Math.round(parseFloat(this.getHeight('cartTitle'))* 100) / 100;
+            this.cart.titleHeight = Math.round(parseFloat(this.getHeight('cart-title'))* 100) / 100;
             console.log(this.cart.titleHeight)
             let qtyProducts = this.productsInCart?.length;
             if (qtyProducts === undefined) {
@@ -211,16 +218,16 @@ export default {
             }
 
             if (this.cart.isOpened === false) {
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(0deg)"
+                document.getElementsByClassName("cart-list__open")[0].style.transform = "rotate(0deg)"
                 this.setCartHeight()
                 this.cart.isOpened = true
                 console.log(this.cart.height)
 
             } else {
-                document.getElementsByClassName("openCartList")[0].style.transform = "rotate(-180deg)"
-                document.getElementById('cartList').style.height = (String(this.cart.titleHeight) + 'px')
+                document.getElementsByClassName("cart-list__open")[0].style.transform = "rotate(-180deg)"
+                document.getElementById('cart-list').style.height = (String(this.cart.titleHeight) + 'px')
 
-                this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
+                this.cart.height = (parseFloat(this.getMargin('cart-list-product'+this.productsInCart[0].id)) + parseFloat(this.getHeight('cart-list-product'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cart-title'))
                 this.cart.height = Math.round(this.cart.height * 100) / 100;
                 console.log(this.cart.height)
                 this.cart.isOpened = false
@@ -231,14 +238,14 @@ export default {
             let qtyProducts = this.productsInCart?.length;
             console.log(qtyProducts)
             if (qtyProducts === 0) {
-                this.cart.height = Math.round(parseFloat(this.getHeight('cartTitle'))* 100) / 100;
-                document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
+                this.cart.height = Math.round(parseFloat(this.getHeight('cart-title'))* 100) / 100;
+                document.getElementById('cart-list').style.height = (String(this.cart.height) + 'px')
                 return
             }
 
-            this.cart.height = (parseFloat(this.getMargin('productInCartList'+this.productsInCart[0].id)) + parseFloat(this.getHeight('productInCartList'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cartTitle'))
+            this.cart.height = (parseFloat(this.getMargin('cart-list-product'+this.productsInCart[0].id)) + parseFloat(this.getHeight('cart-list-product'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cart-title'))
             this.cart.height = Math.round(this.cart.height * 100) / 100;
-            document.getElementById('cartList').style.height = (String(this.cart.height) + 'px')
+            document.getElementById('cart-list').style.height = (String(this.cart.height) + 'px')
         },
 
         removeProductFromCart (product) {
