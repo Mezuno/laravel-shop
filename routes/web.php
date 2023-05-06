@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin/login', App\Entities\Admin\Http\Controllers\LoginController::class)->name('admin.login');
-Route::post('/admin/login', App\Entities\Admin\Http\Controllers\AuthController::class)->name('admin.auth');
+Route::get('/admin/login', App\Entities\Admin\Http\Controllers\LoginController::class)->middleware('guest')->name('admin.login');
+Route::post('/admin/login', App\Entities\Admin\Http\Controllers\AuthController::class)->middleware('guest')->name('admin.auth');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin'], function () {
 
