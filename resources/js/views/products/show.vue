@@ -358,7 +358,7 @@ export default {
         },
 
         getProduct(id) {
-            axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
+            axios.get(`/api/products/${id}`).then(response => {
                 this.loaded = true
                 this.product = response.data.data
                 this.product.content = JSON.parse(this.product.content)
