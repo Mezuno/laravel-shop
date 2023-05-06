@@ -284,7 +284,7 @@ export default {
         },
 
         getFilterList() {
-            axios.get('http://localhost:8000/api/products/filters').then(response => {
+            axios.get('/api/products/filters').then(response => {
                 this.filters = response.data
                 this.filters.categories.unshift({id: 0, title: 'Все категории', })
             });
