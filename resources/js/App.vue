@@ -62,7 +62,11 @@
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item me-2">
-                        <router-link to="/wishlist" class="cart-img text-minor m-0 d-flex align-items-center btn btn-main "><h4 class="m-0"><i class="fas fa-heart"></i></h4></router-link>
+                        <router-link to="/wishlist" class="cart-img text-minor m-0 d-flex align-items-center btn btn-main ">
+                            <h4 class="m-0">
+                                <i class="fas fa-heart"></i>
+                            </h4>
+                        </router-link>
                     </li>
 
                     <li class="nav-item" style="position: relative;">

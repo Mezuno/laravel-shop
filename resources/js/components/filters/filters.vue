@@ -29,9 +29,10 @@
         <price
             @click="openOrHide('price')"
             v-model:priceOpened="opened.price"
+            @setPriceMin="setPrice"
         />
 
-        <div @click="setDataToGetProducts" class="btn btn-additional cursor-pointer unselectable">Применить фильтры</div>
+        <div @click="resetDataToGetProducts" class="btn btn-additional cursor-pointer unselectable">Сбросить фильтры</div>
 
     </div>
 
@@ -72,6 +73,10 @@ export default {
                 sort: 0,
                 category: 0,
                 tags: [],
+                price: {
+                    min: '0',
+                    max: '99999'
+                }
             },
 
         }
@@ -93,6 +98,15 @@ export default {
     },
 
     methods: {
+
+        resetDataToGetProducts() {
+            this.checkedIndex.sort = 0
+            this.checkedIndex.category = 0
+            this.checkedIndex.tags = []
+            this.checkedIndex.price.min = '0'
+            this.checkedIndex.price.max = '99999'
+            this.setDataToGetProducts()
+        },
 
         setDataToGetProducts() {
             this.$emit('getDataToGetProducts', this.checkedIndex)
@@ -129,6 +143,11 @@ export default {
             this.setDataToGetProducts()
         },
 
+        setPrice(price) {
+            console.log(price)
+            this.checkedIndex.price = price
+            this.setDataToGetProducts()
+        },
     }
 
 
