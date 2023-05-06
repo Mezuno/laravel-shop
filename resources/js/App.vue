@@ -193,8 +193,8 @@
 
 <script>
 
-import {mapActions} from 'vuex'
-import ModalCallMeLater from "./components/modals/ModalCallMeLater.vue";
+import { mapActions } from 'vuex'
+import ModalCallMeLater from "@/components/modals/ModalCallMeLater.vue";
 
 export default {
     name: 'App',

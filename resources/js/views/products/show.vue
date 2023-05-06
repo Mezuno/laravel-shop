@@ -204,9 +204,9 @@
 </template>
 
 <script>
-import AlternativeProductCard from "../../components/products/AlternativeProductCard.vue";
-import ModalReadReviews from "../../components/modals/ModalReadReviews.vue";
-import ModalWriteReview from "../../components/modals/ModalWriteReview.vue";
+import AlternativeProductCard from "@/components/products/AlternativeProductCard.vue";
+import ModalReadReviews from "@/components/modals/ModalReadReviews.vue";
+import ModalWriteReview from "@/components/modals/ModalWriteReview.vue";
 
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
@@ -358,7 +358,7 @@ export default {
         },
 
         getProduct(id) {
-            axios.get(`http://localhost:8000/api/products/${id}`).then(response => {
+            axios.get(`/api/products/${id}`).then(response => {
                 this.loaded = true
                 this.product = response.data.data
                 this.product.content = JSON.parse(this.product.content)

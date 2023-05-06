@@ -85,7 +85,7 @@
                         v-for="product in sortedAndFilteredProducts"
                         :identifier="'Catalog'"
                         :product="product"
-                        class="col-3 mb-4 px-3"
+                        class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4 px-3"
                         :key="product.id"
                     />
                 </div>
@@ -97,11 +97,11 @@
 </template>
 
 <script>
-import ProductCard from "../../components/products/ProductCard.vue";
-import Filters from "../../components/filters/filters.vue";
-import radio from "../../components/customButtons/radio.vue";
-import checkbox from "../../components/customButtons/checkbox.vue";
-import filtersMixin from "../../mixins/filtersMixin.vue";
+import filtersMixin from "@/mixins/filtersMixin.vue";
+import ProductCard from "@/components/products/ProductCard.vue";
+import Filters from "@/components/filters/filters.vue";
+import radio from "@/components/customButtons/radio.vue";
+import checkbox from "@/components/customButtons/checkbox.vue";
 
 import {mapActions} from "vuex";
 
@@ -200,7 +200,7 @@ export default {
         },
 
         getFilterList() {
-            axios.get('http://localhost:8000/api/products/filters').then(response => {
+            axios.get('/api/products/filters').then(response => {
                 this.filters = response.data
                 this.filters.categories.unshift({id: 0, title: 'Все категории', })
             });
