@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import ProductCard from "../../components/products/ProductCard.vue";
-import Filters from "../../components/filters/filters.vue";
-import radio from "../../components/customButtons/radio.vue";
-import checkbox from "../../components/customButtons/checkbox.vue";
+import ProductCard from "@/components/products/ProductCard.vue";
+import Filters from "@/components/filters/filters.vue";
+import radio from "@/components/customButtons/radio.vue";
+import checkbox from "@/components/customButtons/checkbox.vue";
 
 import {mapActions} from "vuex";
 

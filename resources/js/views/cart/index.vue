@@ -97,8 +97,8 @@
 <script>
 import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
-import ProductInCart from "../../components/products/ProductInCart.vue";
-import getElementPropertiesMixin from "../../mixins/getElementPropertiesMixin.vue";
+import ProductInCart from "@/components/products/ProductInCart.vue";
+import getElementPropertiesMixin from "@/mixins/getElementPropertiesMixin.vue";
 
 export default {
     name: "cart",
