@@ -183,7 +183,7 @@ export default {
             this.storeOrderData.products = this.$store.state.cartProducts.products
             console.log(this.storeOrderData.products);
             this.orderProcessing = true
-            window.axios.post('http://localhost:8000/api/order', this.storeOrderData).then(({data}) => {
+            window.axios.post('/api/order', this.storeOrderData).then(({data}) => {
                 this.setCartProducts([])
                 this.successOrder = data.data
                 this.validationErrors = {}
