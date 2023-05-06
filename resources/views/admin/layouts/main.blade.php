@@ -18,7 +18,7 @@
     <!-- Charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <!-- additional admin css -->
-    @vite(['resources/css/app.css'])
+    <link rel="stylesheet" href="{{ asset('adminlte/additional-admin-css/app.css') }}">
 </head>
 <body class="dark-mode hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
