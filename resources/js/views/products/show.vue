@@ -411,7 +411,9 @@ export default {
                     this.storeReviewData = {}
                     this.userReview = response.data.data
                     this.userReviewValidationErrors = {}
-                    this.modalVisibility = false
+                    this.modalVisibility.writeReview = false
+                    document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
+                    document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
                 })
                 .catch(({response})=>{
                     if(response.status===422){
