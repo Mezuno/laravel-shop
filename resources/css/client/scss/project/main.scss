@@ -18,6 +18,11 @@
     }
 }
 
+.bg-gradient-additional {
+    background: rgb(102,68,255);
+    background: linear-gradient(90deg, rgba(102,68,255,1) 0%, rgba(197,183,255,1) 100%);
+}
+
 .body-scroll {
     overflow-y: scroll;
     overflow-x: hidden;

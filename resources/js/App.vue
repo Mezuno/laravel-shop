@@ -186,7 +186,7 @@
         <router-view class="content-on-page mb-5"/>
 
         <footer class="static-footer d-flex justify-content-center align-items-center flex-column py-5">
-            <div class="">powered by keril</div>
+            <div class="">powered by ke</div>
         </footer>
     </div>
 </template>
