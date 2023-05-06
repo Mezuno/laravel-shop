@@ -78,7 +78,7 @@
                         v-for="product in sortedAndFilteredProducts"
                         :identifier="'Catalog'"
                         :product="product"
-                        class="col-3 mb-4 px-3"
+                        class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4 px-3"
                         :key="product.id"
                     />
                 </div>
