@@ -13,21 +13,21 @@
                         <div class="carousel-item active">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-<!--&lt;!&ndash;                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(red).png" class="d-block w-100 sliderBlackoutImg" alt="...">&ndash;&gt;-->
+                                    <img src="/storage/app/public/images/images-for-slider/1300x300-(red).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-<!--&lt;!&ndash;                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(blue).png" class="d-block w-100 sliderBlackoutImg" alt="...">&ndash;&gt;-->
+                                    <img src="/storage/app/public/images/images-for-slider/1300x300-(blue).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a class="sliderLink" href="">
                                 <div class="sliderBlackoutDiv">
-<!--&lt;!&ndash;                                    <img src="../../../../storage/app/public/images/images-for-slider/1300x300-(green).png" class="d-block w-100 sliderBlackoutImg" alt="...">&ndash;&gt;-->
+                                    <img src="/storage/app/public/images/images-for-slider/1300x300-(green).png" class="d-block w-100 sliderBlackoutImg" alt="...">
                                 </div>
                             </a>
                         </div>
@@ -48,22 +48,22 @@
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--&lt;!&ndash;                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">&ndash;&gt;-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--&lt;!&ndash;                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">&ndash;&gt;-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--&lt;!&ndash;                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">&ndash;&gt;-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--&lt;!&ndash;                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">&ndash;&gt;-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(blue).png" alt="...">
                 </div>
 
             </div>
@@ -72,22 +72,22 @@
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--&lt;!&ndash;                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">&ndash;&gt;-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(red).png" alt="...">
                 </div>
 
 
@@ -103,22 +103,22 @@
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(green).png" alt="...">
                 </div>
 
 
@@ -128,22 +128,22 @@
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
                 </div>
 
                 <div class="banner col-4 cursor-pointer">
                     <div class="banner-background"></div>
-<!--                    <img class="banner-image" width="300" height="180" src="../../../../storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">-->
+                    <img class="banner-image" width="300" height="180" src="/storage/app/public/images/images-for-banners/300x180-(yellow).png" alt="...">
                 </div>
 
 
