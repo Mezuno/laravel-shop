@@ -169,7 +169,7 @@ export default {
             this.setStoreOrderData()
         }
         this.setTotalPrice()
-        setTimeout(() => {document.getElementById('cart-list').style.height = this.getHeight('cart-list')}, 1000)
+        setTimeout(() => {document.getElementById('cart-list').style.height = this.getHeight('cart-list')}, 2000)
     },
 
     methods: {
@@ -181,7 +181,6 @@ export default {
 
         storeOrder() {
             this.storeOrderData.products = this.$store.state.cartProducts.products
-            console.log(this.storeOrderData.products);
             this.orderProcessing = true
             window.axios.post('/api/order', this.storeOrderData).then(({data}) => {
                 this.setCartProducts([])
@@ -211,7 +210,6 @@ export default {
 
         openCartList() {
             this.cart.titleHeight = Math.round(parseFloat(this.getHeight('cart-title'))* 100) / 100;
-            console.log(this.cart.titleHeight)
             let qtyProducts = this.productsInCart?.length;
             if (qtyProducts === undefined) {
                 return null
@@ -221,7 +219,6 @@ export default {
                 document.getElementsByClassName("cart-list__open")[0].style.transform = "rotate(0deg)"
                 this.setCartHeight()
                 this.cart.isOpened = true
-                console.log(this.cart.height)
 
             } else {
                 document.getElementsByClassName("cart-list__open")[0].style.transform = "rotate(-180deg)"
@@ -229,14 +226,12 @@ export default {
 
                 this.cart.height = (parseFloat(this.getMargin('cart-list-product'+this.productsInCart[0].id)) + parseFloat(this.getHeight('cart-list-product'+this.productsInCart[0].id))) * qtyProducts + parseFloat(this.getHeight('cart-title'))
                 this.cart.height = Math.round(this.cart.height * 100) / 100;
-                console.log(this.cart.height)
                 this.cart.isOpened = false
             }
         },
 
         setCartHeight() {
             let qtyProducts = this.productsInCart?.length;
-            console.log(qtyProducts)
             if (qtyProducts === 0) {
                 this.cart.height = Math.round(parseFloat(this.getHeight('cart-title'))* 100) / 100;
                 document.getElementById('cart-list').style.height = (String(this.cart.height) + 'px')

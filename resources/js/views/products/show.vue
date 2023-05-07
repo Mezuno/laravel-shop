@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-minor" id="addToCartButton">
+                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-main" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
