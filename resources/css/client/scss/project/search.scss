@@ -1,116 +1,100 @@
 .search {
-    position: relative;
 
-    &-form {
-        display: flex;
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 500px;
-        height: 50px;
-        background: white;
-        box-sizing: border-box;
-        border-radius: 25px;
-        padding: 5px;
-        z-index: 990;
-    }
+    background-color: white;
+    height: 50px;
+    width: min(100%, 550px);
+    border-radius: $border-radius-xl;
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
 
     &-input {
-        position: absolute;
-        top: 5px;
-        left: 0;
-        width: 460px;
-        height: 42px;
-        line-height: 30px;
-        outline: 0;
-        border: 0;
-        display: block;
-        font-size: 1em;
-        border-radius: 25px;
-        padding: 0 20px;
+        height: 50px;
+        width: calc(100% - 50px);
+        border-radius: $border-radius-xl;
+        border: none;
+        outline: none;
+        padding-left: 25px;
     }
 
-    &-form:has(&-input:focus), &-form:has(&-list:hover) {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
+    &-button {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-    &-icon {
-        box-sizing: border-box;
-        padding: 10px;
-        width: 42px;
-        height: 42px;
-        position: absolute;
-        top: 5px;
-        right: 3px;
-        border-radius: 50%;
-        color: #919191;
-        text-align: center;
-        font-size: 1.2em;
-        transition: all 0.15s;
-
-        &:hover {
-            color: #252525;
-        }
-    }
-
-    &-list {
-        z-index: 800;
-        position: absolute;
-        top: 50px;
-        left: 0;
-        background-color: white;
-        width: 500px;
-        border-bottom-left-radius: 25px;
-        border-bottom-right-radius: 25px;
-        display: none;
-        padding: 0 10px 10px;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.11);
-
-        &:hover {
-            display: block;
-        }
-
-        &-item {
-            height: 30px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        &__icon {
+            color: #919191;
+            font-size: 1.2em;
             transition: all 0.15s;
-            padding: 0 10px;
-
-            &:hover {
-                background-color: #efefef;
-            }
         }
-    }
 
-    &-input:focus ~ .search-list{
-        display: block;
-    }
-
-    &-delete-history {
-        color: $secondary;
-        padding: 0 10px;
-
-        &:hover {
+        &:hover &__icon {
             color: #252525;
         }
 
-        &-one {
-            color: $secondary;
-            transition: all 0.15s;
-            width: 20px;
-            height: 20px;
-            padding: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            &:hover {
-                color: #252525;
-            }
-        }
     }
+
+    //&-list {
+    //    z-index: 800;
+    //    position: absolute;
+    //    top: 50px;
+    //    left: 0;
+    //    background-color: white;
+    //    width: 500px;
+    //    border-bottom-left-radius: 25px;
+    //    border-bottom-right-radius: 25px;
+    //    display: none;
+    //    padding: 0 10px 10px;
+    //    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.11);
+    //
+    //    &:hover {
+    //        display: block;
+    //    }
+    //
+    //    &-item {
+    //        height: 30px;
+    //        border-radius: 8px;
+    //        display: flex;
+    //        align-items: center;
+    //        justify-content: space-between;
+    //        transition: all 0.15s;
+    //        padding: 0 10px;
+    //
+    //        &:hover {
+    //            background-color: #efefef;
+    //        }
+    //    }
+    //}
+
+    //&-input:focus ~ .search-list{
+    //    display: block;
+    //}
+    //&-delete-history {
+    //    color: $secondary;
+    //    padding: 0 10px;
+    //
+    //    &:hover {
+    //        color: #252525;
+    //    }
+    //
+    //    &-one {
+    //        color: $secondary;
+    //        transition: all 0.15s;
+    //        width: 20px;
+    //        height: 20px;
+    //        padding: 2px;
+    //        display: flex;
+    //        align-items: center;
+    //        justify-content: center;
+    //
+    //        &:hover {
+    //            color: #252525;
+    //        }
+    //    }
+    //}
+
 }

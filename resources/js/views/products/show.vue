@@ -117,10 +117,15 @@
 
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="d-flex" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
-                        <h2>Отзывы</h2>
-                        <span class="ms-1 h5">{{ product.reviews_count }}</span>
+                    <div class="d-flex justify-content-between align-items-center" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
+                        <div class="d-flex me-2">
+                            <h2>Отзывы</h2>
+                            <span class="ms-1 h5">{{ product.reviews_count }}</span>
+                        </div>
+
+                        <a style="border-bottom: dashed 1px;">Смотреть все отзывы</a>
                     </div>
+
                     <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
                         <h3>{{ product.avg_rate }}</h3>
                         <div class="float-left text-nowrap ms-2">
@@ -478,9 +483,6 @@ export default {
                 this.switchRateInModal(i, 'fas')
             }
         },
-
-
-        // вроде костыли, заменить на refs итп при возможности
 
         switchRateInModal(i, state) {
             document.getElementById('rate-in-modal'+i).classList.remove(state)

@@ -30,8 +30,11 @@ export default {
 
     props: {
         priceOpened: {
-            type: Boolean
-        }
+            type: Boolean,
+        },
+        priceMinMax: {
+            type: Object,
+        },
     },
 
     data() {
@@ -56,14 +59,14 @@ export default {
                     }
                     document.getElementsByClassName("price-min-input")[0].value = event.target.value
                     this.price.min = event.target.value
-                    this.$emit('setPriceMin', this.price)
+                    this.$emit('setPrice', this.price)
                     return
                 }
             }
             if (event.target.value.length === 0 || event.target.value[0] === '0') {
                 this.price.min = '0'
                 document.getElementsByClassName("price-min-input")[0].value = '0'
-                this.$emit('setPriceMin', this.price)
+                this.$emit('setPrice', this.price)
                 return
             }
             if (valid === false) {
@@ -83,14 +86,14 @@ export default {
                     }
                     document.getElementsByClassName("price-max-input")[0].value = event.target.value
                     this.price.max = event.target.value
-                    this.$emit('setPriceMin', this.price)
+                    this.$emit('setPrice', this.price)
                     return
                 }
             }
             if (event.target.value.length === 0 || event.target.value[0] === '0') {
                 this.price.max = '0'
                 document.getElementsByClassName("price-max-input")[0].value = '0'
-                this.$emit('setPriceMin', this.price)
+                this.$emit('setPrice', this.price)
                 return
             }
             if (valid === false) {

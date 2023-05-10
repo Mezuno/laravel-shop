@@ -29,7 +29,8 @@
             <price
                 @click="openOrHide('price')"
                 v-model:priceOpened="opened.price"
-                @setPriceMin="setPrice"
+                :priceMinMax="filters.price"
+                @setPrice="setPrice"
             />
 
             <div @click="resetDataToGetProducts('all')" class="btn btn-additional cursor-pointer unselectable">Сбросить фильтры</div>
@@ -37,6 +38,13 @@
 
 
         <div class="filters-selected mb-4">
+            <div
+                class="filters-selected-delete"
+                v-show="searchValue !== ''"
+            >
+                <span class="filters-selected-delete__title unselectable">{{ searchValue }}</span>
+                <i @click="resetDataToGetProducts('search')" class="fas fa-times filters-selected-delete__icon cursor-pointer"></i>
+            </div>
             <div
                 class="filters-selected-delete"
                 v-for="category in filters.categories"
@@ -87,6 +95,9 @@ export default {
         },
         dataToGetProducts: {
             type: Object,
+        },
+        searchValue: {
+            type: String,
         }
     },
 
@@ -106,10 +117,13 @@ export default {
                 price: false,
             },
             checkedIndex: {
-                sort: this.dataToGetProducts.sort,
-                category: this.dataToGetProducts.category,
-                tags: this.dataToGetProducts.tags,
-                price: this.dataToGetProducts.price
+                sort: 0,
+                category: 0,
+                tags: [],
+                price: {
+                    min: '0',
+                    max: '99999',
+                }
             },
 
         }
@@ -118,10 +132,12 @@ export default {
     created() {
         window.addEventListener('click',(event) => {
             for (let openedKey in this.opened) {
-                if (event.target === document.getElementsByClassName(openedKey+'-title')[0]
+                if (
+                    event.target === document.getElementsByClassName(openedKey+'-title')[0]
                     || event.target === document.getElementsByClassName(openedKey+'-text')[0]
                     || event.target === document.getElementsByClassName(openedKey+'-icon')[0]
-                    || event.target === document.getElementsByClassName(openedKey+'-icon')[1])
+                    || event.target === document.getElementsByClassName(openedKey+'-icon')[1]
+                )
                 {
                     return
                 }
@@ -139,6 +155,11 @@ export default {
                 this.checkedIndex.price.min = '0'
                 this.checkedIndex.price.max = '99999'
                 this.setDataToGetProducts()
+                this.$emit('deleteCurrentSearchValue')
+                return
+            }
+            if (reset === 'search') {
+                this.$emit('deleteCurrentSearchValue')
                 return
             }
             if (reset === 'category') {

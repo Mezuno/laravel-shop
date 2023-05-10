@@ -21,8 +21,8 @@ class FilterListController extends Controller
             'categories' => $categories,
             'tags' => $tags,
             'price' => [
-                'max' => $maxPrice,
                 'min' => $minPrice,
+                'max' => $maxPrice,
             ],
         ];
 

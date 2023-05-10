@@ -19,7 +19,7 @@
             <div class="col-3 text-nowrap">
                 <div @click="decQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none me-2 cart-list__minus"><i
                     class="fas fa-minus text-minor"></i></div>
-                <input @input="changeQty(product, index)"  maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
+                <input @input="changeQty(product, index, $event)" type="text" maxlength="3" class="w-25 me-2 input-qty" :value="product.qty">
                 <div @click="incQty(product, index)" type="button" class="border border-0 rounded btn btn-light text-decoration-none cart-list__plus"><i
                     class="fas fa-plus plus"></i></div>
             </div>
@@ -27,8 +27,8 @@
                 {{ product.qty * product.price }} ₽
             </div>
             <div class="col-1">
-                <div @click="this.$parent.removeProductFromCart(product)" type="button" class="">
-                    <i class="far fa-trash-alt hover-circle"></i>
+                <div @click="this.$parent.removeProductFromCart(product)" type="button" class="cursor-pointer">
+                    <i class="far fa-trash-alt"></i>
                 </div>
             </div>
         </div>

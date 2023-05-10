@@ -26,7 +26,6 @@
                 </div>
 
                 <div class="product-card-content-emerging flex-column" :id="`contentInvisible${product.id}`">
-
                     <p class="card-text">{{ product.category.title }}</p>
 
                     <div v-if="product.tags.length !== 0" class="mb-3">

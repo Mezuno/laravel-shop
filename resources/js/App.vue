@@ -55,7 +55,11 @@
 
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <button @click="openModal" class="nav-link btn btn-main text-minor">Перезвоните мне</button>
+                        <div @click="openModal" class="nav-link cursor-pointer text-minor">
+                            <h4>
+                                Перезвоните мне
+                            </h4>
+                        </div>
                     </li>
                 </ul>
 
@@ -104,59 +108,69 @@
                         </li>
                     </ul>
 
-                    <div class="search w-100 h-100 d-flex justify-content-center">
-                        <div class="search-form">
-                            <input @keyup.enter="startSearch(searchInputValue)"
-                                   @input="suggestSearch($event)"
-                                   :value="searchInputValue"
-                                   id="search-input" class="search-input"
-                                   placeholder="поиск" autocomplete="off"
-                            >
-                            <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>
-                            <div class="search-list">
+<!--                    <div class="search w-100 h-100 d-flex justify-content-center">-->
+<!--                        <div class="search-form">-->
+<!--                            <input @keyup.enter="startSearch(searchInputValue)"-->
+<!--                                   @input="suggestSearch($event)"-->
+<!--                                   :value="searchInputValue"-->
+<!--                                   id="search-input"-->
+<!--                                   class="search-input"-->
+<!--                                   placeholder="поиск"-->
+<!--                                   autocomplete="off"-->
+<!--                            >-->
+<!--                            <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>-->
+<!--                            <div class="search-list">-->
 
-                                <span
-                                v-show="search.searchLast.text.length !== 0"
-                                class="search-delete-history cursor-pointer"
-                                @click="deleteAllHistory"
-                                >Очистить историю поиска</span>
+<!--                                <span-->
+<!--                                v-show="search.searchLast.text.length !== 0"-->
+<!--                                class="search-delete-history cursor-pointer"-->
+<!--                                @click="deleteAllHistory"-->
+<!--                                >Очистить историю поиска</span>-->
 
-                                <div class="last-search">
-                                    <div
-                                        v-for="(search, index) in search.searchLast.text"
-                                        v-show="this.search.searchLast.text.length !== 0"
-                                    >
-                                        <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">
+<!--                                <div class="last-search">-->
+<!--                                    <div-->
+<!--                                        v-for="(search, index) in search.searchLast.text"-->
+<!--                                        v-show="this.search.searchLast.text.length !== 0"-->
+<!--                                    >-->
+<!--                                        <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">-->
 
-                                            <span @click="startSearch(search)" class="search-list-item-text w-100">
-                                                <i class="fas fa-history"></i> {{ search }}
-                                            </span>
+<!--                                            <span @click="startSearch(search)" class="search-list-item-text w-100">-->
+<!--                                                <i class="fas fa-history"></i> {{ search }}-->
+<!--                                            </span>-->
 
-                                            <span class="search-delete-history-one">
-                                                <i @click="deleteHistoryOne(index)" class="fas fa-times "></i>
-                                            </span>
+<!--                                            <span class="search-delete-history-one">-->
+<!--                                                <i @click="deleteHistoryOne(index)" class="fas fa-times "></i>-->
+<!--                                            </span>-->
 
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                                <div class="popular-search">
-                                    <div
-                                        v-for="(search, index) in search.searchPopular.text"
-                                        v-if="this.search.searchPopular.text.length !== 0"
-                                    >
-                                        <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">
-                                            <span class="search-list-item-text">
-                                            <i class="fa fa-search"></i> {{ search }}
-                                            </span>
-                                        </div>
+<!--                                <div class="popular-search">-->
+<!--                                    <div-->
+<!--                                        v-for="(search, index) in search.searchPopular.text"-->
+<!--                                        v-if="this.search.searchPopular.text.length !== 0"-->
+<!--                                    >-->
+<!--                                        <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">-->
+<!--                                            <span class="search-list-item-text">-->
+<!--                                            <i class="fa fa-search"></i> {{ search }}-->
+<!--                                            </span>-->
+<!--                                        </div>-->
 
-                                    </div>
-                                </div>
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                            </div>
-                        </div>
-                    </div>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+                    <search
+                        v-model:searchInputValue="searchInputValue"
+                        v-model:searchValue="searchValue"
+                        @updateSearchInputValue="updateSearchInputValue"
+                        @startSearch="startSearch"
+                    />
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li v-show="authenticated" class="nav-item">
@@ -183,7 +197,11 @@
             v-model:callMeLater="modalVisibility.callMeLater"
         />
 
-        <router-view class="content-on-page mb-5"/>
+        <router-view
+            class="content-on-page mb-5"
+            v-model:searchValue="searchValue"
+            @deleteCurrentSearchValue="deleteCurrentSearchValue"
+        />
 
         <footer class="static-footer d-flex justify-content-center align-items-center flex-column py-5">
             <div class="">powered by ke</div>
@@ -195,11 +213,13 @@
 
 import { mapActions } from 'vuex'
 import ModalCallMeLater from "@/components/modals/ModalCallMeLater.vue";
+import Search from "./components/filters/search.vue";
 
 export default {
     name: 'App',
 
     components: {
+        Search,
         ModalCallMeLater,
     },
 
@@ -217,6 +237,7 @@ export default {
                 }
             },
             searchInputValue: '',
+            searchValue: '',
         }
     },
 
@@ -277,23 +298,29 @@ export default {
             setLastSearch:"lastSearch/setLastSearch",
         }),
 
+        updateSearchInputValue(value) {
+            this.searchInputValue = value
+        },
+
         suggestSearch(event) {
             this.searchInputValue = event.target.value
         },
 
+        deleteCurrentSearchValue() {
+            this.searchInputValue = ''
+            this.searchValue = ''
+        },
+
         startSearch(search) {
-            if (search === '') {
-                document.getElementById('search-input').focus()
-                return
-            }
 
-            this.search.searchLast.text.forEach((item, i) => {
-                if (item === search) {
-                    this.search.searchLast.text.splice(i, 1)
-                }
-            })
+            this.searchValue = search
 
-            this.search.searchLast.text.unshift(search);
+            // this.search.searchLast.text.forEach((item, i) => {
+            //     if (item === search) {
+            //         this.search.searchLast.text.splice(i, 1)
+            //     }
+            // })
+            // this.search.searchLast.text.unshift(search);
         },
 
         deleteAllHistory() {
