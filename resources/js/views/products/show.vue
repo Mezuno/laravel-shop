@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-outline-minor" id="addToCartButton">
+                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-main" id="addToCartButton">
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
@@ -217,6 +217,7 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import wishMixin from "@/mixins/wishMixin.vue";
+import router from "@/router";
 
 export default {
     name: "products.show",
@@ -333,35 +334,6 @@ export default {
             addItemToPreviousWatched:"previousWatched/addItemToPreviousWatched",
         }),
 
-
-        openModalReadReviews(review, index) {
-            this.currentOpenReview.review = review
-            this.currentOpenReview.indexInReviews = index
-            this.modalVisibility.readReview = true
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
-        },
-        openModalWriteReviews() {
-            this.modalVisibility.writeReview = true
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
-        },
-        hideModal() {
-            this.modalVisibility.visibility = false
-            this.modalVisibility.writeReview = false
-            this.modalVisibility.readReview = false
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
-        },
-        nextReview(index) {
-            this.currentOpenReview.review = this.reviews[index+1]
-            this.currentOpenReview.indexInReviews += 1
-        },
-        prevReview(index) {
-            this.currentOpenReview.review = this.reviews[index-1]
-            this.currentOpenReview.indexInReviews -= 1
-        },
-
         getProduct(id) {
             axios.get(`/api/products/${id}`).then(response => {
                 this.loaded = true
@@ -416,7 +388,7 @@ export default {
                     this.storeReviewData = {}
                     this.userReview = response.data.data
                     this.userReviewValidationErrors = {}
-                    this.modalVisibility = false
+                    this.hideModal()
                 })
                 .catch(({response})=>{
                     if(response.status===422){
@@ -491,6 +463,38 @@ export default {
             } else if (state === 'fas') {
                 document.getElementById('rate-in-modal'+i).classList.add('far')
             }
+        },
+
+        openModalReadReviews(review, index) {
+            this.currentOpenReview.review = review
+            this.currentOpenReview.indexInReviews = index
+            this.modalVisibility.readReview = true
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
+        },
+        openModalWriteReviews() {
+            if (!this.authenticated) {
+                router.push({name:'user.login'})
+            } else {
+                this.modalVisibility.writeReview = true
+                document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
+                document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
+            }
+        },
+        hideModal() {
+            this.modalVisibility.visibility = false
+            this.modalVisibility.writeReview = false
+            this.modalVisibility.readReview = false
+            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
+            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
+        },
+        nextReview(index) {
+            this.currentOpenReview.review = this.reviews[index+1]
+            this.currentOpenReview.indexInReviews += 1
+        },
+        prevReview(index) {
+            this.currentOpenReview.review = this.reviews[index-1]
+            this.currentOpenReview.indexInReviews -= 1
         },
     }
 }

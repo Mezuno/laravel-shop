@@ -6,8 +6,9 @@ use App\Entities\Product\Models\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ProductExport implements FromCollection, WithHeadings, ShouldAutoSize
+class ProductExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -15,6 +16,26 @@ class ProductExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         return Product::all();
+    }
+
+    /**
+     * @var Product $product
+     */
+    public function map($product): array
+    {
+        return [
+            $product->id,
+            $product->vendor_code,
+            $product->title,
+            $product->price,
+            $product->category->title,
+            $product->count,
+            $product->description,
+            $product->content,
+            $product->deleted_at,
+            $product->created_at,
+            $product->updated_at,
+        ];
     }
 
     /**
@@ -26,15 +47,13 @@ class ProductExport implements FromCollection, WithHeadings, ShouldAutoSize
     {
         return [
             'ID',
+            'Артикул',
             'Название',
+            'Цена (₽)',
+            'Категория',
+            'Кол-во на складе',
             'Описание',
             'Контент',
-            'Превью URL',
-            'Артикул',
-            'Цена (₽)',
-            'Кол-во на складе',
-            'Опубликовано',
-            'Категория',
             'Дата удаления',
             'Дата создания',
             'Дата обновления',

@@ -23,7 +23,7 @@ class IndexController extends Controller
 
     public function __invoke()
     {
-        Mail::to('mekishido@gmail.com')->send(new TestMail());
+//        Mail::to('mekishido@gmail.com')->send(new TestMail());
 
         $orders = Order::all();
 

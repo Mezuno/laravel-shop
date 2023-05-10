@@ -29,15 +29,15 @@ export default {
         storeWish(product, buttonId) {
             if (!this.$store.state.auth.authenticated) {
                 router.push('/user/login')
+            } else {
+                this.switchHeartClasses(buttonId)
+
+                this.addItemToWishlist({
+                    'user_id': this.user.id,
+                    'product_id': product.id,
+                    'product': product,
+                })
             }
-
-            this.switchHeartClasses(buttonId)
-
-            this.addItemToWishlist({
-                'user_id': this.user.id,
-                'product_id': product.id,
-                'product': product,
-            })
         },
 
         removeWish(wish, buttonId) {
