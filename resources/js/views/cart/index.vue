@@ -1,102 +1,102 @@
 <template>
 
-    <div>
-        <div class="container-xxl mt-5 mb-5">
+    <div  class="container-xxl mt-5 mb-5" id="container">
 
-            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-success col-6">
-                Заказ номер {{ successOrder.id }} успешно оформлен!<br>
-                Товары:
-                <ul class="mb-0">
-                    <li v-for="product in successOrder.products">
-                        {{ product.title }} (Артикул: {{ product.vendor_code }}) - {{ product.price }} x {{ product.qty }} = {{ product.price * product.qty }} ₽
-                    </li>
-                </ul>
-                <div>
-                    Адрес: {{ successOrder.address }}
-                </div>
-                <div>
-                    Сумма: {{ successOrder.total_price }} ₽
-                </div>
+        <div v-if="Object.keys(successOrder).length > 0" class="alert alert-success col-6">
+            Заказ номер {{ successOrder.id }} успешно оформлен!<br>
+            Товары:
+            <ul class="mb-0">
+                <li v-for="product in successOrder.products">
+                    {{ product.title }} (Артикул: {{ product.vendor_code }}) - {{ product.price }} x {{ product.qty }} = {{ product.price * product.qty }} ₽
+                </li>
+            </ul>
+            <div>
+                Адрес: {{ successOrder.address }}
             </div>
-
-            <div v-if="Object.keys(successOrder).length > 0" class="alert alert-main">
-                <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>
-                <pre>{{ successOrder }}</pre>
-            </div>
-
-            <div class="d-flex">
-                <div
-                    class="border border-0 cart-card h-100 me-5 overflow-hidden"
-                    id="cart-card"
-                    :class="Object.keys(productsInCart).length === 0 ? 'w-100':'w-75'"
-                >
-                    <div class="p-4" id="cart-card2">
-                        <div class="cart-list" id="cart-list">
-                            <div class="d-flex flex-wrap justify-content-between" id="cart-title">
-
-                                <h3 class="mt-1">
-                                    Корзина
-                                    <span v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</span>
-                                </h3>
-
-                                <div v-show="productsInCart && productsInCart.length > 2" @click="openCartList()" class="btn cart-list__open">
-                                    <h4 class="mb-1"><i class="fas fa-chevron-up"></i></h4>
-                                </div>
-
-                            </div>
-
-
-
-                            <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4" :id="`cart-list-product${product.id}`">
-                                <product-in-cart class="row mt-4" :product="product" :index="index" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    v-show="productsInCart !== null && Object.keys(productsInCart).length > 0"
-                    class="card border border-0 cart-card w-25 h-100"
-                >
-                    <div class="card-body px-4">
-                        <h3 class="card-title mt-1 mb-3">Оформить заказ</h3>
-                        <div>
-                            <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
-                                <div class="alert alert-danger">
-                                    <div v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</div>
-                                </div>
-                            </div>
-                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.name" placeholder="Ваше имя" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.email" placeholder="Электронная почта" style="height: 45px;">
-                            <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.address" placeholder="Адресс доставки" style="height: 45px;">
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input shadow-none border-minor" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-html="true" title="Авторизируйтесь или зарегистрируйтесь чтобы было удобнее заказывать и пользоваться сайтом">
-                            <label class="form-check-label shadow-none " for="flexCheckDefault">
-                                Запомнить адресс?
-                            </label>
-                        </div>
-
-                        <div class="mt-2">
-                            <div class="text-minor text-nowrap">
-                                <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
-                                    <p class="mb-2 text-secondary">Товары, {{ totalCount }}шт</p>
-                                    <p class="mb-2 text-secondary">{{ totalPrice }} ₽</p>
-                                </div>
-                                <h4 class="d-flex justify-content-between">
-                                    <span>Итого: </span>
-                                    <span>{{ totalPrice }} ₽</span>
-                                </h4>
-                            </div>
-                            <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-minor w-100">
-                                {{ orderProcessing ? 'Оформляем' : 'Оформить' }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                Сумма: {{ successOrder.total_price }} ₽
             </div>
         </div>
+
+        <div v-if="Object.keys(successOrder).length > 0" class="alert alert-main">
+            <b>Остальная дата, приходящая с успешным оформлением(можно дополнить окно успешного оформления)</b><br>
+            <pre>{{ successOrder }}</pre>
+        </div>
+
+        <div class="d-flex">
+            <div
+                class="border border-0 cart-card h-100 me-5 overflow-hidden"
+                id="cart-card"
+                :class="Object.keys(productsInCart).length === 0 ? 'w-100':'w-75'"
+            >
+                <div class="p-4" id="cart-card2">
+                    <div class="cart-list" id="cart-list">
+                        <div class="d-flex flex-wrap justify-content-between" id="cart-title">
+
+                            <h3 class="mt-1">
+                                Корзина
+                                <span v-if="Object.keys(productsInCart).length <= 0" class="d-inline">пока пуста</span>
+                            </h3>
+
+                            <div v-show="productsInCart && productsInCart.length > 2" @click="openCartList()" class="btn cart-list__open">
+                                <h4 class="mb-1"><i class="fas fa-chevron-up"></i></h4>
+                            </div>
+
+                        </div>
+
+                        <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4" :id="`cart-list-product${product.id}`">
+                            <product-in-cart class="row mt-4" :product="product" :index="index" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                v-show="productsInCart !== null && Object.keys(productsInCart).length > 0"
+                class="cart-card p-4 order-fields w-25"
+            >
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Оформить заказ</h3>
+                    <div>
+                        <div class="col-12" v-if="Object.keys(validationErrors).length > 0">
+                            <div class="alert alert-danger">
+                                <div v-for="(value, key) in validationErrors" :key="key">{{ value[0] }}</div>
+                            </div>
+                        </div>
+                        <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.name" placeholder="Ваше имя" style="height: 45px;">
+                        <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.email" placeholder="Электронная почта" style="height: 45px;">
+                        <input class="w-100 mb-3 border border-minor rounded form-control shadow-none" type="text" v-model="storeOrderData.address" placeholder="Адресс доставки" style="height: 45px;">
+                    </div>
+
+                    <checkbox
+                        :checkedIndex="checkedIndex"
+                        :index="0"
+                        @click="switchCheckedIndex"
+                    >
+                        Запомнить адресс?
+                    </checkbox>
+
+                    <div class="mt-2">
+                        <div class="text-minor text-nowrap">
+                            <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                                <p class="mb-2 text-secondary">Товары, {{ totalCount }}шт</p>
+                                <p class="mb-2 text-secondary">{{ totalPrice }} ₽</p>
+                            </div>
+                            <h4 class="d-flex justify-content-between">
+                                <span>Итого: </span>
+                                <span>{{ totalPrice }} ₽</span>
+                            </h4>
+                        </div>
+                        <div @click.prevent="storeOrder();" type="button" class="btn btn-outline-minor w-100">
+                            {{ orderProcessing ? 'Оформляем' : 'Оформить' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
     </div>
 
 </template>
@@ -106,10 +106,11 @@ import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import ProductInCart from "@/components/products/ProductInCart.vue";
 import getElementPropertiesMixin from "@/mixins/getElementPropertiesMixin.vue";
+import checkbox from "../../components/customButtons/checkbox.vue";
 
 export default {
     name: "cart",
-    components: {ProductInCart},
+    components: {ProductInCart,checkbox},
     mixins: [cartMixin,getElementPropertiesMixin],
 
     data() {
@@ -131,6 +132,8 @@ export default {
             orderProcessing: null,
             validationErrors: {},
             successOrder: {},
+
+            checkedIndex: [],
         }
     },
 
@@ -169,7 +172,8 @@ export default {
             this.setStoreOrderData()
         }
         this.setTotalPrice()
-        setTimeout(() => {document.getElementById('cart-list').style.height = this.getHeight('cart-list')}, 2000)
+        setTimeout(() => {document.getElementById('cart-list').style.height = this.getHeight('cart-list')}, 1000)
+
     },
 
     methods: {
@@ -178,6 +182,14 @@ export default {
             setCartProducts:"cartProducts/setCartProducts",
             changeItemQtyCartProducts:"cartProducts/changeItemQtyCartProducts",
         }),
+
+        switchCheckedIndex() {
+            if (this.checkedIndex[0] === 0) {
+                this.checkedIndex = []
+            } else {
+                this.checkedIndex[0] = 0
+            }
+        },
 
         storeOrder() {
             this.storeOrderData.products = this.$store.state.cartProducts.products

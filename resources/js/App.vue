@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <nav class="navbar navbar-expand p-0">
+    <div class="app">
+
+        <nav class="navbar nav-info navbar-expand p-0">
             <div class="d-flex justify-content-center w-100">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -28,7 +29,7 @@
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand p-4 navbar-light bg-light bg-img">
+        <nav class="navbar nav-bg navbar-expand p-4 navbar-light bg-light bg-img">
             <div class="container-xxl" style="z-index: 3">
 
                 <ul class="navbar-nav me-auto">
@@ -86,7 +87,7 @@
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-main bg-main">
+        <nav class="navbar nav-header navbar-expand-lg navbar-main bg-main">
             <div class="container-xxl">
 
                 <router-link class="navbar-brand" to="/">Магазин</router-link>
@@ -108,61 +109,61 @@
                         </li>
                     </ul>
 
-<!--                    <div class="search w-100 h-100 d-flex justify-content-center">-->
-<!--                        <div class="search-form">-->
-<!--                            <input @keyup.enter="startSearch(searchInputValue)"-->
-<!--                                   @input="suggestSearch($event)"-->
-<!--                                   :value="searchInputValue"-->
-<!--                                   id="search-input"-->
-<!--                                   class="search-input"-->
-<!--                                   placeholder="поиск"-->
-<!--                                   autocomplete="off"-->
-<!--                            >-->
-<!--                            <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>-->
-<!--                            <div class="search-list">-->
+                    <!--                    <div class="search w-100 h-100 d-flex justify-content-center">-->
+                    <!--                        <div class="search-form">-->
+                    <!--                            <input @keyup.enter="startSearch(searchInputValue)"-->
+                    <!--                                   @input="suggestSearch($event)"-->
+                    <!--                                   :value="searchInputValue"-->
+                    <!--                                   id="search-input"-->
+                    <!--                                   class="search-input"-->
+                    <!--                                   placeholder="поиск"-->
+                    <!--                                   autocomplete="off"-->
+                    <!--                            >-->
+                    <!--                            <i @click="startSearch(searchInputValue)" class="fa fa-search search-icon cursor-pointer"></i>-->
+                    <!--                            <div class="search-list">-->
 
-<!--                                <span-->
-<!--                                v-show="search.searchLast.text.length !== 0"-->
-<!--                                class="search-delete-history cursor-pointer"-->
-<!--                                @click="deleteAllHistory"-->
-<!--                                >Очистить историю поиска</span>-->
+                    <!--                                <span-->
+                    <!--                                v-show="search.searchLast.text.length !== 0"-->
+                    <!--                                class="search-delete-history cursor-pointer"-->
+                    <!--                                @click="deleteAllHistory"-->
+                    <!--                                >Очистить историю поиска</span>-->
 
-<!--                                <div class="last-search">-->
-<!--                                    <div-->
-<!--                                        v-for="(search, index) in search.searchLast.text"-->
-<!--                                        v-show="this.search.searchLast.text.length !== 0"-->
-<!--                                    >-->
-<!--                                        <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">-->
+                    <!--                                <div class="last-search">-->
+                    <!--                                    <div-->
+                    <!--                                        v-for="(search, index) in search.searchLast.text"-->
+                    <!--                                        v-show="this.search.searchLast.text.length !== 0"-->
+                    <!--                                    >-->
+                    <!--                                        <div v-show="index+1 <= 5" class="search-list-item cursor-pointer">-->
 
-<!--                                            <span @click="startSearch(search)" class="search-list-item-text w-100">-->
-<!--                                                <i class="fas fa-history"></i> {{ search }}-->
-<!--                                            </span>-->
+                    <!--                                            <span @click="startSearch(search)" class="search-list-item-text w-100">-->
+                    <!--                                                <i class="fas fa-history"></i> {{ search }}-->
+                    <!--                                            </span>-->
 
-<!--                                            <span class="search-delete-history-one">-->
-<!--                                                <i @click="deleteHistoryOne(index)" class="fas fa-times "></i>-->
-<!--                                            </span>-->
+                    <!--                                            <span class="search-delete-history-one">-->
+                    <!--                                                <i @click="deleteHistoryOne(index)" class="fas fa-times "></i>-->
+                    <!--                                            </span>-->
 
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
 
-<!--                                <div class="popular-search">-->
-<!--                                    <div-->
-<!--                                        v-for="(search, index) in search.searchPopular.text"-->
-<!--                                        v-if="this.search.searchPopular.text.length !== 0"-->
-<!--                                    >-->
-<!--                                        <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">-->
-<!--                                            <span class="search-list-item-text">-->
-<!--                                            <i class="fa fa-search"></i> {{ search }}-->
-<!--                                            </span>-->
-<!--                                        </div>-->
+                    <!--                                <div class="popular-search">-->
+                    <!--                                    <div-->
+                    <!--                                        v-for="(search, index) in search.searchPopular.text"-->
+                    <!--                                        v-if="this.search.searchPopular.text.length !== 0"-->
+                    <!--                                    >-->
+                    <!--                                        <div @click="startSearch(search)" v-if="index < 5 || index < (10 - this.search.searchLast.text.length)" class="search-list-item cursor-pointer">-->
+                    <!--                                            <span class="search-list-item-text">-->
+                    <!--                                            <i class="fa fa-search"></i> {{ search }}-->
+                    <!--                                            </span>-->
+                    <!--                                        </div>-->
 
-<!--                                    </div>-->
-<!--                                </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
 
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
 
                     <search
@@ -214,6 +215,7 @@
 import { mapActions } from 'vuex'
 import ModalCallMeLater from "@/components/modals/ModalCallMeLater.vue";
 import Search from "./components/filters/search.vue";
+import hideScrollMixin from "@/mixins/hideScrollMixin.vue";
 
 export default {
     name: 'App',
@@ -222,6 +224,8 @@ export default {
         Search,
         ModalCallMeLater,
     },
+
+    mixins: [hideScrollMixin],
 
     data() {
         return {
@@ -335,15 +339,12 @@ export default {
 
         openModal() {
             this.modalVisibility.callMeLater = true
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
-
+            this.hideScroll()
         },
 
         hideModal() {
             this.modalVisibility.callMeLater = false
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
+            this.addScroll()
         },
 
         async logout(){

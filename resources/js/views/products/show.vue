@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div v-if="loaded" class="row mb-5" style="padding-left: 30px; padding-right: 30px;">
+            <div v-if="loaded" class="row mb-5 product-page__info" style="padding-left: 30px; padding-right: 30px;">
 
                 <div class="col-1">
                     <img @mouseover="pictureReplacement(product.image_url, 0)" :src="product.image_url" alt="" class="mb-2 w-100 small-product-img current-small-product-img" style="cursor: pointer; border-radius: 7px;" >
@@ -93,7 +93,7 @@
                     </div>
                 </div>
 
-                <div class="card border border-0 cart-card col-3 h-100 p-4">
+                <div class="card border border-0 cart-card col-3 h-100 p-4 product-page__aside">
 
                     <div class="d-flex justify-content-between">
                         <h3 class="card-text text-minor fw-bold">
@@ -217,12 +217,13 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import wishMixin from "@/mixins/wishMixin.vue";
+import hideScrollMixin from "@/mixins/hideScrollMixin.vue";
 import router from "@/router";
 
 export default {
     name: "products.show",
 
-    mixins: [cartMixin, wishMixin],
+    mixins: [cartMixin, wishMixin, hideScrollMixin],
 
     components: {
         Carousel,
@@ -469,24 +470,21 @@ export default {
             this.currentOpenReview.review = review
             this.currentOpenReview.indexInReviews = index
             this.modalVisibility.readReview = true
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
+            this.hideScroll()
         },
         openModalWriteReviews() {
             if (!this.authenticated) {
                 router.push({name:'user.login'})
             } else {
                 this.modalVisibility.writeReview = true
-                document.getElementsByClassName('body-scroll')[0].style.overflowY = 'hidden'
-                document.getElementsByClassName('body-scroll')[0].style.paddingRight = '16px'
+                this.hideScroll()
             }
         },
         hideModal() {
             this.modalVisibility.visibility = false
             this.modalVisibility.writeReview = false
             this.modalVisibility.readReview = false
-            document.getElementsByClassName('body-scroll')[0].style.overflowY = ''
-            document.getElementsByClassName('body-scroll')[0].style.paddingRight = ''
+            this.addScroll()
         },
         nextReview(index) {
             this.currentOpenReview.review = this.reviews[index+1]

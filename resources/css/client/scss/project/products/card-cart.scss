@@ -1,18 +1,19 @@
-.cart-card {
-    border-radius: $border-radius-l;
-    box-shadow: 0 0 10px $cart-card-box-shadow;
-    transition: all ease-out $default-transition;
-    background-color: #fff;
-    min-height: 0;
-
-    &:hover {
-        box-shadow: 0 0 40px $cart-card-box-shadow;
-    }
-}
-
 .cart {
+
+    &-card {
+        border-radius: $border-radius-l;
+        box-shadow: 0 0 10px $cart-card-box-shadow;
+        transition: all ease-out $default-transition;
+        background-color: #fff;
+        min-height: 0;
+
+        &:hover {
+            box-shadow: 0 0 40px $cart-card-box-shadow;
+        }
+    }
+
     &-list {
-        transition: all linear $default-transition;
+        transition: all ease $default-long-transition;
         &__open {
             align-items: center;
             justify-content: center;
@@ -38,3 +39,12 @@
     outline:none;
     text-align: center;
 }
+
+.order-fields {
+    position: sticky;
+    position:-webkit-sticky;
+    top: 40px;
+    height: fit-content;
+}
+
+

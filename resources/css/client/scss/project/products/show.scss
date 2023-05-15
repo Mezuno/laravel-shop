@@ -26,3 +26,16 @@
     margin-left: -15px;
     margin-right: -15px;
 }
+
+.product-page {
+
+    &__info {
+        position: relative;
+    }
+
+    &__aside {
+        position: sticky;
+        top: 40px;
+    }
+
+}
