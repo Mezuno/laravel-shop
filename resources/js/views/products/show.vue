@@ -30,12 +30,30 @@
             <div v-if="loaded" class="row mb-5 product-page__info" style="padding-left: 30px; padding-right: 30px;">
 
                 <div class="col-1">
-                    <img @mouseover="pictureReplacement(product.image_url, 0)" :src="product.image_url" alt="" class="mb-2 w-100 small-product-img current-small-product-img" style="cursor: pointer; border-radius: 7px;" >
-                    <img @mouseover="pictureReplacement(productImage.url, index+1)" v-for="(productImage, index) in product.product_images" :src="productImage.url" alt="" class="mb-2 w-100 small-product-img" style="cursor: pointer; border-radius: 7px;">
+                    <img
+                        @mouseover="pictureReplacement(product.image_url, 0)"
+                        :src="product.image_url"
+                        alt=""
+                        class="mb-2 w-100 small-product-img current-small-product-img cursor-pointer"
+                        style="border-radius: 7px;"
+                    >
+                    <img
+                        @mouseover="pictureReplacement(productImage.url, index+1)"
+                        v-for="(productImage, index) in product.product_images"
+                        :src="productImage.url"
+                        alt=""
+                        class="mb-2 w-100 small-product-img cursor-pointer"
+                        style="border-radius: 7px;"
+                    >
                 </div>
 
                 <div class="col-4">
-                    <img :src="product.image_url" class="figure-img w-100 show-product-img" alt="" id="bigProductImage">
+                    <img
+                        :src="product.image_url"
+                        class="figure-img w-100 show-product-img"
+                        alt=""
+                        id="bigProductImage"
+                    >
                 </div>
 
                 <div class="col-4">
@@ -55,15 +73,33 @@
                     <div class="float-left text-nowrap">
                         <i v-for="star in Math.round(product.avg_rate)" class="fas fa-star rate text-main"></i>
                         <i v-for="star in 5 - Math.round(product.avg_rate)" class="far fa-star rate text-main"></i>
-                        <a @click="openModalReadReviews(reviews[currentOpenReview.indexInReviews], currentOpenReview.indexInReviews)" class="link-secondary ms-2 cursor-pointer text-decoration-none more" style="border-bottom: dashed 1px; font-size: 0.9rem;">
-                            <div class="d-inline">
+                        <span
+                            @click="scrollToReviews()"
+                            class="link-secondary ms-2 cursor-pointer text-decoration-none more"
+                            style="border-bottom: dashed 1px;
+                            font-size: 0.9rem;"
+                        >
+                            <span class="d-inline">
                                 {{ product.reviews_count }}
-                                <span v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )">Отзывов</span>
-                                <span v-else-if="product.reviews_count.toString().slice(-1) === '1'">Отзыв</span>
-                                <span v-else-if="(product.reviews_count.toString().slice(-1) === '2') || (product.reviews_count.toString().slice(-1) === '3') || (product.reviews_count.toString().slice(-1) === '4') ">Отзыва</span>
+                                <span
+                                    v-if="(product.reviews_count > 9) && (product.reviews_count < 21 )"
+                                >
+                                    Отзывов
+                                </span>
+                                <span
+                                    v-else-if="product.reviews_count.toString().slice(-1) === '1'"
+                                >
+                                    Отзыв
+                                </span>
+                                <span
+                                    v-else-if="(product.reviews_count.toString().slice(-1) === '2') ||
+                                    (product.reviews_count.toString().slice(-1) === '3') ||
+                                    (product.reviews_count.toString().slice(-1) === '4') "
+                                >Отзыва
+                                </span>
                                 <span v-else>Отзывов</span>
-                            </div>
-                        </a>
+                            </span>
+                        </span>
                         <p class="text-secondary mt-2">Артикул: <span class="text-minor">{{ product.vendor_code }}</span></p>
 
                         <div class="text-wrap" style="font-size: 0.9rem;">
@@ -100,12 +136,21 @@
                             {{ product.price.slice(0, -3) }}<span class="ms-2 d-inline text-minor">₽</span>
                         </h3>
                         <h4 class="ps-3 m-0 text-danger">
-                            <i @click.prevent="switchWish(product, 'addToWishlistHeart')" id="addToWishlistHeart" class="far fa-heart heart-fas" style="cursor: pointer;"></i>
+                            <i
+                                @click.prevent="switchWish(product, 'addToWishlistHeart')"
+                                id="addToWishlistHeart"
+                                class="far fa-heart heart-fas"
+                                style="cursor: pointer;"
+                            ></i>
                         </h4>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a @click.prevent="addToCart(product, 'addToCartButton')" class="w-100 m-0 btn btn-main" id="addToCartButton">
+                        <a
+                            @click.prevent="addToCart(product, 'addToCartButton')"
+                            class="w-100 m-0 btn btn-main"
+                            id="addToCartButton"
+                        >
                             В корзину
                             <i class="fas fa-shopping-cart"></i>
                         </a>
@@ -115,15 +160,35 @@
             </div>
 
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" id="reviews">
                 <div>
-                    <div class="d-flex justify-content-between align-items-center" style="margin-left: 25px" v-if="loaded && Object.keys(reviews).length > 0">
+                    <div
+                        class="d-flex justify-content-between align-items-center"
+                        style="margin-left: 25px"
+                        v-if="loaded && Object.keys(reviews).length > 0"
+                    >
                         <div class="d-flex me-2">
                             <h2>Отзывы</h2>
                             <span class="ms-1 h5">{{ product.reviews_count }}</span>
                         </div>
-
                         <a style="border-bottom: dashed 1px;">Смотреть все отзывы</a>
+                    </div>
+
+                    <div
+                        class="d-flex align-items-end mb-4"
+                        v-else-if="Object.keys(reviews).length === 0"
+                        style="margin-left: 25px"
+                    >
+                        <h2>
+                            Отзывов пока нет будьте первым
+                            <span
+                                class="cursor-pointer text-additional"
+                                @click="openModalWriteReviews"
+                                style="border-bottom: dashed 3px;"
+                            >
+                                оставьте отзыв!
+                            </span>
+                        </h2>
                     </div>
 
                     <div v-if="loaded && Object.keys(reviews).length > 0" class="d-flex align-items-center" style="margin-left: 25px">
@@ -134,41 +199,64 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!userReview && loaded" class="btn btn-outline-minor px-4" style="margin-right: 30px" @click="openModalWriteReviews">
+                <div
+                    v-if="!userReview && loaded && Object.keys(reviews).length > 0"
+                    class="btn btn-outline-minor px-4"
+                    style="margin-right: 30px"
+                    @click="openModalWriteReviews"
+                >
                     Оставить отзыв
                 </div>
             </div>
 
-            <carousel :breakpoints="breakpointsReviews" :snapAlign="'start'" :items-to-show="3" v-if="loaded && Object.keys(reviews).length > 0">
+            <carousel
+                :breakpoints="breakpointsReviews"
+                :snapAlign="'start'"
+                :items-to-show="3"
+                v-if="loaded && Object.keys(reviews).length > 0"
+            >
 
                     <slide v-for="(review, index) in reviews" :key="review.id" style="padding: 40px 30px 40px 30px">
 
-                            <div @click="openModalReadReviews(review, index)" class="cart-card p-4 w-100 h-100 d-flex flex-column align-items-start cursor-pointer">
-                                <div class="d-flex justify-content-between w-100">
-                                    <div>
-                                        <h5>{{ review.user.name }} <span class="h6 text-secondary text-nowrap" v-if="review.user.id === this.$store.state.auth.user.id">(Ваш отзыв)</span></h5>
-                                    </div>
-                                    <div class="float-left text-nowrap" v-if="loaded">
-                                        <i v-for="star in review.rate" class="fas fa-star rate text-main"></i>
-                                        <i v-for="star in 5 - review.rate" class="far fa-star rate text-main"></i>
-                                    </div>
+                        <div
+                            @click="openModalReadReviews(review, index)"
+                            class="cart-card p-4 w-100 h-100 d-flex flex-column align-items-start cursor-pointer"
+                        >
+                            <div class="d-flex justify-content-between w-100">
+                                <div>
+                                    <h5>
+                                        {{ review.user.name }}
+                                        <span
+                                            class="h6 text-secondary text-nowrap"
+                                            v-if="review.user.id === this.$store.state.auth.user.id"
+                                        >
+                                            (Ваш отзыв)
+                                        </span>
+                                    </h5>
                                 </div>
-
-                                <div class="float-left mb-2">
-                                    <span class="text-secondary">{{ review.created }}</span>
+                                <div class="float-left text-nowrap" v-if="loaded">
+                                    <i v-for="star in review.rate" class="fas fa-star rate text-main"></i>
+                                    <i v-for="star in 5 - review.rate" class="far fa-star rate text-main"></i>
                                 </div>
-
-                                <div class="">
-                                    <div class="float-left">
-                                        <h6>{{ review.title }}</h6>
-                                    </div>
-                                    <div class="float-left">
-                                        <p class="mb-0">{{ review.body.slice(0,150) }}<span class="h6" v-if="review.body.slice(0,150).length < review.body.length">... </span></p>
-                                        <span class="text-nowrap h6">Читать далее</span>
-                                    </div>
-                                </div>
-
                             </div>
+
+                            <div class="float-left mb-2">
+                                <span class="text-secondary">{{ review.created }}</span>
+                            </div>
+
+                            <div class="">
+                                <div class="float-left">
+                                    <h6>{{ review.title }}</h6>
+                                </div>
+                                <div class="float-left">
+                                    <p class="mb-0">{{ review.body.slice(0,150) }}
+                                        <span class="h6" v-if="review.body.slice(0,150).length < review.body.length">... </span>
+                                    </p>
+                                    <span class="text-nowrap h6">Читать полностью</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </slide>
 
                     <template #addons>
@@ -176,16 +264,18 @@
                     </template>
             </carousel>
 
-            <div v-else-if="loaded" class="cart-card p-4 h-100 m-4 col-6">
-                Отзывов пока нету
-            </div>
-
             <div v-if="Object.keys(successReview).length > 0" class="m-4 alert alert-success col-4">
                 Ваш отзыв успешно отправлен! Публикация отзыва произойдет после успешной модерции.<br>
             </div>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Похожие товары</h2>
-            <carousel :breakpoints="breakpointsProducts" :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(sameProducts).length > 0">
+            <carousel
+                :breakpoints="breakpointsProducts"
+                :mouseDrag="false"
+                :snapAlign="'start'"
+                :items-to-show="4"
+                v-if="loaded && Object.keys(sameProducts).length > 0"
+            >
                 <slide v-for="sameProduct in sameProducts" :key="sameProduct.id" style="padding: 40px;">
                     <alternative-product-card :identifier="'SameProduct'" :product="sameProduct" class="" :key="sameProduct.id" style="width: 18rem;"/>
                 </slide>
@@ -195,7 +285,13 @@
             </carousel>
 
             <h2 v-if="loaded" class="px-4 mt-3 mb-0">Смотрели ранее</h2>
-            <carousel :breakpoints="breakpointsProducts" :mouseDrag="false" :snapAlign="'start'" :items-to-show="4" v-if="loaded && Object.keys(previousWatched).length > 0">
+            <carousel
+                :breakpoints="breakpointsProducts"
+                :mouseDrag="false"
+                :snapAlign="'start'"
+                :items-to-show="4"
+                v-if="loaded && Object.keys(previousWatched).length > 0"
+            >
                 <slide v-for="productWatched in previousWatched" :key="productWatched.id" style="padding: 40px;">
                     <alternative-product-card :identifier="'PreviousWatched'" :product="productWatched" class="" :key="productWatched.id" style="width: 18rem;"/>
                 </slide>
@@ -464,6 +560,10 @@ export default {
             } else if (state === 'fas') {
                 document.getElementById('rate-in-modal'+i).classList.add('far')
             }
+        },
+
+        scrollToReviews() {
+            document.getElementById('reviews').scrollIntoView({block: "center", behavior: "smooth"});
         },
 
         openModalReadReviews(review, index) {

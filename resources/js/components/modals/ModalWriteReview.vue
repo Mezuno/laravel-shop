@@ -8,7 +8,6 @@
                 <div class="d-flex flex-column">
                     <div class="d-flex">
                         <h3>Оставьте свой отзыв к товару «{{ product.title }}»</h3>
-                        <p class="alert alert-info p-1 ms-4 px-2" v-if="Object.keys(reviews).length <= 0">Будьте первым!</p>
                     </div>
 
                     <div class="col-12" v-if="Object.keys(userReviewValidationErrors).length > 0">
@@ -22,7 +21,13 @@
                     </div>
                     <div @mouseout="outMouseOver">
                         <h4>
-                            <i v-for="i in 5" @mouseover="onMouseOver(i)" @click="changeReviewDataRate(i)" class="far fa-star text-warning cursor-pointer" :id="`rate-in-modal${i-1}`"></i>
+                            <i
+                                v-for="i in 5"
+                                @mouseover="onMouseOver(i)"
+                                @click="changeReviewDataRate(i)"
+                                class="far fa-star text-warning cursor-pointer"
+                                :id="`rate-in-modal${i-1}`"
+                            ></i>
                         </h4>
                     </div>
 
