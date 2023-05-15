@@ -5,7 +5,7 @@
             <h3>Проконсультируйте меня</h3>
             <p>Наш оператор перезвонит Вам в течение 5 минут</p>
             <form action="">
-                <input type="text" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">
+                <input type="text" inputmode="numeric" class="mb-3 form-control p-2 px-3" placeholder="Номер телефона">
                 <button @click.prevent="$parent.hideModal()" class="btn btn-minor w-100">Свяжитесь со мной</button>
             </form>
 

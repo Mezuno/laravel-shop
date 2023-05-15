@@ -62,19 +62,6 @@ export default {
             }
         },
 
-        changeQty(product, index) {
-            let qty = Number(document.getElementsByClassName("input-qty")[index].value)
-
-            if (qty < 1) {
-                qty = 1
-            } else if (qty > 999) {
-                qty = 999
-            }
-
-            this.changeItemQtyCartProducts({index, qty})
-            product.qty = qty
-        },
-
         stretchCartButton(buttonId) {
             document.getElementById(buttonId).classList.remove('col-10')
             document.getElementById(buttonId).classList.add('col-12')

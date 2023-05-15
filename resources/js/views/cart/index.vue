@@ -45,7 +45,7 @@
                         </div>
 
                         <div v-show="productsInCart" v-for="(product, index) in productsInCart" :key="product.id" class="row mt-4" :id="`cart-list-product${product.id}`">
-                            <product-in-cart class="row mt-4" :product="product" :index="index" />
+                            <product-in-cart @setQty="setQty" class="row mt-4" :product="product" :index="index" />
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ import {mapActions} from "vuex";
 import cartMixin from "@/mixins/cartMixin.vue";
 import ProductInCart from "@/components/products/ProductInCart.vue";
 import getElementPropertiesMixin from "@/mixins/getElementPropertiesMixin.vue";
-import checkbox from "../../components/customButtons/checkbox.vue";
+import checkbox from "@/components/customButtons/checkbox.vue";
 
 export default {
     name: "cart",
@@ -182,6 +182,13 @@ export default {
             setCartProducts:"cartProducts/setCartProducts",
             changeItemQtyCartProducts:"cartProducts/changeItemQtyCartProducts",
         }),
+
+        setQty(emitData) {
+            this.productsInCart[emitData.index].qty = emitData.value
+            let index = emitData.index
+            let qty = emitData.value
+            this.changeItemQtyCartProducts({index, qty})
+        },
 
         switchCheckedIndex() {
             if (this.checkedIndex[0] === 0) {
